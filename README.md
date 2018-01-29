@@ -1,1 +1,3 @@
 # 350S18-18-LifeStats
+
+In order for a person to identify trends in their life and build new habits, it would be helpful to track their productivity and mental health each day. This can be done in many ways, for example by filling out some metrics (along the lines of happiness, stress, productivity) and a short description of my day. From there I can see how specific activities and timeframes affect me, like "during finals my happiness went down 40% but productivity went up 30%" or "working out every day led to a 15% reduction in stress over a 3 week period". This app could be used by anyone trying to better understand themselves and change their habits: people trying to manage anxiety, get in better shape, be less stressed, or get more done in the day.
