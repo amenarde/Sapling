@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="hwk2.cis350.upenn.edu.sapling">
+    package="cis350.upenn.edu.sapling">
 
     <application
         android:allowBackup="true"
