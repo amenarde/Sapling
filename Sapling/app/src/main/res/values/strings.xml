@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Sapling</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="plant_description">Plant icon corresponding to quality of life </string>
+    <string name="quality_of_life_graph_description">Graph tracking quality of life </string>
+
 </resources>
