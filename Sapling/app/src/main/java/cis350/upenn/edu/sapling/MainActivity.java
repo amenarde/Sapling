@@ -1,4 +1,4 @@
-package hwk2.cis350.upenn.edu.sapling;
+package cis350.upenn.edu.sapling;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

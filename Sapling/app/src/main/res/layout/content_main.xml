@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="hwk2.cis350.upenn.edu.sapling.MainActivity"
+    tools:context="cis350.upenn.edu.sapling.MainActivity"
     tools:showIn="@layout/activity_main">
 
 </android.support.constraint.ConstraintLayout>
