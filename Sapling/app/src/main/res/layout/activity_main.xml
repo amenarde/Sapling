@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,14 +7,33 @@
     android:background="@drawable/gradient"
     tools:context="cis350.upenn.edu.sapling.MainActivity">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_log"
+        android:layout_width="70dp"
+        android:layout_height="61dp"
+        android:layout_below="@+id/homepage_graph"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/homepage_graph"
+        android:layout_toRightOf="@+id/homepage_graph"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_anchor="@id/log_summary"
+        app:layout_anchorGravity="top|right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.973"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95" />
+
     <ImageView
         android:id="@+id/homepage_plant"
         android:layout_width="279dp"
         android:layout_height="219dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp"
         android:contentDescription="@string/plant_description"
         android:src="@drawable/plant_default"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,10 +47,9 @@
         android:id="@+id/homepage_graph"
         android:layout_width="241dp"
         android:layout_height="166dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_below="@+id/homepage_plant"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp"
         android:contentDescription="@string/quality_of_life_graph_description"
         android:src="@drawable/mock_graph"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,44 +63,22 @@
         android:id="@+id/log_summary"
         android:layout_width="390dp"
         android:layout_height="67dp"
-        android:layout_marginTop="500dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:background="#E8F1F3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_new_log"
-        android:layout_width="70dp"
-        android:layout_height="61dp"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_anchor="@id/log_summary"
-        app:layout_anchorGravity="bottom|right|end"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.973"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95" />
-
-    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_menu"
         android:layout_width="70dp"
         android:layout_height="61dp"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_alignLeft="@+id/fab_new_log"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/fab_new_log"
         android:clickable="true"
         android:focusable="true"
-        app:layout_anchor="@id/log_summary"
-        app:layout_anchorGravity="bottom|right|end"
+        app:layout_anchorGravity="top|right|start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.947"
@@ -90,4 +86,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.016" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
+
+

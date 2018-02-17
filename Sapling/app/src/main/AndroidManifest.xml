@@ -15,9 +15,16 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DisplayActivity"
+            android:label="@string/title_activity_display"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".GoalTrackingActivity"></activity>
     </application>
 
 </manifest>
