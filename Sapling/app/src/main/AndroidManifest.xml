@@ -24,7 +24,8 @@
             android:label="@string/title_activity_display"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".GoalTrackingActivity"></activity>
+        <activity android:name=".GoalTrackingActivity" />
+        <activity android:name=".LoggingActivity" />
     </application>
 
 </manifest>

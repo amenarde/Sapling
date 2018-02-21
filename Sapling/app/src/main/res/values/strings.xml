@@ -5,4 +5,6 @@
     <string name="quality_of_life_graph_description">Graph tracking quality of life </string>
     <string name="title_activity_display">DisplayActivity</string>
 
+    <string name="display_button_label">Display</string>
+
 </resources>
