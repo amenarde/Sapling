@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,6 +18,9 @@ class DBWriter {
         if (path == null) { throw new IllegalArgumentException("null argument"); }
         if(!(new File(path)).exists() || !(new File(path)).isDirectory()) {
             throw new IllegalArgumentException("directory does not exist");
+        }
+        if(!path.endsWith("/")) {
+            path += "/";
         }
         this.path = path;
     }
@@ -38,7 +41,7 @@ class DBWriter {
         }
     }
 
-    public Day getDay(Date date) {
+    public Day getDay(LocalDate date) {
         if (date == null) { throw new IllegalArgumentException("null argument"); }
 
         String filepath = path + date.toString() + ".JSON";
