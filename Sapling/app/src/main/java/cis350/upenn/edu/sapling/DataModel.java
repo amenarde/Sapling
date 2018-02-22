@@ -16,4 +16,8 @@ class DataModel {
     private DataModel() {
 
     }
+
+    class Model {
+
+    }
 }

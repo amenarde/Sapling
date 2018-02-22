@@ -8,10 +8,11 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 // @author: amenarde
 
-class DBWriter {
+class DBWriter implements FileDictionary<LocalDate, Day>{
     private String path;
 
     public DBWriter(String path) {
@@ -25,7 +26,7 @@ class DBWriter {
         this.path = path;
     }
 
-    public boolean putDay(Day day) {
+    public boolean put(LocalDate date, Day day) {
         if (day == null) { throw new IllegalArgumentException("null argument"); }
         String filepath = path + day.getDate().toString() + ".JSON";
 
@@ -41,7 +42,7 @@ class DBWriter {
         }
     }
 
-    public Day getDay(LocalDate date) {
+    public Day get(LocalDate date) {
         if (date == null) { throw new IllegalArgumentException("null argument"); }
 
         String filepath = path + date.toString() + ".JSON";
@@ -58,18 +59,25 @@ class DBWriter {
         }
     }
 
-    public boolean hasDay() {
+    public boolean has(LocalDate date) {
         // TODO: Empty method
         return false;
     }
 
-    public Day removeDay() {
+    public Day remove(LocalDate date) {
         // TODO: Empty method
         return null;
     }
 
-    public List<Day> getDayList() {
+    public Set<LocalDate> getKeySet() {
         // TODO: Empty method
         return null;
     }
+
+    public Set<Day> getValueSet() {
+        // TODO: Empty method
+        return null;
+    }
+
+
 }
