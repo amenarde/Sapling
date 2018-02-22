@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,73 +8,159 @@
     android:background="@drawable/gradient_back"
     tools:context="cis350.upenn.edu.sapling.MainActivity">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_new_log"
-        android:layout_width="70dp"
-        android:layout_height="61dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/homepage_graph"
-        android:layout_marginEnd="9dp"
-        android:layout_marginRight="9dp"
-        android:layout_marginTop="7dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="startLogging"
-        app:layout_anchorGravity="top|right"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.973"
+    <TextView
+        android:id="@+id/avatar_background"
+        android:layout_width="280dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="64dp"
+        android:background="#8CFFFFFF"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ground_background"
+        android:layout_width="280dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="276dp"
+        android:background="#8CFFFFFF"
+        fab:layout_constraintStart_toStartOf="parent"
+        fab:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/homepage_plant"
-        android:layout_width="279dp"
-        android:layout_height="219dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="60dp"
+
         android:contentDescription="@string/plant_description"
-        android:src="@drawable/plant_default"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.114" />
+        android:src="@drawable/ic_sapling_1"
+        app:layout_constraintStart_toStartOf="@+id/avatar_background"
+        app:layout_constraintTop_toTopOf="@+id/avatar_background" />
 
-    <ImageView
-        android:id="@+id/homepage_graph"
-        android:layout_width="241dp"
-        android:layout_height="166dp"
-        android:layout_below="@+id/homepage_plant"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"
-        android:contentDescription="@string/quality_of_life_graph_description"
-        android:src="@drawable/mock_graph"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.703" />
-
-    <TextView
-        android:id="@+id/log_summary"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:background="#E8F1F3"
+        android:layout_height="76dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/status_bar"
+            android:layout_width="386dp"
+            android:layout_height="match_parent"
+            android:background="@color/add_button_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/prod_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="24dp"
+                android:text="4.5"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="30sp"
+                app:layout_constraintStart_toEndOf="@+id/health_stat"
+                fab:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/happiness_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="24dp"
+                android:text="3.8"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="@+id/happiness_title"
+                fab:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/stress_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:text="4.9"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="30sp"
+                app:layout_constraintStart_toEndOf="@+id/prod_stat"
+                fab:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/health_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="24dp"
+                android:text="4.7"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="30sp"
+                app:layout_constraintStart_toEndOf="@+id/happiness_stat"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/health_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="8dp"
+                android:text="health"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                fab:layout_constraintStart_toEndOf="@+id/happiness_title"
+                fab:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/prod_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+
+                android:layout_marginTop="8dp"
+                android:text="productivity"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/health_stat"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/happiness_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="8dp"
+                android:text="happiness"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/stress_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:text="stress"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/prod_title"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </FrameLayout>
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/menu"
@@ -145,6 +230,24 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
     </com.github.clans.fab.FloatingActionMenu>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_log"
+        android:layout_width="70dp"
+        android:layout_height="61dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/homepage_graph"
+        android:layout_marginBottom="48dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="startLogging"
+        android:src="@mipmap/add_button_foreground"
+        app:backgroundTint="@color/add_button_back"
+        app:layout_anchorGravity="top|right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
 
