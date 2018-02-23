@@ -5,10 +5,10 @@ package cis350.upenn.edu.sapling;
 import java.io.File;
 import java.util.Set;
 
-public class ModelWriter{
+public class ModelIO {
     private File file;
 
-    public ModelWriter (String fileName) {
+    public ModelIO (String fileName) {
         if (file == null) { throw new IllegalArgumentException("null argument"); }
         this.file = new File(fileName);
         if(!this.file.exists() || !this.file.isFile()) {
@@ -26,5 +26,10 @@ public class ModelWriter{
 
     public Set toSet() {
         return null;
+    }
+
+    
+    public void fetch(DataModel dm) {
+
     }
 }
