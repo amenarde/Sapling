@@ -14,7 +14,7 @@ import java.util.Set;
 
 // @author: amenarde
 
-class DBWriter implements FileDictionary<Date, Day>{
+class DBWriter implements FileDictionary<Date, DayData>{
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
     private String path;
 
@@ -29,13 +29,13 @@ class DBWriter implements FileDictionary<Date, Day>{
         this.path = path;
     }
 
-    public boolean put(Date date, Day day) {
-        if (day == null) { throw new IllegalArgumentException("null argument"); }
+    public boolean put(Date date, DayData dayData) {
+        if (dayData == null) { throw new IllegalArgumentException("null argument"); }
         String filepath = dateToFilename(date);
 
         try {
             PrintWriter writer = new PrintWriter(filepath);
-            writer.append(day.toJSON());
+            writer.append(dayData.toJSON());
             writer.close();
 
             return true;
@@ -46,7 +46,7 @@ class DBWriter implements FileDictionary<Date, Day>{
         }
     }
 
-    public Day get(Date date) {
+    public DayData get(Date date) {
         if (date == null) { throw new IllegalArgumentException("null argument"); }
 
         String filepath = path + dateToFilename(date);
@@ -59,7 +59,7 @@ class DBWriter implements FileDictionary<Date, Day>{
             String content = new Scanner(day).useDelimiter("\\Z").next();
 
             Gson gson = new Gson();
-            return gson.fromJson(content, Day.class);
+            return gson.fromJson(content, DayData.class);
         }
         catch (FileNotFoundException e) {
             return null;
@@ -81,15 +81,15 @@ class DBWriter implements FileDictionary<Date, Day>{
         return false;
     }
 
-    public Day remove(Date date) {
+    public DayData remove(Date date) {
         if (date == null) { throw new IllegalArgumentException("null argument"); }
 
-        Day day = get(date);
-        if(day == null) { return null; }
+        DayData dayData = get(date);
+        if(dayData == null) { return null; }
 
         File toDelete = new File(dateToFilename(date));
         toDelete.delete();
-        return day;
+        return dayData;
     }
 
     public Set<Date> getKeySet() {
@@ -104,9 +104,9 @@ class DBWriter implements FileDictionary<Date, Day>{
         return dates;
     }
 
-    public Set<Day> getValueSet() {
+    public Set<DayData> getValueSet() {
         File[] filesList = new File(path).listFiles();
-        Set<Day> dayData = new HashSet<Day>(filesList.length);
+        Set<DayData> dayData = new HashSet<DayData>(filesList.length);
 
         for (File f : filesList) {
             Date date = filenameToDate(f.getPath());
