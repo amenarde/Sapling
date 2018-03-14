@@ -5,14 +5,17 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
 // @author: amenarde
 
-class DBWriter implements FileDictionary<LocalDate, Day>{
+class DBWriter implements FileDictionary<Date, Day>{
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
     private String path;
 
     public DBWriter(String path) {
@@ -26,9 +29,9 @@ class DBWriter implements FileDictionary<LocalDate, Day>{
         this.path = path;
     }
 
-    public boolean put(LocalDate date, Day day) {
+    public boolean put(Date date, Day day) {
         if (day == null) { throw new IllegalArgumentException("null argument"); }
-        String filepath = path + day.getDate().toString() + ".JSON";
+        String filepath = dateToFilename(date);
 
         try {
             PrintWriter writer = new PrintWriter(filepath);
@@ -38,15 +41,19 @@ class DBWriter implements FileDictionary<LocalDate, Day>{
             return true;
         }
         catch (FileNotFoundException e) {
+            //TODO: log and quit
             return false;
         }
     }
 
-    public Day get(LocalDate date) {
+    public Day get(Date date) {
         if (date == null) { throw new IllegalArgumentException("null argument"); }
 
-        String filepath = path + date.toString() + ".JSON";
+        String filepath = path + dateToFilename(date);
         File day = new File(filepath);
+        if (!day.exists()) {
+            return null;
+        }
 
         try {
             String content = new Scanner(day).useDelimiter("\\Z").next();
@@ -59,25 +66,70 @@ class DBWriter implements FileDictionary<LocalDate, Day>{
         }
     }
 
-    public boolean has(LocalDate date) {
-        // TODO: Empty method
+    public boolean has(Date date) {
+        if (date == null) { throw new IllegalArgumentException("null argument"); }
+
+        File[] filesList = new File(path).listFiles();
+        String wantedFile = dateToFilename(date);
+
+        for (File f : filesList) {
+            if (wantedFile.equals(f.getPath())) {
+                return true;
+            }
+        }
+
         return false;
     }
 
-    public Day remove(LocalDate date) {
-        // TODO: Empty method
-        return null;
+    public Day remove(Date date) {
+        if (date == null) { throw new IllegalArgumentException("null argument"); }
+
+        Day day = get(date);
+        if(day == null) { return null; }
+
+        File toDelete = new File(dateToFilename(date));
+        toDelete.delete();
+        return day;
     }
 
-    public Set<LocalDate> getKeySet() {
-        // TODO: Empty method
-        return null;
+    public Set<Date> getKeySet() {
+        File[] filesList = new File(path).listFiles();
+        Set<Date> dates = new HashSet<Date>(filesList.length);
+
+        for (File f : filesList) {
+            String date = f.getPath();
+            dates.add(filenameToDate(date));
+        }
+
+        return dates;
     }
 
     public Set<Day> getValueSet() {
-        // TODO: Empty method
-        return null;
+        File[] filesList = new File(path).listFiles();
+        Set<Day> dayData = new HashSet<Day>(filesList.length);
+
+        for (File f : filesList) {
+            Date date = filenameToDate(f.getPath());
+            dayData.add(get(date));
+        }
+
+        return dayData;
     }
 
+    private String dateToFilename(Date date) {
+        return path + this.sdf.format(date) + ".JSON";
+    }
+
+    private Date filenameToDate(String filename) {
+        filename.replace(this.path, "");
+        filename.replace(".JSON", "");
+        try {
+            return this.sdf.parse(filename);
+        } catch (ParseException e){
+            //TODO: LOG / assert false
+            return null;
+        }
+
+    }
 
 }

@@ -1,7 +1,7 @@
 package cis350.upenn.edu.sapling;
 
 import com.google.gson.Gson;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 
 // @author: amenarde
@@ -9,9 +9,9 @@ import java.util.HashMap;
 public class Day {
     private HashMap<String, Scale> metrics;
     private HashMap<String, Boolean> goals;
-    private final LocalDate date;
+    private final Date date;
 
-    public Day(LocalDate date) {
+    public Day(Date date) {
         if (date == null) { throw new IllegalArgumentException("null argument"); }
 
         this.date = date;
@@ -44,7 +44,7 @@ public class Day {
         return goals.get(name);
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
