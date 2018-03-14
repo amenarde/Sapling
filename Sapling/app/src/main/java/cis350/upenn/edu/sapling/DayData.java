@@ -1,50 +1,47 @@
 package cis350.upenn.edu.sapling;
 
 import com.google.gson.Gson;
+
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 
 // @author: amenarde
 
 public class DayData {
-    private HashMap<String, Scale> metrics;
-    private HashMap<String, Boolean> goals;
+    private HashMap<String, Metric> metrics;
+    private HashMap<String, Goal> goals;
 
     public DayData() {
-        metrics = new HashMap<String, Scale>();
-        goals = new HashMap<String, Boolean>();
+        metrics = new HashMap<String, Metric>();
+        goals = new HashMap<String, Goal>();
     }
 
-    public void putMetric(String name, Scale value) {
-        if (name == null || value == null) { throw new IllegalArgumentException("null argument"); }
-
-        metrics.put(name, value);
+    public void putMetric(Metric metric) {
+        if (metric == null) { throw new IllegalArgumentException("null argument"); }
+        metrics.put(metric.getName(), metric);
     }
 
-    public Scale getMetric(String name) {
+    public Metric getMetric(String name) {
         if (name == null) { throw new IllegalArgumentException("null argument"); }
-
         return metrics.get(name);
     }
 
-    public void putGoal(String name, Boolean achieved) {
-        if (name == null || achieved == null) { throw new IllegalArgumentException("null argument"); }
-
-        goals.put(name, achieved);
+    public void putGoal(Goal goal) {
+        if (goal == null) { throw new IllegalArgumentException("null argument"); }
+        goals.put(goal.getName(), goal);
     }
 
-    public Boolean getGoal(String name) {
+    public Goal getGoal(String name) {
         if (name == null) { throw new IllegalArgumentException("null argument"); }
-
         return goals.get(name);
     }
 
-    public String toJSON() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
+    public Collection<Metric> getAllMetrics() {
+        return metrics.values();
     }
 
-    public DayData fromJSON(String json) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, DayData.class);
+    public Collection<Goal> getAllGoals() {
+        return goals.values();
     }
 }
