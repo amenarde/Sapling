@@ -1,21 +1,15 @@
 package cis350.upenn.edu.sapling;
 
 import com.google.gson.Gson;
-import java.time.LocalDate;
 import java.util.HashMap;
 
 // @author: amenarde
 
-public class Day {
+public class DayData {
     private HashMap<String, Scale> metrics;
     private HashMap<String, Boolean> goals;
-    private final LocalDate date;
 
-    public Day(LocalDate date) {
-        if (date == null) { throw new IllegalArgumentException("null argument"); }
-
-        this.date = date;
-
+    public DayData() {
         metrics = new HashMap<String, Scale>();
         goals = new HashMap<String, Boolean>();
     }
@@ -44,17 +38,13 @@ public class Day {
         return goals.get(name);
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
     public String toJSON() {
         Gson gson = new Gson();
         return gson.toJson(this);
     }
 
-    public Day fromJSON(String json) {
+    public DayData fromJSON(String json) {
         Gson gson = new Gson();
-        return gson.fromJson(json, Day.class);
+        return gson.fromJson(json, DayData.class);
     }
 }
