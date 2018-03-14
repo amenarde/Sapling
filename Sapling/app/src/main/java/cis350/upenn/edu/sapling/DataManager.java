@@ -1,9 +1,23 @@
 package cis350.upenn.edu.sapling;
 
-/**
- * Created by amenarde on 2/16/18.
- */
+//@author: amenarde
 
 public class DataManager {
-	
+    private static DataManager dataManager;
+
+    private DataModel dataModel;
+    private DBWriter dbWriter;
+
+	private DataManager() {
+        dataModel = DataModel.getinstance();
+        dbWriter = new DBWriter("./data/");
+    }
+
+    public static DataManager getInstance() {
+        if (dataManager == null) {
+            dataManager = new DataManager();
+        }
+
+        return dataManager;
+    }
 }

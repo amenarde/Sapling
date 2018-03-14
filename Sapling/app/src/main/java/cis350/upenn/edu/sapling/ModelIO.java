@@ -1,6 +1,6 @@
 package cis350.upenn.edu.sapling;
 
-//@author: amenarde
+//@author: doheejkim
 
 import java.io.BufferedWriter;
 import java.io.File;

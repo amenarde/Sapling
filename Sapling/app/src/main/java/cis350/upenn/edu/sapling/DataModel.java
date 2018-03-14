@@ -3,7 +3,7 @@ package cis350.upenn.edu.sapling;
 import java.io.IOException;
 import java.util.HashSet;
 
-// @author: amenarde
+// @author: doheejkim
 
 // Singleton class used for in memory storage of metrics/goals
 class DataModel {
