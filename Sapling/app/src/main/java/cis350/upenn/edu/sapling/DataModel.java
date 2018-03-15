@@ -3,9 +3,9 @@ package cis350.upenn.edu.sapling;
 import java.io.IOException;
 import java.util.HashSet;
 
-// @author: doheejkim
+// @author: juezhou
 
-// Singleton class used for in memory storage of metrics/goals
+// Singleton class used for in memory disk storage of metrics/goals
 class DataModel {
     private static DataModel instance;
     static HashSet<String> activeMetrics;
