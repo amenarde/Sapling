@@ -12,7 +12,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-// I/O class under DataModel that maintains a persistent file for all currently tracked metrics
+// I/O class under DataModel that maintains a persistent file for
+// all currently tracked / deprecated metrics
 public class ModelIO {
     private File file;
     private static DataModel dm;
