@@ -28,19 +28,19 @@ public class ModelIO {
     }
 
     public boolean hasActiveMetric(String s) {
-        return fileCheckHelper(s,"Active Goals");
-    }
-
-    public boolean hasinactiveMetric(String s) {
-        return fileCheckHelper(s,"Inactive Goals");
-    }
-
-    public boolean hasActiveGoal(String s) {
         return fileCheckHelper(s,"Active Metrics");
     }
 
+    public boolean hasinactiveMetric(String s) {
+        return fileCheckHelper(s,"Inactive Metrics");
+    }
+
+    public boolean hasActiveGoal(String s) {
+        return fileCheckHelper(s,"Active Goals");
+    }
+
     public boolean hasinactiveGoal(String s) {
-        return fileCheckHelper(s, "Inactive Metrics");
+        return fileCheckHelper(s, "Inactive Goals");
     }
 
     // helper method that parses through the data file on disk
@@ -97,6 +97,10 @@ public class ModelIO {
         for (String s : content) {
             writer.write(s + "\n");
         }
+    }
+    
+    public static void main(String[] args) {
+        ModelIO io = new ModelIO("./path.txt", DataModel.getInstance());
     }
 
 }
