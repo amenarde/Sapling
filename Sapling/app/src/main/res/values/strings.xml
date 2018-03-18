@@ -16,4 +16,8 @@
     <string name="happiness_stat">3.8</string>
     <string name="health_stat">4.7</string>
     <string name="stress_stat">4.9</string>
+
+    <string name="metrics_label">Metrics</string>
+    <string name="goals_label">Goals</string>
+    <string name="today_label">Today\'s Log</string>
 </resources>

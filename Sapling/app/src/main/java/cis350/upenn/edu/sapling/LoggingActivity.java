@@ -1,13 +1,73 @@
 package cis350.upenn.edu.sapling;
 
+import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
+import java.util.HashSet;
 
 public class LoggingActivity extends AppCompatActivity {
-
+DataManager dataManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logging);
+
+
+        HashSet<String> activeMetrics = new HashSet<String>();
+        activeMetrics.add("Health");
+        activeMetrics.add("Productivity");
+        activeMetrics.add("Stress");
+
+        HashSet<String> activeGoals = new HashSet<String>();
+        activeGoals.add("Eat an apple");
+        activeGoals.add("Go to gym");
+
+//        dataManager = DataManager.getInstance();
+//        HashSet<String> activeMetrics = dataManager.getActiveMetrics();
+
+        //Programmatically add metrics to layout
+        for (String m : activeMetrics) {
+
+            LinearLayout metric_labels = findViewById(R.id.metrics_view_list);
+            TextView textV = new TextView(this);
+            textV.setText(m.toUpperCase());
+            textV.setTextSize(20);
+
+
+            SeekBar seekBar = new SeekBar(this);
+            seekBar.setMax(7);
+            ShapeDrawable thumb = new ShapeDrawable(new OvalShape());
+            thumb.setIntrinsicHeight(30);
+            thumb.setIntrinsicWidth(30);
+            seekBar.setThumb(thumb);
+            seekBar.setProgress(1);
+            seekBar.setVisibility(View.VISIBLE);
+
+            metric_labels.addView(textV);
+            metric_labels.addView(seekBar);
+        }
+
+
+        //Programmatically add goals to layout
+        for (String g : activeGoals) {
+            LinearLayout goal_labels = findViewById(R.id.goals_view_list);
+
+            String input = g.trim().toLowerCase();
+            String formattedText = input.substring(0, 1).toUpperCase() + input.substring(1);
+
+            CheckBox checkBox = new CheckBox(this);
+            checkBox.setText(formattedText);
+            checkBox.setTextSize(20);
+            goal_labels.addView(checkBox);
+
+        }
     }
 }
