@@ -15,7 +15,7 @@ class DataModel {
     static ModelIO modelIO;    // an IO writer that keeps track of the same data in a local txt file
     static String modelFilePath = "./modelIOTest.txt";
 
-    static DataModel getinstance() {
+    static DataModel getInstance() {
         if (instance == null) {
             instance = new DataModel();
         }
