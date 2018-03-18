@@ -7,4 +7,13 @@
 
     <string name="display_button_label">Display</string>
 
+    <string name="productivity_label">Productivity</string>
+    <string name="happiness_label">Happiness</string>
+    <string name="health_label">Health</string>
+    <string name="stress_label">Stress</string>
+
+    <string name="prod_stat">4.5</string>
+    <string name="happiness_stat">3.8</string>
+    <string name="health_stat">4.7</string>
+    <string name="stress_stat">4.9</string>
 </resources>
