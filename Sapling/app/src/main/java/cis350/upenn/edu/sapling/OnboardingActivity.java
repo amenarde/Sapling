@@ -81,11 +81,14 @@ public class OnboardingActivity extends AppCompatActivity {
 
         if (currState == 0) {
             nameLayout.startAnimation(out);
+            //save name for settings
         } else if (currState == 1) {
             metricsLayout.startAnimation(out);
+            //save metrics for settings
         } else {
             Intent i = new Intent();
             setResult(RESULT_OK, i);
+            //save habits for settings
             finish();
         }
 
