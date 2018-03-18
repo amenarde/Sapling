@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.view.animation.Animation;
 import android.view.animation.AlphaAnimation;
 import android.support.constraint.ConstraintLayout;
+import android.content.SharedPreferences;
+import android.content.Context;
 
 /**
  * Created by Tiffany_Yue on 2/23/18.
@@ -23,8 +25,11 @@ public class OnboardingActivity extends AppCompatActivity {
     ConstraintLayout metricsLayout;
     ConstraintLayout habitsLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
 
@@ -79,10 +84,12 @@ public class OnboardingActivity extends AppCompatActivity {
         } else if (currState == 1) {
             metricsLayout.startAnimation(out);
         } else {
-            Intent i = new Intent(this, MainActivity.class);
-            startActivityForResult(i, 1);
+            Intent i = new Intent();
+            setResult(RESULT_OK, i);
+            finish();
         }
 
     }
+
 
 }
