@@ -124,7 +124,6 @@
                 android:text="@string/health_label"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
-                fab:layout_constraintStart_toEndOf="@+id/happiness_title"
                 fab:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/metric1_title" />
 

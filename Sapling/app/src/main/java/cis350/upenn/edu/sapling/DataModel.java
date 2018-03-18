@@ -59,15 +59,15 @@ class DataModel {
 
     // add a metric to currently track
     public void addMetric(String metric) throws IOException {
-        activeGoals.add(metric);
+        activeMetrics.add(metric);
         modelIO.updateFile();
     }
 
     // deprecate a metric
     public void deprecateMetric(String metric) throws IOException {
-        if (activeGoals.contains(metric)) {
-            activeGoals.remove(metric);
-            inactiveGoals.add(metric);
+        if (activeMetrics.contains(metric)) {
+            activeMetrics.remove(metric);
+            inactiveMetrics.add(metric);
             modelIO.updateFile();
         }
     }

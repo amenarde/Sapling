@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Set;
 
 public class DataManager {
     private static DataManager dataManager;
@@ -28,55 +29,63 @@ public class DataManager {
         return dataManager;
     }
     
-    public Iterator<Metric> getMetricsForDay(Date date) {
-        return dbWriter.get(date).getAllMetrics().iterator();
+    public DayData getDay(Date date) {
+        DayData day = dbWriter.get(date);
+        if (day == null) {
+            DayData toFill = new DayData();
+            Set<String> metrics = getActiveMetrics();
+            Set<String> goals = getActiveGoals();
+            for (String name : metrics) {
+                toFill.putMetric(new Metric(name, null));
+            }
+            for (String name : goals) {
+                toFill.putGoal(new Goal(name, null));
+            }
+            return toFill;
+        }
+
+        return day;
     }
-    
-    public Iterator<Goal> getGoalsForDay(Date date) {
-        return dbWriter.get(date).getAllGoals().iterator();
+
+    public void putDay(Date date, DayData dayData) {
+        if (dayData == null) {
+            throw new IllegalArgumentException("null argument");
+        }
+
+        dbWriter.put(date, dayData);
     }
-    
-    public Iterator<Iterator<Metric>> getMetricsForLastWeek(Date date) {
-        ArrayList<Iterator<Metric>> list = new ArrayList<Iterator<Metric>>(7);
+
+    // Hands back in order: today, yesterday, ...
+    public Iterator<DayData> getLastWeek(Date date) {
+        ArrayList<DayData> list = new ArrayList<DayData>(7);
         for (int i = 6; i >= 0; i--) {
             Date newDate = new Date(date.getTime() - (86_400_000 * i)); //millis in a day
-            list.add(dbWriter.get(newDate).getAllMetrics().iterator());
+            list.add(getDay(newDate));
         }
-        
-        return list.iterator();
-    }
-    
-    public Iterator<Iterator<Goal>> getGoalsForLastWeek(Date date) {
-        ArrayList<Iterator<Goal>> list = new ArrayList<Iterator<Goal>>(7);
-        for (int i = 6; i >= 0; i--) {
-            Date newDate = new Date(date.getTime() - (86_400_000 * i)); //millis in a day
-            list.add(dbWriter.get(newDate).getAllGoals().iterator());
-        }
-        
         return list.iterator();
     }
     
     /* <-------------------------------- DataModel Methods --------------------------> */
     
     // getters for the metrics/goals sets from the Data Model
-    public HashSet<String> getActiveGoals() {
+    private Set<String> getActiveGoals() {
         return dataModel.getActiveGoals();
     }
     
-    public HashSet<String> getinactiveGoals() {
+    private Set<String> getinactiveGoals() {
         return dataModel.getinativeMetrics();
     }
     
-    public HashSet<String> getActiveMetrics() {
+    private Set<String> getActiveMetrics() {
         return dataModel.getActiveMetrics();
     }
     
-    public HashSet<String> getinativeMetrics() {
+    private Set<String> getinativeMetrics() {
         return dataModel.getinativeMetrics();
     }
     
     // setters for the metrics/goals sets from the Data Model
-    public void addMetric(String s) {
+    public void addModelMetric(String s) {
         try {
             dataModel.addMetric(s);
         } catch (IOException e) {
@@ -84,7 +93,7 @@ public class DataManager {
         }
     }
     
-    public void deprecateMetric(String s) {
+    public void deprecateModelMetric(String s) {
         try {
             dataModel.deprecateMetric(s);
         } catch (IOException e) {
@@ -92,7 +101,7 @@ public class DataManager {
         }
     }
     
-    public void addGoal(String s) {
+    public void addModelGoal(String s) {
         try {
             dataModel.addGoal(s);
         } catch (IOException e) {
@@ -100,7 +109,7 @@ public class DataManager {
         }
     }
     
-    public void deprecateGoal(String s) {
+    public void deprecateModelGoal(String s) {
         try {
             dataModel.deprecateGoal(s);
         } catch (IOException e) {

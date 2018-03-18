@@ -46,6 +46,7 @@ class DBWriter implements FileDictionary<Date, DayData>{
         }
     }
 
+    // Returns null if day does not exist in system
     public DayData get(Date date) {
         if (date == null) { throw new IllegalArgumentException("null argument"); }
 
