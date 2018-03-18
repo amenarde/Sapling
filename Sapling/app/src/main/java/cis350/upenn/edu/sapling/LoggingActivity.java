@@ -24,7 +24,6 @@ public class LoggingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logging);
 
-
         HashSet<String> activeMetrics = new HashSet<String>();
         activeMetrics.add("Health");
         activeMetrics.add("Productivity");
@@ -57,14 +56,23 @@ public class LoggingActivity extends AppCompatActivity {
         activeGoals.add("Eat an apple");
         activeGoals.add("Go to gym");
 
+        for (String g: activeGoals ) {
+            LinearLayout goal_labels = findViewById(R.id.goals_view_list);
+            String input = g.trim().toLowerCase();
+            String formattedText = input.substring(0, 1).toUpperCase() + input.substring(1);
+            CheckBox checkBox = new CheckBox(this);
+            checkBox.setText(formattedText);
+            checkBox.setTextSize(20);
+            goal_labels.addView(checkBox);
+        }
 
  // COMMUNICATES W/DATA LAYER
 
 //        dataManager = DataManager.getInstance();
 //        Date today = new Date();
-//        dayData = DataManager.getDay(today);
+//        dayData = dataManager.getDay(today);
 //
-//        Iterator<Metric> itMetrics = dataManager.getMetricsForDay(today);
+//        Iterator<Metric> itMetrics = dayData.getAllMetrics().iterator();
 //
 //        while(itMetrics.hasNext()) {
 //            Metric m = itMetrics.next();
@@ -74,7 +82,7 @@ public class LoggingActivity extends AppCompatActivity {
 //            textV.setText(label);
 //            textV.setTextSize(20);
 //
-//            SeekBar seekBar = new SeekBar(this);
+//            SeekBar seekBar = new MetricScale(this, label);
 //            seekBar.setMax(7);
 //            ShapeDrawable thumb = new ShapeDrawable(new OvalShape());
 //            thumb.setIntrinsicHeight(30);
@@ -88,7 +96,7 @@ public class LoggingActivity extends AppCompatActivity {
 //        }
 //
 //
-//        Iterator<Goal> itGoals = dataManager.getGoalsForDay(today);
+//        Iterator<Goal> itGoals = dayData.getAllGoals().iterator();
 //
 //        while(itGoals.hasNext()) {
 //            Goal g = itGoals.next();
@@ -119,10 +127,9 @@ public class LoggingActivity extends AppCompatActivity {
 //            g = new Goal(txt.toString(), false);
 //        }
 //        dayData.putGoal(g);
-//    }
 //
+//    }
 //    public void onScaleClicked(View view) {
 //
-//    }
-    }
+  }
 }
