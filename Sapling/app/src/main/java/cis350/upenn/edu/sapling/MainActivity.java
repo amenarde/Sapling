@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    /*
-
     public void startDisplay(View view){
         Intent i = new Intent(this, DisplayActivity.class);
         startActivityForResult(i, 1);
@@ -32,17 +30,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void startLogging(View view){
         Intent i = new Intent(this, LoggingActivity.class);
-        startActivityForResult(i, 1);
+        startActivityForResult(i, 2);
     }
 
     public void startGoalTracking(View view){
         Intent i = new Intent(this, GoalTrackingActivity.class);
-        startActivityForResult(i, 1);
+        startActivityForResult(i, 3);
     }
 
     public void startSettings(View view){
         Intent i = new Intent(this, SettingsActivity.class);
-        startActivityForResult(i, 1);
+        startActivityForResult(i, 4);
     }
-    */
+
 }

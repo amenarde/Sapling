@@ -35,7 +35,7 @@ class DBWriter implements FileDictionary<Date, DayData>{
 
         try {
             PrintWriter writer = new PrintWriter(filepath);
-            writer.append(dayData.toJSON());
+            writer.append(DayDataToJSON(dayData));
             writer.close();
 
             return true;
@@ -59,7 +59,7 @@ class DBWriter implements FileDictionary<Date, DayData>{
             String content = new Scanner(day).useDelimiter("\\Z").next();
 
             Gson gson = new Gson();
-            return gson.fromJson(content, DayData.class);
+            return DayDataFromJSON(content);
         }
         catch (FileNotFoundException e) {
             return null;
@@ -130,6 +130,16 @@ class DBWriter implements FileDictionary<Date, DayData>{
             return null;
         }
 
+    }
+
+    private String DayDataToJSON(DayData dayData) {
+        Gson gson = new Gson();
+        return gson.toJson(dayData);
+    }
+
+    private DayData DayDataFromJSON(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, DayData.class);
     }
 
 }
