@@ -39,7 +39,7 @@ public class DataManager {
     public Iterator<Iterator<Metric>> getMetricsForLastWeek(Date date) {
         ArrayList<Iterator<Metric>> list = new ArrayList<Iterator<Metric>>(7);
         for (int i = 6; i >= 0; i--) {
-            //Date newDate = new Date(date.getTime() - (86_400_000 * i)); //millis in a day
+            Date newDate = new Date(date.getTime() - (86_400_000 * i)); //millis in a day
             list.add(dbWriter.get(newDate).getAllMetrics().iterator());
         }
         
@@ -49,7 +49,7 @@ public class DataManager {
     public Iterator<Iterator<Goal>> getGoalsForLastWeek(Date date) {
         ArrayList<Iterator<Goal>> list = new ArrayList<Iterator<Goal>>(7);
         for (int i = 6; i >= 0; i--) {
-            //Date newDate = new Date(date.getTime() - (86_400_000 * i)); //millis in a day
+            Date newDate = new Date(date.getTime() - (86_400_000 * i)); //millis in a day
             list.add(dbWriter.get(newDate).getAllGoals().iterator());
         }
         
