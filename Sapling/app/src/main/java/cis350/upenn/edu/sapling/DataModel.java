@@ -24,7 +24,7 @@ class DataModel {
 
     private DataModel() {
         activeMetrics = new HashSet<String>();
-        addDefaultMetrics();
+        //addDefaultMetrics();
         inactiveMetrics = new HashSet<String>();
         activeGoals = new HashSet<String>();
         inactiveGoals = new HashSet<String>();
