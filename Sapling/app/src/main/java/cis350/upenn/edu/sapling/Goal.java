@@ -7,7 +7,7 @@ public class Goal {
     private final Boolean completed;
 
     public Goal(String name, Boolean completed) {
-        if (name == null || completed == null) {
+        if (name == null) {
             throw new IllegalArgumentException("null argument");
         }
 

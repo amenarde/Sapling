@@ -7,7 +7,7 @@ public class Metric {
     private final Scale scale;
 
     public Metric(String name, Scale scale) {
-        if (name == null || scale == null) {
+        if (name == null) {
             throw new IllegalArgumentException("null argument");
         }
 
@@ -18,7 +18,6 @@ public class Metric {
     public String getName() {
         return name;
     }
-
     public int getRating() {
         return scale.getValue();
     }
