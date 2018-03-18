@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import android.util.Log;
+import android.content.Context;
+import android.app.Activity;
 
 // I/O class under DataModel that maintains a persistent file for
 // all currently tracked / deprecated metrics

@@ -41,9 +41,9 @@ public class OnboardingActivity extends AppCompatActivity {
         habitsLayout = findViewById(R.id.habits_layout);
         habitsLayout.setVisibility(View.INVISIBLE);
 
-        in.setDuration(500);
+        in.setDuration(350);
 
-        out.setDuration(500);
+        out.setDuration(350);
         out.setAnimationListener(new Animation.AnimationListener() {
 
             @Override
