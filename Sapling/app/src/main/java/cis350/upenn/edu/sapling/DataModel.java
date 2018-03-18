@@ -3,7 +3,7 @@ package cis350.upenn.edu.sapling;
 import java.io.IOException;
 import java.util.HashSet;
 
-// @author: doheejkim
+// @author: juezhou
 
 // Singleton class used for in memory storage of metrics/goals
 class DataModel {
@@ -24,30 +24,43 @@ class DataModel {
 
     private DataModel() {
         activeMetrics = new HashSet<String>();
+        addDefaultMetrics();
         inactiveMetrics = new HashSet<String>();
         activeGoals = new HashSet<String>();
         inactiveGoals = new HashSet<String>();
         modelIO = new ModelIO(modelFilePath, this);
     }
 
+    // add default metrics to track upon initial setup
+    public void addDefaultMetrics() {
+        try {
+            activeMetrics.add("Happiness");
+            activeMetrics.add("Stress");
+            activeMetrics.add("Productivity");
+            modelIO.updateFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     // add a goal to currently track
     public void addGoal(String goal) throws IOException {
         activeGoals.add(goal);
-        this.modelIO.updateFile();
+        modelIO.updateFile();
     }
     // deprecate a goal
     public void deprecateGoal(String goal) throws IOException {
         if (activeGoals.contains(goal)) {
             activeGoals.remove(goal);
             inactiveGoals.add(goal);
-            this.modelIO.updateFile();
+            modelIO.updateFile();
         }
     }
 
     // add a metric to currently track
     public void addMetric(String metric) throws IOException {
         activeGoals.add(metric);
-        this.modelIO.updateFile();
+        modelIO.updateFile();
     }
 
     // deprecate a metric
@@ -55,7 +68,7 @@ class DataModel {
         if (activeGoals.contains(metric)) {
             activeGoals.remove(metric);
             inactiveGoals.add(metric);
-            this.modelIO.updateFile();
+            modelIO.updateFile();
         }
     }
 
