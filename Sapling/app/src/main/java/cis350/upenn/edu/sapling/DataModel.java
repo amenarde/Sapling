@@ -13,9 +13,9 @@ class DataModel {
     static HashSet<String> inactiveMetrics;
     static HashSet<String> inactiveGoals;
     static ModelIO modelIO;    // an IO writer that keeps track of the same data in a local txt file
-    static String modelFilePath = "/path.txt";
+    static String modelFilePath = "./path.txt";
 
-    static DataModel getinstance() {
+    static DataModel getInstance() {
         if (instance == null) {
             instance = new DataModel();
         }
