@@ -135,7 +135,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginLeft="32dp"
-
                 android:layout_marginTop="8dp"
                 android:text="@string/productivity_label"
                 android:textColor="@color/colorPrimary"
@@ -252,7 +251,6 @@
         android:layout_marginBottom="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-
         android:clickable="true"
         android:focusable="true"
         android:onClick="startLogging"
