@@ -39,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     public void startDisplay(View view){
         Intent i = new Intent(this, DisplayActivity.class);
         startActivityForResult(i, 1);
