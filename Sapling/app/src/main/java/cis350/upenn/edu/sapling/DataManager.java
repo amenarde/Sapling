@@ -16,7 +16,7 @@ public class DataManager {
     private DBWriter dbWriter;
     
     private DataManager() {
-        dataModel = DataModel.getInstance();
+        dataModel = DataModel.getinstance();
         dbWriter = new DBWriter("./data/");
     }
     
