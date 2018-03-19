@@ -12,9 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.LayoutInflater.Factory;
 import android.view.View;
+import android.widget.TextView;
 import android.view.ViewGroup;
 
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.zip.Inflater;
+import java.util.Collection;
+import java.util.Iterator;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +49,41 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        // updates the elements as per the current day's existing metrics, "--" if not present
+
+        /*
+
+        DataManager dm = DataManager.getInstance();
+        DayData todayData = dm.getMetricsForDay(Calendar.getInstance().getTime());
+
+        Collection<Metric> todayMetrics = todayData.getAllMetrics();
+        Iterator<Metric> iter = todayMetrics.iterator();
+
+        int metricCount = 0;
+
+        while (iter.hasNext()) {
+            Metric m = iter.next();
+
+            if (metricCount == 0) {
+                ((TextView) findViewById(R.id.metric1_title)).setText(m.getName());
+                ((TextView) findViewById(R.id.metric1_stat)).setText(m.getRating());
+            } else if (metricCount == 1) {
+                ((TextView) findViewById(R.id.metric2_title)).setText(m.getName());
+                ((TextView) findViewById(R.id.metric2_stat)).setText(m.getRating());
+            } else if (metricCount == 2) {
+                ((TextView) findViewById(R.id.metric3_title)).setText(m.getName());
+                ((TextView) findViewById(R.id.metric3_stat)).setText(m.getRating());
+            } else {
+                ((TextView) findViewById(R.id.metric4_title)).setText(m.getName());
+                ((TextView) findViewById(R.id.metric4_stat)).setText(m.getRating());
+            }
+
+            metricCount++;
+        }
+        */
+
+
     }
 
     public void startDisplay(View view){
