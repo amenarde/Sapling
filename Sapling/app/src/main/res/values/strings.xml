@@ -16,4 +16,16 @@
     <string name="happiness_stat">3.8</string>
     <string name="health_stat">4.7</string>
     <string name="stress_stat">4.9</string>
+
+    <string name="metrics_label">Metrics</string>
+    <string name="goals_label">Goals</string>
+    <string name="today_label">Today\'s Log</string>
+
+    <string name="reset_label">Reset</string>
+    <string name="modify_label">Modify Info</string>
+    <string name="username_label">Name: </string>
+    <string name="birthday_label">Birthday: </string>
+    <string name="username">Jane Doe </string>
+    <string name="birthday">01/03/1993</string>
+
 </resources>
