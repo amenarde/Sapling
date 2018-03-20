@@ -2,6 +2,8 @@ package cis350.upenn.edu.sapling;
 
 //@author: amenarde
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -17,7 +19,7 @@ public class DataManager {
     private DBWriter dbWriter;
     
     private DataManager() {
-        dataModel = DataModel.getInstance();
+        //dataModel = DataModel.getInstance();
         dbWriter = new DBWriter("./data/");
     }
     
@@ -29,8 +31,8 @@ public class DataManager {
         return dataManager;
     }
     
-    public DayData getDay(Date date) {
-        DayData day = dbWriter.get(date);
+    public DayData getDay(Date date, Context context) {
+        DayData day = dbWriter.get(date, context);
         if (day == null) {
             DayData toFill = new DayData();
             Set<String> metrics = getActiveMetrics();
@@ -47,20 +49,20 @@ public class DataManager {
         return day;
     }
 
-    public void putDay(Date date, DayData dayData) {
+    public void putDay(Date date, DayData dayData, Context context) {
         if (dayData == null) {
             throw new IllegalArgumentException("null argument");
         }
 
-        dbWriter.put(date, dayData);
+        dbWriter.put(date, dayData, context);
     }
 
     // Hands back in order: today, yesterday, ...
-    public Iterator<DayData> getLastWeek(Date date) {
+    public Iterator<DayData> getLastWeek(Date date, Context context) {
         ArrayList<DayData> list = new ArrayList<DayData>(7);
         for (int i = 6; i >= 0; i--) {
             Date newDate = new Date(date.getTime() - (86_400_000 * i)); //millis in a day
-            list.add(getDay(newDate));
+            list.add(getDay(newDate, context));
         }
         return list.iterator();
     }
