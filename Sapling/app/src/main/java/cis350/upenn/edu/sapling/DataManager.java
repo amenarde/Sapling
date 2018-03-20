@@ -2,6 +2,8 @@ package cis350.upenn.edu.sapling;
 
 //@author: amenarde
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -29,12 +31,12 @@ public class DataManager {
         return dataManager;
     }
     
-    public DayData getDay(Date date) {
+    public DayData getDay(Date date, Context c) {
         DayData day = dbWriter.get(date);
         if (day == null) {
             DayData toFill = new DayData();
-            Set<String> metrics = getActiveMetrics();
-            Set<String> goals = getActiveGoals();
+            Set<String> metrics = getActiveMetrics(c);
+            Set<String> goals = getActiveGoals(c);
             for (String name : metrics) {
                 toFill.putMetric(new Metric(name, null));
             }
@@ -56,11 +58,11 @@ public class DataManager {
     }
 
     // Hands back in order: today, yesterday, ...
-    public Iterator<DayData> getLastWeek(Date date) {
+    public Iterator<DayData> getLastWeek(Date date, Context c) {
         ArrayList<DayData> list = new ArrayList<DayData>(7);
         for (int i = 6; i >= 0; i--) {
             Date newDate = new Date(date.getTime() - (86_400_000 * i)); //millis in a day
-            list.add(getDay(newDate));
+            list.add(getDay(newDate, c));
         }
         return list.iterator();
     }
@@ -68,50 +70,50 @@ public class DataManager {
     /* <-------------------------------- DataModel Methods --------------------------> */
     
     // getters for the metrics/goals sets from the Data Model
-    private Set<String> getActiveGoals() {
-        return dataModel.getActiveGoals();
+    private Set<String> getActiveGoals(Context c) {
+        return dataModel.getActiveGoals(c);
     }
     
-    private Set<String> getinactiveGoals() {
-        return dataModel.getinativeMetrics();
+    private Set<String> getinactiveGoals(Context c) {
+        return dataModel.getinativeMetrics(c);
     }
     
-    private Set<String> getActiveMetrics() {
-        return dataModel.getActiveMetrics();
+    private Set<String> getActiveMetrics(Context c) {
+        return dataModel.getActiveMetrics(c);
     }
     
-    private Set<String> getinativeMetrics() {
-        return dataModel.getinativeMetrics();
+    private Set<String> getinativeMetrics(Context c) {
+        return dataModel.getinativeMetrics(c);
     }
     
     // setters for the metrics/goals sets from the Data Model
-    public void addModelMetric(String s) {
+    public void addModelMetric(String s, Context c) {
         try {
-            dataModel.addMetric(s);
+            dataModel.addMetric(s, c);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
-    public void deprecateModelMetric(String s) {
+    public void deprecateModelMetric(String s, Context c) {
         try {
-            dataModel.deprecateMetric(s);
+            dataModel.deprecateMetric(s, c);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
-    public void addModelGoal(String s) {
+    public void addModelGoal(String s, Context c) {
         try {
-            dataModel.addGoal(s);
+            dataModel.addGoal(s, c);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
-    public void deprecateModelGoal(String s) {
+    public void deprecateModelGoal(String s, Context c) {
         try {
-            dataModel.deprecateGoal(s);
+            dataModel.deprecateGoal(s, c);
         } catch (IOException e) {
             e.printStackTrace();
         }
