@@ -1,5 +1,7 @@
 package cis350.upenn.edu.sapling;
 
+import android.content.Context;
+
 import java.io.IOException;
 import java.util.HashSet;
 
@@ -13,7 +15,6 @@ class DataModel {
     static HashSet<String> inactiveMetrics;
     static HashSet<String> inactiveGoals;
     static ModelIO modelIO;    // an IO writer that keeps track of the same data in a local txt file
-    static String modelFilePath = "./path.txt";
 
     static DataModel getInstance() {
         if (instance == null) {
@@ -24,68 +25,56 @@ class DataModel {
 
     private DataModel() {
         activeMetrics = new HashSet<String>();
-        addDefaultMetrics();
         inactiveMetrics = new HashSet<String>();
         activeGoals = new HashSet<String>();
         inactiveGoals = new HashSet<String>();
-        modelIO = new ModelIO(modelFilePath, this);
+        modelIO = new ModelIO(this);
     }
 
-    // add default metrics to track upon initial setup
-    public void addDefaultMetrics() {
-        try {
-            activeMetrics.add("Happiness");
-            activeMetrics.add("Stress");
-            activeMetrics.add("Productivity");
-            modelIO.updateFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     // add a goal to currently track
-    public void addGoal(String goal) throws IOException {
+    public void addGoal(String goal, Context c) throws IOException {
         activeGoals.add(goal);
-        modelIO.updateFile();
+        modelIO.updateFile(c);
     }
     // deprecate a goal
-    public void deprecateGoal(String goal) throws IOException {
+    public void deprecateGoal(String goal, Context c) throws IOException {
         if (activeGoals.contains(goal)) {
             activeGoals.remove(goal);
             inactiveGoals.add(goal);
-            modelIO.updateFile();
+            modelIO.updateFile(c);
         }
     }
 
     // add a metric to currently track
-    public void addMetric(String metric) throws IOException {
+    public void addMetric(String metric, Context c) throws IOException {
         activeMetrics.add(metric);
-        modelIO.updateFile();
+        modelIO.updateFile(c);
     }
 
     // deprecate a metric
-    public void deprecateMetric(String metric) throws IOException {
+    public void deprecateMetric(String metric, Context c) throws IOException {
         if (activeMetrics.contains(metric)) {
             activeMetrics.remove(metric);
             inactiveMetrics.add(metric);
-            modelIO.updateFile();
+            modelIO.updateFile(c);
         }
     }
 
     // getters for the metrics/goals sets
-    public HashSet<String> getActiveGoals() {
+    public HashSet<String> getActiveGoals(Context c) {
         return activeGoals;
     }
 
-    public HashSet<String> getinactiveGoals() {
+    public HashSet<String> getinactiveGoals(Context c) {
         return inactiveGoals;
     }
 
-    public HashSet<String> getActiveMetrics() {
+    public HashSet<String> getActiveMetrics(Context c) {
         return activeMetrics;
     }
 
-    public HashSet<String> getinativeMetrics() {
+    public HashSet<String> getinativeMetrics(Context c) {
         return activeMetrics;
     }
 
