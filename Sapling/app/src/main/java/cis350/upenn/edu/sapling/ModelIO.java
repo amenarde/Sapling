@@ -31,25 +31,25 @@ public class ModelIO {
         this.dm = dm;
     }
 
-    public boolean hasActiveMetric(String s) {
-        return fileCheckHelper(s,"Active Metrics");
+    public boolean hasActiveMetric(String s, Context c) {
+        return fileCheckHelper(s,"Active Metrics", c);
     }
 
-    public boolean hasinactiveMetric(String s) {
-        return fileCheckHelper(s,"Inactive Metrics");
+    public boolean hasinactiveMetric(String s, Context c) {
+        return fileCheckHelper(s,"Inactive Metrics", c);
     }
 
-    public boolean hasActiveGoal(String s) {
-        return fileCheckHelper(s,"Active Goals");
+    public boolean hasActiveGoal(String s, Context c) {
+        return fileCheckHelper(s,"Active Goals", c);
     }
 
-    public boolean hasinactiveGoal(String s) {
-        return fileCheckHelper(s, "Inactive Goals");
+    public boolean hasinactiveGoal(String s, Context c) {
+        return fileCheckHelper(s, "Inactive Goals", c);
     }
 
     // helper method that parses through the data file on disk
     // inputs: s - target string to check contains for, category - category of metric/goals
-    public boolean fileCheckHelper(String s, String category) {
+    public boolean fileCheckHelper(String s, String category, Context c) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(this.file));
             String l;
