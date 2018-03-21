@@ -19,8 +19,8 @@ public class DataManager {
     private DBWriter dbWriter;
     
     private DataManager() {
-        dataModel = DataModel.getInstance();
-        dbWriter = new DBWriter("./data/");
+        //dataModel = DataModel.getInstance();
+        dbWriter = new DBWriter("data/");
     }
     
     public static DataManager getInstance() {
@@ -30,39 +30,46 @@ public class DataManager {
         
         return dataManager;
     }
-    
-    public DayData getDay(Date date, Context c) {
-        DayData day = dbWriter.get(date);
+
+    public DayData getDay(Date date, Context context) {
+        DayData day = dbWriter.get(date, context);
+
+
         if (day == null) {
-            DayData toFill = new DayData();
-            Set<String> metrics = getActiveMetrics(c);
-            Set<String> goals = getActiveGoals(c);
-            for (String name : metrics) {
-                toFill.putMetric(new Metric(name, null));
-            }
-            for (String name : goals) {
-                toFill.putGoal(new Goal(name, null));
-            }
-            return toFill;
+            DayData data = new DayData();
+            data.putMetric(new Metric("Metric1", new Scale(5)));
+            data.putGoal(new Goal("Goal1", Boolean.TRUE));
+            return data;
+
+//            DayData toFill = new DayData();
+//            Set<String> metrics = getActiveMetrics(context);
+//            Set<String> goals = getActiveGoals(context);
+//            for (String name : metrics) {
+//                toFill.putMetric(new Metric(name, null));
+//            }
+//            for (String name : goals) {
+//                toFill.putGoal(new Goal(name, null));
+//            }
+//            return toFill;
         }
 
         return day;
     }
 
-    public void putDay(Date date, DayData dayData) {
+    public void putDay(Date date, DayData dayData, Context context) {
         if (dayData == null) {
             throw new IllegalArgumentException("null argument");
         }
 
-        dbWriter.put(date, dayData);
+        dbWriter.put(date, dayData, context);
     }
 
     // Hands back in order: today, yesterday, ...
-    public Iterator<DayData> getLastWeek(Date date, Context c) {
+    public Iterator<DayData> getLastWeek(Date date, Context context) {
         ArrayList<DayData> list = new ArrayList<DayData>(7);
         for (int i = 6; i >= 0; i--) {
             Date newDate = new Date(date.getTime() - (86_400_000 * i)); //millis in a day
-            list.add(getDay(newDate, c));
+            list.add(getDay(newDate, context));
         }
         return list.iterator();
     }

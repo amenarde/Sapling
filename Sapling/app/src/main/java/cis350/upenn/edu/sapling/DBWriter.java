@@ -1,9 +1,17 @@
 package cis350.upenn.edu.sapling;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +22,7 @@ import java.util.Set;
 
 // @author: amenarde
 
-class DBWriter implements FileDictionary<Date, DayData>{
+class DBWriter {
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
     private String path;
 
@@ -29,45 +37,54 @@ class DBWriter implements FileDictionary<Date, DayData>{
         this.path = path;
     }
 
-    public boolean put(Date date, DayData dayData) {
+    public boolean put(Date date, DayData dayData, Context context) {
         if (dayData == null) { throw new IllegalArgumentException("null argument"); }
         String filepath = dateToFilename(date);
 
         try {
-            PrintWriter writer = new PrintWriter(filepath);
-            writer.append(DayDataToJSON(dayData));
-            writer.close();
-
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(filepath, Context.MODE_PRIVATE));
+            outputStreamWriter.write(DayDataToJSON(dayData));
+            outputStreamWriter.close();
             return true;
         }
-        catch (FileNotFoundException e) {
-            //TODO: log and quit
+        catch (IOException e) {
             return false;
         }
     }
 
     // Returns null if day does not exist in system
-    public DayData get(Date date) {
+    public DayData get(Date date, Context context) {
         if (date == null) { throw new IllegalArgumentException("null argument"); }
 
-        String filepath = path + dateToFilename(date);
-        File day = new File(filepath);
-        if (!day.exists()) {
-            return null;
-        }
+        String filepath = dateToFilename(date);
 
         try {
-            String content = new Scanner(day).useDelimiter("\\Z").next();
+            InputStream inputStream = new FileInputStream(new File(filepath));
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
 
-            Gson gson = new Gson();
-            return DayDataFromJSON(content);
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+                inputStream.close();
+                String content = stringBuilder.toString();
+                Gson gson = new Gson();
+                return DayDataFromJSON(content);
+            }
+            else return null; //TODO throw errors
         }
         catch (FileNotFoundException e) {
             return null;
+        } catch (IOException e) {
+            return null; //TODO throw errors
         }
+
     }
 
-    public boolean has(Date date) {
+    public boolean has(Date date, Context context) {
         if (date == null) { throw new IllegalArgumentException("null argument"); }
 
         File[] filesList = new File(path).listFiles();
@@ -82,10 +99,10 @@ class DBWriter implements FileDictionary<Date, DayData>{
         return false;
     }
 
-    public DayData remove(Date date) {
+    public DayData remove(Date date, Context context) {
         if (date == null) { throw new IllegalArgumentException("null argument"); }
 
-        DayData dayData = get(date);
+        DayData dayData = get(date, context);
         if(dayData == null) { return null; }
 
         File toDelete = new File(dateToFilename(date));
@@ -93,7 +110,7 @@ class DBWriter implements FileDictionary<Date, DayData>{
         return dayData;
     }
 
-    public Set<Date> getKeySet() {
+    public Set<Date> getKeySet(Context context) {
         File[] filesList = new File(path).listFiles();
         Set<Date> dates = new HashSet<Date>(filesList.length);
 
@@ -105,13 +122,13 @@ class DBWriter implements FileDictionary<Date, DayData>{
         return dates;
     }
 
-    public Set<DayData> getValueSet() {
+    public Set<DayData> getValueSet(Context context) {
         File[] filesList = new File(path).listFiles();
         Set<DayData> dayData = new HashSet<DayData>(filesList.length);
 
         for (File f : filesList) {
             Date date = filenameToDate(f.getPath());
-            dayData.add(get(date));
+            dayData.add(get(date, context));
         }
 
         return dayData;
