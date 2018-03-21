@@ -20,7 +20,7 @@ public class DataManager {
     
     private DataManager() {
         //dataModel = DataModel.getInstance();
-        dbWriter = new DBWriter("./data/");
+        dbWriter = new DBWriter("data/");
     }
     
     public static DataManager getInstance() {
@@ -34,17 +34,23 @@ public class DataManager {
     public DayData getDay(Date date, Context context) {
         DayData day = dbWriter.get(date, context);
 
+
         if (day == null) {
-            DayData toFill = new DayData();
-            Set<String> metrics = getActiveMetrics(context);
-            Set<String> goals = getActiveGoals(context);
-            for (String name : metrics) {
-                toFill.putMetric(new Metric(name, null));
-            }
-            for (String name : goals) {
-                toFill.putGoal(new Goal(name, null));
-            }
-            return toFill;
+            DayData data = new DayData();
+            data.putMetric(new Metric("Metric1", new Scale(5)));
+            data.putGoal(new Goal("Goal1", Boolean.TRUE));
+            return data;
+
+//            DayData toFill = new DayData();
+//            Set<String> metrics = getActiveMetrics(context);
+//            Set<String> goals = getActiveGoals(context);
+//            for (String name : metrics) {
+//                toFill.putMetric(new Metric(name, null));
+//            }
+//            for (String name : goals) {
+//                toFill.putGoal(new Goal(name, null));
+//            }
+//            return toFill;
         }
 
         return day;

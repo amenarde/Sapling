@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,10 +56,10 @@ class DBWriter {
     public DayData get(Date date, Context context) {
         if (date == null) { throw new IllegalArgumentException("null argument"); }
 
-        String filepath = path + dateToFilename(date);
+        String filepath = dateToFilename(date);
 
         try {
-            InputStream inputStream = context.openFileInput(filepath);
+            InputStream inputStream = new FileInputStream(new File(filepath));
             if ( inputStream != null ) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
