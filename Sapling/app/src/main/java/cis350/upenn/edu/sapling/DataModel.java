@@ -16,8 +16,6 @@ class DataModel {
     static HashSet<String> inactiveGoals;
     static ModelIO modelIO;    // an IO writer that keeps track of the same data in a local txt file
 
-    static String modelFilePath = "./modelIOTest.txt";
-
     static DataModel getInstance() {
         if (instance == null) {
             instance = new DataModel();
@@ -27,12 +25,11 @@ class DataModel {
 
     private DataModel() {
         activeMetrics = new HashSet<String>();
-
         //addDefaultMetrics();
         inactiveMetrics = new HashSet<String>();
         activeGoals = new HashSet<String>();
         inactiveGoals = new HashSet<String>();
-        modelIO = new ModelIO(this);
+        modelIO = new ModelIO(this, "/data");
     }
 
 
@@ -66,19 +63,19 @@ class DataModel {
     }
 
     // getters for the metrics/goals sets
-    public HashSet<String> getActiveGoals(Context c) {
+    public HashSet<String> getActiveGoals() {
         return activeGoals;
     }
 
-    public HashSet<String> getinactiveGoals(Context c) {
+    public HashSet<String> getinactiveGoals() {
         return inactiveGoals;
     }
 
-    public HashSet<String> getActiveMetrics(Context c) {
+    public HashSet<String> getActiveMetrics() {
         return activeMetrics;
     }
 
-    public HashSet<String> getinativeMetrics(Context c) {
+    public HashSet<String> getinativeMetrics() {
         return activeMetrics;
     }
 

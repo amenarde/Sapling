@@ -19,7 +19,7 @@ public class DataManager {
     private DBWriter dbWriter;
     
     private DataManager() {
-        //dataModel = DataModel.getInstance();
+        dataModel = DataModel.getInstance();
         dbWriter = new DBWriter("data/");
     }
     
@@ -78,19 +78,19 @@ public class DataManager {
     
     // getters for the metrics/goals sets from the Data Model
     private Set<String> getActiveGoals(Context c) {
-        return dataModel.getActiveGoals(c);
+        return dataModel.getActiveGoals();
     }
     
     private Set<String> getinactiveGoals(Context c) {
-        return dataModel.getinativeMetrics(c);
+        return dataModel.getinativeMetrics();
     }
     
     private Set<String> getActiveMetrics(Context c) {
-        return dataModel.getActiveMetrics(c);
+        return dataModel.getActiveMetrics();
     }
     
     private Set<String> getinativeMetrics(Context c) {
-        return dataModel.getinativeMetrics(c);
+        return dataModel.getinativeMetrics();
     }
     
     // setters for the metrics/goals sets from the Data Model
