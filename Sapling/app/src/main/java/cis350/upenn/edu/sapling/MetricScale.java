@@ -13,4 +13,8 @@ public class MetricScale extends android.support.v7.widget.AppCompatSeekBar {
         super(context);
         this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
 }
