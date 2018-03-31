@@ -78,19 +78,19 @@ public class DataManager {
     /* <-------------------------------- DataModel Methods --------------------------> */
     
     // getters for the metrics/goals sets from the Data Model
-    private Set<String> getActiveGoals(Context c) {
+    public Set<String> getActiveGoals(Context c) {
         return dataModel.getActiveGoals();
     }
     
-    private Set<String> getinactiveGoals(Context c) {
+    public Set<String> getinactiveGoals(Context c) {
         return dataModel.getinactiveGoals();
     }
     
-    private Map<String, Metric> getActiveMetrics(Context c) {
+    public Map<String, Metric> getActiveMetrics(Context c) {
         return dataModel.getActiveMetrics();
     }
     
-    private Map<String, Metric> getinativeMetrics(Context c) {
+    public Map<String, Metric> getinativeMetrics(Context c) {
         return dataModel.getinativeMetrics();
     }
     
