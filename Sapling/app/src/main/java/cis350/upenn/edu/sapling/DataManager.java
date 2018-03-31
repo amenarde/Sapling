@@ -37,7 +37,7 @@ public class DataManager {
 
         if (day == null) {
             DayData data = new DayData();
-            data.putMetric(new Metric("Metric1", new Scale(5)));
+            data.putMetric(new Metric("Metric1", new Scale(5), true));
             data.putGoal(new Goal("Goal1", Boolean.TRUE));
             return data;
 

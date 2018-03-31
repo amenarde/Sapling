@@ -37,7 +37,7 @@ public class LoggingActivity extends AppCompatActivity {
             textV.setText(label);
             textV.setTextSize(20);
 
-            MetricScale seekBar = new MetricScale(this, label);
+            MetricScale seekBar = new MetricScale(this, label, m.getPositive());
             seekBar.setMax(6);
             ShapeDrawable thumb = new ShapeDrawable(new OvalShape());
             thumb.setIntrinsicHeight(30);
@@ -65,10 +65,10 @@ public class LoggingActivity extends AppCompatActivity {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
                  MetricScale sk = (MetricScale) seekBar;
-                 Metric newM = new Metric(sk.getName(), new Scale(progress + 1));
+                 Metric newM = new Metric(sk.getName(), new Scale(progress + 1), sk.getPositive());
                  dayData.putMetric(newM);
 
-                    //test checkbox listeners
+                    //test checkbox listenerss
                     System.out.println("Seekbar moved");
                     System.out.println(dayData.getMetric(newM.getName()).getName());
                     System.out.println("New value:" + dayData.getMetric(newM.getName()).getRating());

@@ -9,12 +9,15 @@ import android.widget.SeekBar;
 
 public class MetricScale extends android.support.v7.widget.AppCompatSeekBar {
     String name;
-    public MetricScale(Context context, String name) {
+    boolean positive;
+    public MetricScale(Context context, String name, boolean positive) {
         super(context);
         this.name = name;
+        this.positive = positive;
     }
 
     public String getName() {
         return name;
     }
+    public boolean getPositive() { return positive;}
 }
