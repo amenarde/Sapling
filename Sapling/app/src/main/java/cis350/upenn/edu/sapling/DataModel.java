@@ -27,7 +27,7 @@ class DataModel {
     }
 
     private DataModel() {
-        modelIO = new ModelIO(this, "/data");
+        modelIO = new ModelIO(this, "data/");
         activeMetrics = new HashMap<>();
         //addDefaultMetrics();
         inactiveMetrics = new HashMap<>();
@@ -38,8 +38,10 @@ class DataModel {
 
     // add a goal to currently track
     public void addGoal(String goal, Context c) throws IOException {
-        activeGoals.add(goal);
-        modelIO.updateFile(c);
+        if (!activeGoals.contains(goal)) {
+            activeGoals.add(goal);
+            modelIO.updateFile(c);
+        }
     }
     // deprecate a goal
     public void deprecateGoal(String goal, Context c) throws IOException {
@@ -52,9 +54,11 @@ class DataModel {
 
     // add a metric to currently track
     public void addMetric(String name, boolean positive, Context c) throws IOException {
-        Metric metric = new Metric(name, positive);
-        activeMetrics.put(name, metric);
-        modelIO.updateFile(c);
+        if (!activeMetrics.containsKey(name)) {
+            Metric metric = new Metric(name, positive);
+            activeMetrics.put(name, metric);
+            modelIO.updateFile(c);
+        }
     }
 
     // deprecate a metric
@@ -77,8 +81,8 @@ class DataModel {
         return activeMetrics;
     }
 
-    public Map<String, Metric> getinativeMetrics() {
-        return activeMetrics;
+    public Map<String, Metric> getinactiveMetrics() {
+        return inactiveMetrics;
     }
 
 
