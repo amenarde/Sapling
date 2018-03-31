@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class DataManager {
@@ -82,34 +83,34 @@ public class DataManager {
     }
     
     private Set<String> getinactiveGoals(Context c) {
-        return dataModel.getinativeMetrics();
+        return dataModel.getinactiveGoals();
     }
     
-    private Set<String> getActiveMetrics(Context c) {
+    private Map<String, Metric> getActiveMetrics(Context c) {
         return dataModel.getActiveMetrics();
     }
     
-    private Set<String> getinativeMetrics(Context c) {
+    private Map<String, Metric> getinativeMetrics(Context c) {
         return dataModel.getinativeMetrics();
     }
     
     // setters for the metrics/goals sets from the Data Model
-    public void addModelMetric(String s, Context c) {
+    public void addModelMetric(String s, boolean positive, Context c) {
         try {
-            dataModel.addMetric(s, c);
+            dataModel.addMetric(s, positive, c);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-    public void deprecateModelMetric(String s, Context c) {
+
+    public void deprecateModelMetric(String s, boolean positive, Context c) {
         try {
-            dataModel.deprecateMetric(s, c);
+            dataModel.deprecateMetric(s, positive, c);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     public void addModelGoal(String s, Context c) {
         try {
             dataModel.addGoal(s, c);
@@ -117,7 +118,7 @@ public class DataManager {
             e.printStackTrace();
         }
     }
-    
+
     public void deprecateModelGoal(String s, Context c) {
         try {
             dataModel.deprecateGoal(s, c);

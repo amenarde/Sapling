@@ -3,16 +3,19 @@ package cis350.upenn.edu.sapling;
 import android.content.Context;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 // @author: juezhou
 
 // Singleton class used for in memory storage of metrics/goals
 class DataModel {
     private static DataModel instance;
-    static HashSet<String> activeMetrics;
-    static HashSet<String> activeGoals;
-    static HashSet<String> inactiveMetrics;
+    static Map<String, Metric> activeMetrics;
+    static Map<String, Metric> inactiveMetrics;
+    static Set<String> activeGoals;
     static HashSet<String> inactiveGoals;
     static ModelIO modelIO;    // an IO writer that keeps track of the same data in a local txt file
 
@@ -24,12 +27,12 @@ class DataModel {
     }
 
     private DataModel() {
-        activeMetrics = new HashSet<String>();
-        //addDefaultMetrics();
-        inactiveMetrics = new HashSet<String>();
-        activeGoals = new HashSet<String>();
-        inactiveGoals = new HashSet<String>();
         modelIO = new ModelIO(this, "/data");
+        activeMetrics = new HashMap<>();
+        //addDefaultMetrics();
+        inactiveMetrics = new HashMap<>();
+        activeGoals = new HashSet<>();
+        inactiveGoals = new HashSet<>();
     }
 
 
@@ -48,34 +51,33 @@ class DataModel {
     }
 
     // add a metric to currently track
-    public void addMetric(String metric, Context c) throws IOException {
-        activeMetrics.add(metric);
+    public void addMetric(String name, boolean positive, Context c) throws IOException {
+        Metric metric = new Metric(name, positive);
+        activeMetrics.put(name, metric);
         modelIO.updateFile(c);
     }
 
     // deprecate a metric
-    public void deprecateMetric(String metric, Context c) throws IOException {
-        if (activeMetrics.contains(metric)) {
-            activeMetrics.remove(metric);
-            inactiveMetrics.add(metric);
+    public void deprecateMetric(String name, boolean positive, Context c) throws IOException {
+        if (activeMetrics.containsKey(name)) {
+            activeMetrics.remove(name);
+            inactiveMetrics.put(name, new Metric(name, positive));
             modelIO.updateFile(c);
         }
     }
 
     // getters for the metrics/goals sets
-    public HashSet<String> getActiveGoals() {
-        return activeGoals;
-    }
+    public Set<String> getActiveGoals() { return activeGoals; }
 
-    public HashSet<String> getinactiveGoals() {
+    public Set<String> getinactiveGoals() {
         return inactiveGoals;
     }
 
-    public HashSet<String> getActiveMetrics() {
+    public Map<String, Metric> getActiveMetrics() {
         return activeMetrics;
     }
 
-    public HashSet<String> getinativeMetrics() {
+    public Map<String, Metric> getinativeMetrics() {
         return activeMetrics;
     }
 
