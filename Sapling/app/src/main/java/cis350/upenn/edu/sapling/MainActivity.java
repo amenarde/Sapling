@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.LayoutInflater.Factory;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.ViewGroup;
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //reset shared preferences, assuming that mainactivity is always running (not killed by app close)
+        //reset shared preferences, assuming that main activity is always running (not killed by app close)
         SharedPreferences mPreferences = this.getPreferences(Context.MODE_PRIVATE);
         mPreferences.edit().clear().commit();
 
@@ -49,11 +50,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        //Initializing dm & current day values
         DataManager dm = DataManager.getInstance();
         DayData today = dm.getDay(new Date(), this.getApplicationContext());
         Iterator<DayData> pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
-        int qualityOfLife = 0;
+
+
+        //Algorithm for plant health
+        double averageScale = 0;
         int daysInWeek = 0;
        while (pastWeek.hasNext()) {
             DayData dayData = pastWeek.next();
@@ -63,14 +67,29 @@ public class MainActivity extends AppCompatActivity {
           while(metrics.hasNext()) {
               Metric m = metrics.next();
               if (m.getPositive()){
-              qualityOfLife += m.getRating();
           } else {
-                  qualityOfLife += (7 - m.getRating());
+                  averageScale += (7 - m.getRating());
               }
           }
         }
-        qualityOfLife = qualityOfLife / daysInWeek;
-
+        averageScale = averageScale / daysInWeek;
+       double q = (7/6);
+       int qualityOfLife;
+       if (averageScale < (q)) {
+            qualityOfLife = 1;
+        } else if (averageScale < (q * 2)) {
+            qualityOfLife = 2;
+       } else if (averageScale < (q * 3)) {
+           qualityOfLife = 3;
+       } else if (averageScale < (q * 4)) {
+           qualityOfLife = 4;
+       } else if (averageScale < (q * 5)) {
+           qualityOfLife = 5;
+       } else {
+           qualityOfLife = 6;
+       }
+       ImageView plant_view = (ImageView) findViewById(R.id.homepage_plant);
+        
 
 
         // updates the elements as per the current day's existing metrics, "--" if not present

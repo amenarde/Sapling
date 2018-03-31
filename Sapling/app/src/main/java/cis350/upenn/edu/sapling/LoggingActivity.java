@@ -12,6 +12,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Map;
 
 public class LoggingActivity extends AppCompatActivity {
     DataManager dataManager;
@@ -116,5 +117,15 @@ public class LoggingActivity extends AppCompatActivity {
                 }
             });
         }
+    //Testing data model
+
+//        dataManager.addModelGoal();
+//        dataManager.addModelMetric();
+//        dataManager.getActiveGoals();
+        Map<String, Metric> metrics = dataManager.getActiveMetrics(this.getApplicationContext());
+
+        System.out.println("<-------------LOOK HERE !!!!! -------------->");
+        System.out.println(metrics.size());
+
     }
 }
