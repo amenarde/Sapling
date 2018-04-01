@@ -41,9 +41,18 @@
         android:layout_marginTop="60dp"
 
         android:contentDescription="@string/plant_description"
-        android:src="@drawable/ic_sapling_1"
+        android:src="@drawable/ic_sapling_2"
         app:layout_constraintStart_toStartOf="@+id/avatar_background"
         app:layout_constraintTop_toTopOf="@+id/avatar_background" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/ground_background"
+        app:layout_constraintTop_toTopOf="@+id/ground_background" />
 
     <FrameLayout
         android:layout_width="match_parent"

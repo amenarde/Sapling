@@ -23,6 +23,15 @@ import java.util.zip.Inflater;
 import java.util.Collection;
 import java.util.Iterator;
 
+import com.jjoe64.graphview.series.Series;
+import com.jjoe64.graphview.series.BaseSeries;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.BarGraphSeries;
+
+import android.graphics.Color;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -91,6 +100,19 @@ public class MainActivity extends AppCompatActivity {
        ImageView plant_view = (ImageView) findViewById(R.id.homepage_plant);
         
 
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+                new DataPoint(0, 1),
+                new DataPoint(1, 5),
+                new DataPoint(2, 3),
+                new DataPoint(3, 2),
+                new DataPoint(4, 6)
+        });
+        series.setColor(Color.WHITE);
+        series.setDrawDataPoints(true);
+        series.setDataPointsRadius(10);
+        series.setThickness(8);
+        graph.addSeries(series);
 
         // updates the elements as per the current day's existing metrics, "--" if not present
 
