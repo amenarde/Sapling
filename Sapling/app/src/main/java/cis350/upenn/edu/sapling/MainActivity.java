@@ -62,43 +62,7 @@ public class MainActivity extends AppCompatActivity {
         //Initializing dm & current day values
         DataManager dm = DataManager.getInstance();
         DayData today = dm.getDay(new Date(), this.getApplicationContext());
-        Iterator<DayData> pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
-
-
-        //Algorithm for plant health
-        double averageScale = 0;
-        int daysInWeek = 0;
-       while (pastWeek.hasNext()) {
-            DayData dayData = pastWeek.next();
-            daysInWeek += 1;
-
-          Iterator<Metric> metrics = dayData.getAllMetrics().iterator();
-          while(metrics.hasNext()) {
-              Metric m = metrics.next();
-              if (m.getPositive()){
-          } else {
-                  averageScale += (7 - m.getRating());
-              }
-          }
-        }
-        averageScale = averageScale / daysInWeek;
-       double q = (7/6);
-       int qualityOfLife;
-       if (averageScale < (q)) {
-            qualityOfLife = 1;
-        } else if (averageScale < (q * 2)) {
-            qualityOfLife = 2;
-       } else if (averageScale < (q * 3)) {
-           qualityOfLife = 3;
-       } else if (averageScale < (q * 4)) {
-           qualityOfLife = 4;
-       } else if (averageScale < (q * 5)) {
-           qualityOfLife = 5;
-       } else {
-           qualityOfLife = 6;
-       }
-       ImageView plant_view = (ImageView) findViewById(R.id.homepage_plant);
-        
+        setPlantImg(dm);
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
@@ -114,8 +78,10 @@ public class MainActivity extends AppCompatActivity {
         series.setThickness(8);
         graph.addSeries(series);
 
-        // updates the elements as per the current day's existing metrics, "--" if not present
 
+
+
+        // updates the elements as per the current day's existing metrics, "--" if not present
         /*
 
         DataManager dm = DataManager.getInstance();
@@ -142,12 +108,9 @@ public class MainActivity extends AppCompatActivity {
                 ((TextView) findViewById(R.id.metric4_title)).setText(m.getName());
                 ((TextView) findViewById(R.id.metric4_stat)).setText(m.getRating());
             }
-
             metricCount++;
         }
         */
-
-
     }
 
     public void startDisplay(View view){
@@ -184,4 +147,59 @@ public class MainActivity extends AppCompatActivity {
         return firstTime;
     }
 
+   private void setPlantImg (DataManager dm) {
+       Iterator<DayData> pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
+
+       //Algorithm for plant health
+       double averageScale = 0;
+       int daysInWeek = 0;
+       while (pastWeek.hasNext()) {
+           DayData dayData = pastWeek.next();
+           daysInWeek += 1;
+
+           Iterator<Metric> metrics = dayData.getAllMetrics().iterator();
+           while(metrics.hasNext()) {
+               Metric m = metrics.next();
+               if (m.getPositive()){
+               } else {
+                   averageScale += (7 - m.getRating());
+               }
+           }
+       }
+       averageScale = averageScale / daysInWeek;
+       double q = (7/6);
+       int qualityOfLife;
+       if (averageScale < (q)) {
+           qualityOfLife = 1;
+       } else if (averageScale < (q * 2)) {
+           qualityOfLife = 2;
+       } else if (averageScale < (q * 3)) {
+           qualityOfLife = 3;
+       } else if (averageScale < (q * 4)) {
+           qualityOfLife = 4;
+       } else if (averageScale < (q * 5)) {
+           qualityOfLife = 5;
+       } else {
+           qualityOfLife = 6;
+       }
+
+       int qof = qualityOfLife;
+       ImageView plant_view = (ImageView) findViewById(R.id.homepage_plant);
+       switch(qof) {
+           case 1 : plant_view.setImageResource(R.drawable.ic_sapling_1);
+               break;
+           case 2 : plant_view.setImageResource(R.drawable.ic_sapling_2);
+               break;
+           case 3 : plant_view.setImageResource(R.drawable.ic_sapling_3);
+               break;
+           case 4 : plant_view.setImageResource(R.drawable.ic_sapling_4);
+               break;
+           case 5 : plant_view.setImageResource(R.drawable.ic_sapling_5);
+               break;
+           case 6 : plant_view.setImageResource(R.drawable.ic_sapling_6);
+               break;
+           default :plant_view.setImageResource(R.drawable.ic_sapling_1);
+               break;
+       }
+   }
 }
