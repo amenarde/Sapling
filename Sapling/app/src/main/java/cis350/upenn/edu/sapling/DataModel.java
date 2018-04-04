@@ -16,7 +16,7 @@ import java.util.Set;
     Designers in Activity files can add goals and deprecate goals and metrics, which then triggers
     an update function within an ModelIO object, which handles the read & write
     of on-disk storage in a txt file.
- */
+*/
 class DataModel {
     private static DataModel instance;
     static Map<String, Metric> activeMetrics;
