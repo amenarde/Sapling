@@ -83,24 +83,34 @@ public class DataManager {
     }
     
     /* <-------------------------------- DataModel Methods --------------------------> */
-    
+
+    // adds a few default metrics to the metric map and txt file
+    public void addDefaultMetrics(Context c) throws IOException {
+        dataModel.addDefaultMetrics(c);
+    }
+
+    // adds a few default goals to the goal set and txt file
+    public void addDefaultGoals(Context c) throws IOException {
+        dataModel.addDefaultGoals(c);
+    }
+
     // getters for the metrics/goals sets from the Data Model
     public Set<String> getActiveGoals(Context c) {
         return dataModel.getActiveGoals();
     }
-    
+
     public Set<String> getinactiveGoals(Context c) {
         return dataModel.getinactiveGoals();
     }
-    
+
     public Map<String, Metric> getActiveMetrics(Context c) {
         return dataModel.getActiveMetrics();
     }
-    
+
     public Map<String, Metric> getinativeMetrics(Context c) {
-        return dataModel.getinativeMetrics();
+        return dataModel.getinactiveMetrics();
     }
-    
+
     // setters for the metrics/goals sets from the Data Model
     public void addModelMetric(String s, boolean positive, Context c) {
         try {
