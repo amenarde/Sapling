@@ -4,7 +4,9 @@ package cis350.upenn.edu.sapling;
 
 import android.content.Context;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -21,7 +23,7 @@ public class DataManager {
     
     private DataManager() {
         dataModel = DataModel.getInstance();
-        dbWriter = new DBWriter("data/");
+        dbWriter = new DBWriter();
     }
     
     public static DataManager getInstance() {
@@ -33,20 +35,25 @@ public class DataManager {
     }
 
     public DayData getDay(Date date, Context context) {
+
+        DayData dd = new DayData();
+        dd.putMetric(new Metric("Antonio's Metric", new Scale(3), true));
+        dd.putGoal(new Goal("Antonio please go to gym", false));
+
+        dbWriter.put(new Date(), dd, context);
+
         DayData day = dbWriter.get(date, context);
 
-
         if (day == null) {
-            DayData data = new DayData();
-            data.putMetric(new Metric("Metric1", new Scale(5), true));
-            data.putGoal(new Goal("Goal1", Boolean.TRUE));
-            return data;
+            DayData dx = new DayData();
+            dd.putMetric(new Metric("bad", new Scale(3), true));
+            dd.putGoal(new Goal("more bad", false));
 
 //            DayData toFill = new DayData();
-//            Set<String> metrics = getActiveMetrics(context);
+//            Map<String, Metric> metrics = getActiveMetrics(context);
 //            Set<String> goals = getActiveGoals(context);
-//            for (String name : metrics) {
-//                toFill.putMetric(new Metric(name, null));
+//            for (Metric m : metrics.values()) {
+//                toFill.putMetric(m);
 //            }
 //            for (String name : goals) {
 //                toFill.putGoal(new Goal(name, null));

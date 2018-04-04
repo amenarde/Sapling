@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         //Initializing dm & current day values
         DataManager dm = DataManager.getInstance();
         DayData today = dm.getDay(new Date(), this.getApplicationContext());
-        setPlantImg(dm);
+        //setPlantImg(dm);
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {

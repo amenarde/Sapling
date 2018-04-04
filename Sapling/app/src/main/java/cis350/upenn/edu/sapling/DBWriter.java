@@ -24,18 +24,6 @@ import java.util.Set;
 
 class DBWriter {
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
-    private String path;
-
-    public DBWriter(String path) {
-        if (path == null) { throw new IllegalArgumentException("null argument"); }
-        if(!(new File(path)).exists() || !(new File(path)).isDirectory()) {
-            throw new IllegalArgumentException("directory does not exist");
-        }
-        if(!path.endsWith("/")) {
-            path += "/";
-        }
-        this.path = path;
-    }
 
     public boolean put(Date date, DayData dayData, Context context) {
         if (dayData == null) { throw new IllegalArgumentException("null argument"); }
@@ -59,7 +47,7 @@ class DBWriter {
         String filepath = dateToFilename(date);
 
         try {
-            InputStream inputStream = new FileInputStream(new File(filepath));
+            InputStream inputStream = new FileInputStream(new File(context.getFilesDir(), filepath));
             if ( inputStream != null ) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -87,7 +75,7 @@ class DBWriter {
     public boolean has(Date date, Context context) {
         if (date == null) { throw new IllegalArgumentException("null argument"); }
 
-        File[] filesList = new File(path).listFiles();
+        File[] filesList = context.getFilesDir().listFiles();
         String wantedFile = dateToFilename(date);
 
         for (File f : filesList) {
@@ -111,7 +99,7 @@ class DBWriter {
     }
 
     public Set<Date> getKeySet(Context context) {
-        File[] filesList = new File(path).listFiles();
+        File[] filesList = context.getFilesDir().listFiles();
         Set<Date> dates = new HashSet<Date>(filesList.length);
 
         for (File f : filesList) {
@@ -123,7 +111,7 @@ class DBWriter {
     }
 
     public Set<DayData> getValueSet(Context context) {
-        File[] filesList = new File(path).listFiles();
+        File[] filesList = context.getFilesDir().listFiles();
         Set<DayData> dayData = new HashSet<DayData>(filesList.length);
 
         for (File f : filesList) {
@@ -135,11 +123,10 @@ class DBWriter {
     }
 
     private String dateToFilename(Date date) {
-        return path + this.sdf.format(date) + ".JSON";
+        return this.sdf.format(date) + ".JSON";
     }
 
     private Date filenameToDate(String filename) {
-        filename.replace(this.path, "");
         filename.replace(".JSON", "");
         try {
             return this.sdf.parse(filename);
