@@ -1,11 +1,19 @@
 package cis350.upenn.edu.sapling;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -48,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         //if the first time opening the app, jump to onboarding process
         if (isFirstTime()) {
+            (new NotificationBuilder()).setNotificationCalendar();
             Intent i = new Intent(this, OnboardingActivity.class);
             startActivityForResult(i, 5);
         }
@@ -59,10 +68,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         //Initializing dm & current day values
         DataManager dm = DataManager.getInstance();
         DayData today = dm.getDay(new Date(), this.getApplicationContext());
         //setPlantImg(dm);
+
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
@@ -137,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         if (firstTime == null) {
             SharedPreferences mPreferences = this.getPreferences(Context.MODE_PRIVATE);
             firstTime = mPreferences.getBoolean("firstTime", true);
-            Log.v("First Time after getting boolean?", "it is " + firstTime);
+            Log.v("First Time bool true?", "it is " + firstTime);
             if (firstTime) {
                 SharedPreferences.Editor editor = mPreferences.edit();
                 editor.putBoolean("firstTime", false);
@@ -145,6 +156,49 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return firstTime;
+    }
+
+
+    public class NotificationBuilder {
+        public void setNotificationCalendar() {
+
+            // https://stackoverflow.com/questions/23440251/how-to-repeat-notification-daily-on-specific-time-in-android-through-background
+            //
+
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(Calendar.HOUR_OF_DAY, 17);
+            calendar.set(Calendar.MINUTE, 22);
+            Intent intent = new Intent(MainActivity.this, Notification.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+            AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            //am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            Log.v("Notifications", "Time until notification sent:" + (calendar.getTimeInMillis() - System.currentTimeMillis()));
+            am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    SystemClock.elapsedRealtime() + (calendar.getTimeInMillis() - System.currentTimeMillis()),
+                    pendingIntent);
+
+
+//            long when = System.currentTimeMillis();
+//            NotificationManager notificationManager = (NotificationManager) MainActivity.this
+//                    .getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//            Intent notificationIntent = new Intent(MainActivity.this, LoggingActivity.class);
+//            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//
+//            pendingIntent = PendingIntent.getActivity(MainActivity.this, 0,
+//                    notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//            NotificationCompat.Builder mNotifyBuilder = new NotificationCompat.Builder(MainActivity.this, "default")
+//                    .setSmallIcon(R.drawable.ic_sapling_1)
+//                    .setContentTitle("Alarm Fired")
+//                    .setContentText("Events to be Performed")
+//                    .setAutoCancel(true).setWhen(when)
+//                    .setContentIntent(pendingIntent)
+//                    .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});
+//            notificationManager.notify(1, mNotifyBuilder.build());
+        }
     }
 
    private void setPlantImg (DataManager dm) {
@@ -202,4 +256,5 @@ public class MainActivity extends AppCompatActivity {
                break;
        }
    }
+
 }
