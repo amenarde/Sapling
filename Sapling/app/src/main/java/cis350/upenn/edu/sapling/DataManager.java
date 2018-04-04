@@ -91,7 +91,7 @@ public class DataManager {
     }
     
     public Map<String, Metric> getinativeMetrics(Context c) {
-        return dataModel.getinativeMetrics();
+        return dataModel.getinactiveMetrics();
     }
     
     // setters for the metrics/goals sets from the Data Model
