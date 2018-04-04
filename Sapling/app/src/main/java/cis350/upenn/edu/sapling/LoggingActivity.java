@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+
 public class LoggingActivity extends AppCompatActivity {
     DataManager dataManager;
     DayData dayData;
@@ -28,61 +29,59 @@ public class LoggingActivity extends AppCompatActivity {
         dataManager = DataManager.getInstance();
         Date today = new Date();
         dayData = dataManager.getDay(today, this.getApplicationContext());
+        voidPopulateCheckBoxes(dayData);
+        populateSeekBars(dayData);
+    }
 
-        Iterator<Metric> itMetrics = dayData.getAllMetrics().iterator();
+private void populateSeekBars(final DayData day) {
+    Iterator<Metric> itMetrics = day.getAllMetrics().iterator();
 
-        while(itMetrics.hasNext()) {
-            Metric m = itMetrics.next();
-            String label = m.getName().toUpperCase();
-            LinearLayout metric_labels = findViewById(R.id.metrics_view_list);
-            TextView textV = new TextView(this);
-            textV.setText(label);
-            textV.setTextSize(20);
+    while(itMetrics.hasNext()) {
+        Metric m = itMetrics.next();
+        String label = m.getName().toUpperCase();
+        LinearLayout metric_labels = findViewById(R.id.metrics_view_list);
+        TextView textV = new TextView(this);
+        textV.setText(label);
+        textV.setTextSize(20);
 
-            MetricScale seekBar = new MetricScale(this, label, m.getPositive());
-            seekBar.setMax(6);
-            ShapeDrawable thumb = new ShapeDrawable(new OvalShape());
-            thumb.setIntrinsicHeight(30);
-            thumb.setIntrinsicWidth(30);
-            seekBar.setMinimumWidth(1000);
-            seekBar.setThumb(thumb);
-            seekBar.setProgress(1);
-            seekBar.setVisibility(View.VISIBLE);
+        MetricScale seekBar = new MetricScale(this, label, m.getPositive());
+        seekBar.setMax(6);
+        ShapeDrawable thumb = new ShapeDrawable(new OvalShape());
+        thumb.setIntrinsicHeight(30);
+        thumb.setIntrinsicWidth(30);
+        seekBar.setMinimumWidth(1000);
+        seekBar.setThumb(thumb);
+        seekBar.setProgress(1);
+        seekBar.setVisibility(View.VISIBLE);
 
-            metric_labels.addView(textV);
-            metric_labels.addView(seekBar);
+        metric_labels.addView(textV);
+        metric_labels.addView(seekBar);
 
-            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    // nothing
-                }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // nothing
+            }
 
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                    // nothing
-                }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // nothing
+            }
 
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-                 MetricScale sk = (MetricScale) seekBar;
-                 Metric newM = new Metric(sk.getName(), new Scale(progress + 1), sk.getPositive());
-                 dayData.putMetric(newM);
-
-                    //test checkbox listenerss
-                    System.out.println("Seekbar moved");
-                    System.out.println(dayData.getMetric(newM.getName()).getName());
-                    System.out.println("New value:" + dayData.getMetric(newM.getName()).getRating());
-                }
-            });
-
-        }
-
-
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                MetricScale sk = (MetricScale) seekBar;
+                Metric newM = new Metric(sk.getName(), new Scale(progress + 1), sk.getPositive());
+                day.putMetric(newM);
+            }
+        });
+    }
+}
+    private void voidPopulateCheckBoxes(final DayData dayData) {
         Iterator<Goal> itGoals = dayData.getAllGoals().iterator();
 
-        while(itGoals.hasNext()) {
+        while (itGoals.hasNext()) {
             Goal g = itGoals.next();
             LinearLayout goal_labels = findViewById(R.id.goals_view_list);
             String input = g.getName().trim().toLowerCase();
@@ -99,7 +98,7 @@ public class LoggingActivity extends AppCompatActivity {
                     // Is the view now checked?
                     boolean checked = ((CheckBox) view).isChecked();
                     CheckBox cb = (CheckBox) view;
-                    String label =  cb.getText().toString().toLowerCase();
+                    String label = cb.getText().toString().toLowerCase();
                     Goal newG;
 
                     if (checked) {
@@ -110,11 +109,6 @@ public class LoggingActivity extends AppCompatActivity {
                         newG = new Goal(txt.toString(), false);
                     }
                     dayData.putGoal(newG);
-
-                    //test checkbox listeners
-                    System.out.println("Box clicked");
-                    System.out.println(dayData.getGoal(newG.getName()).getName());
-                    System.out.println("New value:" + dayData.getGoal(newG.getName()).getCompleted());
                 }
             });
         }
