@@ -13,6 +13,8 @@ import android.content.SharedPreferences;
 import android.content.Context;
 import android.util.Log;
 
+import java.util.Map;
+
 /**
  * Created by Tiffany_Yue on 2/23/18.
  */
@@ -95,21 +97,20 @@ public class OnboardingActivity extends AppCompatActivity {
             String metric4 = ((EditText) findViewById(R.id.metrics_input4)).getText().toString();
             Log.v("Metrics entered are ", metric1 + " " + metric2 + " " + metric3 + " " + metric4);
 
-            //DataManager dm = DataManager.getInstance();
-            /*
-            if (metric1.length() > 0) {
-                dm.addMetric(metric1);
-            }
-            if (metric2.length() > 0) {
-                dm.addMetric(metric2);
-            }
-            if (metric3.length() > 0) {
-                dm.addMetric(metric3);
-            }
-            if (metric4.length() > 0) {
-                dm.addMetric(metric4);
-            }*/
+            DataManager dm = DataManager.getInstance();
 
+            // test code for DataManager
+            dm.addModelMetric("Productivity", true, getApplicationContext());
+            dm.addModelMetric("Laziness", false, getApplicationContext());
+            dm.addModelGoal("Eat an Apple", getApplicationContext());
+            dm.addModelGoal("Go to the gym", getApplicationContext());
+            Map<String, Metric> activeMetrics = dm.getActiveMetrics(getApplicationContext());
+            System.out.println("active metric size : " + activeMetrics.size());
+            for (String s : activeMetrics.keySet()) {
+                Metric m = activeMetrics.get(s);
+                System.out.println("active m: " + m.getName() + " " + m.getPositive());
+            }
+            System.out.println("active goals size: " + dm.getActiveGoals(getApplicationContext()).size());
 
         } else {
 

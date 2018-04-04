@@ -20,9 +20,13 @@ import android.util.Log;
 import android.content.Context;
 import android.app.Activity;
 import java.util.Set;
+/*
+    I/O class under DataModel that maintains a persistent file for
+    all currently tracked / deprecated metrics
 
-// I/O class under DataModel that maintains a persistent file for
-// all currently tracked / deprecated metrics
+    ModelIO updates the txt file when the updateFile() function is called, and rewrites the txt
+    file based on strings and metrics stored in the maps and sets within DataModel.
+*/
 public class ModelIO {
     private File file;
     private static DataModel dm;
@@ -92,7 +96,7 @@ public class ModelIO {
         return false;
     }
 
-    // updates the file on disk by re-writing the file using the hashsets in DataModel
+    // updates the file on disk by re-writing the file using the sets & maps in DataModel
     public void updateFile(Context c) throws IOException {
         OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(new File(c.getFilesDir(),
                                 this.modelFilePath), false));

@@ -10,7 +10,13 @@ import java.util.Set;
 
 // @author: juezhou
 
-// Singleton class used for in memory storage of metrics/goals
+/*
+    Singleton class used for in memory storage of metrics/goals.
+    The Data Model contains data structures to store active and inactive goals and metrics
+    Designers in Activity files can add goals and deprecate goals and metrics, which then triggers
+    an update function within an ModelIO object, which handles the read & write
+    of on-disk storage in a txt file.
+ */
 class DataModel {
     private static DataModel instance;
     static Map<String, Metric> activeMetrics;
@@ -29,12 +35,24 @@ class DataModel {
     private DataModel() {
         modelIO = new ModelIO(this, "data/");
         activeMetrics = new HashMap<>();
-        //addDefaultMetrics();
         inactiveMetrics = new HashMap<>();
         activeGoals = new HashSet<>();
         inactiveGoals = new HashSet<>();
     }
 
+    // adds a few default metrics to track - used in onboarding activity
+    public void addDefaultMetrics(Context c) throws IOException {
+        addMetric("Happiness", true, c);
+        addMetric("Productivity", true, c);
+        addMetric("Stress", false, c);
+        addMetric("Health", true, c);
+    }
+
+    // adds a few default goals to track - used in onboarding activity
+    public void addDefaultGoals(Context c) throws IOException {
+        addGoal("Eat an Apple a day", c);
+        addGoal("Go to the gym", c);
+    }
 
     // add a goal to currently track
     public void addGoal(String goal, Context c) throws IOException {
@@ -77,9 +95,7 @@ class DataModel {
         return inactiveGoals;
     }
 
-    public Map<String, Metric> getActiveMetrics() {
-        return activeMetrics;
-    }
+    public Map<String, Metric> getActiveMetrics() { return activeMetrics; }
 
     public Map<String, Metric> getinactiveMetrics() {
         return inactiveMetrics;
