@@ -3,16 +3,25 @@ package cis350.upenn.edu.sapling;
 import android.content.Context;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 // @author: juezhou
 
-// Singleton class used for in memory storage of metrics/goals
+/*
+    Singleton class used for in memory storage of metrics/goals.
+    The Data Model contains data structures to store active and inactive goals and metrics
+    Designers in Activity files can add goals and deprecate goals and metrics, which then triggers
+    an update function within an ModelIO object, which handles the read & write
+    of on-disk storage in a txt file.
+*/
 class DataModel {
     private static DataModel instance;
-    static HashSet<String> activeMetrics;
-    static HashSet<String> activeGoals;
-    static HashSet<String> inactiveMetrics;
+    static Map<String, Metric> activeMetrics;
+    static Map<String, Metric> inactiveMetrics;
+    static Set<String> activeGoals;
     static HashSet<String> inactiveGoals;
     static ModelIO modelIO;    // an IO writer that keeps track of the same data in a local txt file
 
@@ -24,19 +33,33 @@ class DataModel {
     }
 
     private DataModel() {
-        activeMetrics = new HashSet<String>();
-        //addDefaultMetrics();
-        inactiveMetrics = new HashSet<String>();
-        activeGoals = new HashSet<String>();
-        inactiveGoals = new HashSet<String>();
-        modelIO = new ModelIO(this, "/data");
+        modelIO = new ModelIO(this, "data/");
+        activeMetrics = new HashMap<>();
+        inactiveMetrics = new HashMap<>();
+        activeGoals = new HashSet<>();
+        inactiveGoals = new HashSet<>();
     }
 
+    // adds a few default metrics to track - used in onboarding activity
+    public void addDefaultMetrics(Context c) throws IOException {
+        addMetric("Happiness", true, c);
+        addMetric("Productivity", true, c);
+        addMetric("Stress", false, c);
+        addMetric("Health", true, c);
+    }
+
+    // adds a few default goals to track - used in onboarding activity
+    public void addDefaultGoals(Context c) throws IOException {
+        addGoal("Eat an Apple a day", c);
+        addGoal("Go to the gym", c);
+    }
 
     // add a goal to currently track
     public void addGoal(String goal, Context c) throws IOException {
-        activeGoals.add(goal);
-        modelIO.updateFile(c);
+        if (!activeGoals.contains(goal)) {
+            activeGoals.add(goal);
+            modelIO.updateFile(c);
+        }
     }
     // deprecate a goal
     public void deprecateGoal(String goal, Context c) throws IOException {
@@ -48,35 +71,34 @@ class DataModel {
     }
 
     // add a metric to currently track
-    public void addMetric(String metric, Context c) throws IOException {
-        activeMetrics.add(metric);
-        modelIO.updateFile(c);
+    public void addMetric(String name, boolean positive, Context c) throws IOException {
+        if (!activeMetrics.containsKey(name)) {
+            Metric metric = new Metric(name, positive);
+            activeMetrics.put(name, metric);
+            modelIO.updateFile(c);
+        }
     }
 
     // deprecate a metric
-    public void deprecateMetric(String metric, Context c) throws IOException {
-        if (activeMetrics.contains(metric)) {
-            activeMetrics.remove(metric);
-            inactiveMetrics.add(metric);
+    public void deprecateMetric(String name, boolean positive, Context c) throws IOException {
+        if (activeMetrics.containsKey(name)) {
+            activeMetrics.remove(name);
+            inactiveMetrics.put(name, new Metric(name, positive));
             modelIO.updateFile(c);
         }
     }
 
     // getters for the metrics/goals sets
-    public HashSet<String> getActiveGoals() {
-        return activeGoals;
-    }
+    public Set<String> getActiveGoals() { return activeGoals; }
 
-    public HashSet<String> getinactiveGoals() {
+    public Set<String> getinactiveGoals() {
         return inactiveGoals;
     }
 
-    public HashSet<String> getActiveMetrics() {
-        return activeMetrics;
-    }
+    public Map<String, Metric> getActiveMetrics() { return activeMetrics; }
 
-    public HashSet<String> getinativeMetrics() {
-        return activeMetrics;
+    public Map<String, Metric> getinactiveMetrics() {
+        return inactiveMetrics;
     }
 
 

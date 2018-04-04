@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class DataManager {
@@ -75,41 +76,51 @@ public class DataManager {
     }
     
     /* <-------------------------------- DataModel Methods --------------------------> */
-    
+
+    // adds a few default metrics to the metric map and txt file
+    public void addDefaultMetrics(Context c) throws IOException {
+        dataModel.addDefaultMetrics(c);
+    }
+
+    // adds a few default goals to the goal set and txt file
+    public void addDefaultGoals(Context c) throws IOException {
+        dataModel.addDefaultGoals(c);
+    }
+
     // getters for the metrics/goals sets from the Data Model
-    private Set<String> getActiveGoals(Context c) {
+    public Set<String> getActiveGoals(Context c) {
         return dataModel.getActiveGoals();
     }
-    
-    private Set<String> getinactiveGoals(Context c) {
-        return dataModel.getinativeMetrics();
+
+    public Set<String> getinactiveGoals(Context c) {
+        return dataModel.getinactiveGoals();
     }
-    
-    private Set<String> getActiveMetrics(Context c) {
+
+    public Map<String, Metric> getActiveMetrics(Context c) {
         return dataModel.getActiveMetrics();
     }
-    
-    private Set<String> getinativeMetrics(Context c) {
-        return dataModel.getinativeMetrics();
+
+    public Map<String, Metric> getinativeMetrics(Context c) {
+        return dataModel.getinactiveMetrics();
     }
-    
+
     // setters for the metrics/goals sets from the Data Model
-    public void addModelMetric(String s, Context c) {
+    public void addModelMetric(String s, boolean positive, Context c) {
         try {
-            dataModel.addMetric(s, c);
+            dataModel.addMetric(s, positive, c);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-    public void deprecateModelMetric(String s, Context c) {
+
+    public void deprecateModelMetric(String s, boolean positive, Context c) {
         try {
-            dataModel.deprecateMetric(s, c);
+            dataModel.deprecateMetric(s, positive, c);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     public void addModelGoal(String s, Context c) {
         try {
             dataModel.addGoal(s, c);
@@ -117,7 +128,7 @@ public class DataManager {
             e.printStackTrace();
         }
     }
-    
+
     public void deprecateModelGoal(String s, Context c) {
         try {
             dataModel.deprecateGoal(s, c);
