@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -38,10 +39,51 @@ public class OnboardingActivity extends AppCompatActivity {
 
         //locate views necessary
         nameLayout = findViewById(R.id.name_layout);
+
+        //set the default metrics
+
         metricsLayout = findViewById(R.id.metrics_layout);
+
+        DataManager dm = DataManager.getInstance();
+        try {
+            dm.addDefaultGoals(getApplicationContext());
+            dm.addDefaultMetrics(getApplicationContext());
+        } catch (IOException e) {
+
+        }
+
+        Map<String, Metric> activeMetrics = dm.getActiveMetrics(getApplicationContext());
+        System.out.println("active metric size : " + activeMetrics.size());
+        int num = 1;
+        String metric1="";
+        String metric2="";
+        String metric3="";
+        String metric4="";
+        for (String s : activeMetrics.keySet()) {
+            Metric m = activeMetrics.get(s);
+            System.out.println("active m: " + m.getName() + " " + m.getPositive());
+            if (num == 1) {
+                metric1 = m.getName();
+            } else if (num == 2) {
+                metric2 = m.getName();
+            } else if (num == 3) {
+                metric3 = m.getName();
+            } else {
+                metric4 = m.getName();
+            }
+            num++;
+        }
+
+        ((EditText) findViewById(R.id.metrics_input1)).setText(metric1);
+        ((EditText) findViewById(R.id.metrics_input2)).setText(metric2);
+        ((EditText) findViewById(R.id.metrics_input3)).setText(metric3);
+        ((EditText) findViewById(R.id.metrics_input4)).setText(metric4);
+
+
         metricsLayout.setVisibility(View.INVISIBLE);
         habitsLayout = findViewById(R.id.habits_layout);
         habitsLayout.setVisibility(View.INVISIBLE);
+
 
         in.setDuration(350);
 
@@ -90,6 +132,7 @@ public class OnboardingActivity extends AppCompatActivity {
             Log.v("Name entered is ", name);
         } else if (currState == 1) {
             metricsLayout.startAnimation(out);
+
             //save metrics for settings
             String metric1 = ((EditText) findViewById(R.id.metrics_input1)).getText().toString();
             String metric2 = ((EditText) findViewById(R.id.metrics_input2)).getText().toString();
@@ -99,6 +142,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
             DataManager dm = DataManager.getInstance();
 
+            /*
             // test code for DataManager
             dm.addModelMetric("Productivity", true, getApplicationContext());
             dm.addModelMetric("Laziness", false, getApplicationContext());
@@ -111,6 +155,7 @@ public class OnboardingActivity extends AppCompatActivity {
                 System.out.println("active m: " + m.getName() + " " + m.getPositive());
             }
             System.out.println("active goals size: " + dm.getActiveGoals(getApplicationContext()).size());
+            */
 
         } else {
 
