@@ -240,8 +240,9 @@ public class MainActivity extends AppCompatActivity {
            while(metrics.hasNext()) {
                Metric m = metrics.next();
                if (m.getPositive()){
+                   averageScale += m.getRating();
                } else {
-                   averageScale += (7 - m.getRating());
+                   averageScale += (8 - m.getRating());
                }
            }
        }
