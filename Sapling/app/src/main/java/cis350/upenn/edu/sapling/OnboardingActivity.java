@@ -182,15 +182,15 @@ public class OnboardingActivity extends AppCompatActivity {
                     a = true;
                     as = m;
                 }
-                if (i == 2 && !m.equals(metric2) && metric1.length() != 0) {
+                if (i == 2 && !m.equals(metric2) && metric2.length() != 0) {
                     b = true;
                     bs = m;
                 }
-                if (i == 3 && !m.equals(metric3) && metric1.length() != 0) {
+                if (i == 3 && !m.equals(metric3) && metric3.length() != 0) {
                     c = true;
                     cs = m;
                 }
-                if (i == 4 && !m.equals(metric4) && metric1.length() != 0) {
+                if (i == 4 && !m.equals(metric4) && metric4.length() != 0) {
                     d = true;
                     ds = m;
                 }
@@ -255,11 +255,11 @@ public class OnboardingActivity extends AppCompatActivity {
                     aa = true;
                     aas = m;
                 }
-                if (i == 2 && !m.equals(habit2) && habit1.length() != 0) {
+                if (i == 2 && !m.equals(habit2) && habit2.length() != 0) {
                     bb = true;
                     bbs = m;
                 }
-                if (i == 3 && !m.equals(habit3) && habit1.length() != 0) {
+                if (i == 3 && !m.equals(habit3) && habit3.length() != 0) {
                     cc = true;
                     ccs = m;
                 }
