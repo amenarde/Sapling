@@ -120,7 +120,6 @@ public class ShowcaseActivity extends AppCompatActivity implements OnShowcaseEve
             }
         };
         timer.schedule(timerTask, 1000, 1000);
-
     }
 
 
@@ -172,8 +171,9 @@ private void switchShowcase () {
                 break;
             case 4:
                 showcase.hide();
-                Intent i = new Intent(this, MainActivity.class);
-                startActivityForResult(i, 5);
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
                 break;
         }
 }
