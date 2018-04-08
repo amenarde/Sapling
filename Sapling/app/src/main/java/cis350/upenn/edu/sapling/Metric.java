@@ -28,7 +28,7 @@ public class Metric {
     public String getName() {
         return name;
     }
-    public boolean hasScale() {return scale == null;}
+    public boolean hasScale() {return scale != null;}
     public void putScale(Scale scale) { this.scale = scale; }
     public int getRating() {
         return scale.getValue();

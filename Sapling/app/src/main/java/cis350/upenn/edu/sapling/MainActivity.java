@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.zip.Inflater;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 
 import com.jjoe64.graphview.series.Series;
 import com.jjoe64.graphview.series.BaseSeries;
@@ -69,49 +70,95 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+
+        DataManager dm = DataManager.getInstance();
+        Iterator<DayData> pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
+
+        setPlantImg(dm);
+
+        ///TIFFANY'S GRAPH CODE
+
+        DataPoint[] points = new DataPoint[7];
+        int dayInWeek = 7;
+        while (pastWeek.hasNext()) {
+            double totalNum = 0;
+            DayData dayData = pastWeek.next();
+            dayInWeek -= 1;
+
+            Iterator<Metric> metrics = dayData.getAllMetrics().iterator();
+            int numMetrics = 0;
+            while(metrics.hasNext()) {
+                Metric m = metrics.next();
+                numMetrics++;
+                if (m.getPositive()){
+                    totalNum += m.getRating();
+                } else {
+                    totalNum += (7 - m.getRating());
+                }
+            }
+            double val = totalNum/numMetrics;
+
+            //assign to proper day
+            points[dayInWeek] = new DataPoint(dayInWeek + 1, val);
+        }
+
         GraphView graph = (GraphView) findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
-        });
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
         series.setColor(Color.WHITE);
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(10);
         series.setThickness(8);
         graph.addSeries(series);
 
-        DataManager dm = DataManager.getInstance();
-        DayData today = dm.getDay(new Date(), this.getApplicationContext());
-        Iterator<DayData> pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
-        int qualityOfLife = 0;
-        int daysInWeek = 0;
-        while (pastWeek.hasNext()) {
-            DayData dayData = pastWeek.next();
-            daysInWeek += 1;
+        graph.getViewport().setMinX(1);
+        graph.getViewport().setMaxX(7);
+        graph.getViewport().setMinY(0.0);
+        graph.getViewport().setMaxY(7.0);
 
-          Iterator<Metric> metrics = dayData.getAllMetrics().iterator();
-          while(metrics.hasNext()) {
-              Metric m = metrics.next();
-              if (m.getPositive()){
-              qualityOfLife += m.getRating();
-          } else {
-                  qualityOfLife += (7 - m.getRating());
-              }
-          }
-        }
-        qualityOfLife = qualityOfLife / daysInWeek;
-        setPlantImg(dm);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setXAxisBoundsManual(true);
 
 
 
 
         // updates the elements as per the current day's existing metrics, "--" if not present
-        /*
 
-        DataManager dm = DataManager.getInstance();
+
+        Map<String, Metric> todayMetrics = dm.getActiveMetrics(getApplicationContext());
+        int i = 0;
+        for (Metric m : todayMetrics.values()) {
+            if (i == 0) {
+                ((TextView) findViewById(R.id.metric1_title)).setText(m.getName());
+                if (m.hasScale()) {
+                    ((TextView) findViewById(R.id.metric1_stat)).setText(m.getRating());
+                } else {
+                    ((TextView) findViewById(R.id.metric1_stat)).setText("--");
+                }
+            } else if (i == 1) {
+                ((TextView) findViewById(R.id.metric2_title)).setText(m.getName());
+                if (m.hasScale()) {
+                    ((TextView) findViewById(R.id.metric2_stat)).setText(m.getRating());
+                } else {
+                    ((TextView) findViewById(R.id.metric2_stat)).setText("--");
+                }
+            } else if (i == 2) {
+                ((TextView) findViewById(R.id.metric3_title)).setText(m.getName());
+                if (m.hasScale()) {
+                    ((TextView) findViewById(R.id.metric3_stat)).setText(m.getRating());
+                } else {
+                    ((TextView) findViewById(R.id.metric3_stat)).setText("--");
+                }
+            } else if (i == 3) {
+                ((TextView) findViewById(R.id.metric4_title)).setText(m.getName());
+                if (m.hasScale()) {
+                    ((TextView) findViewById(R.id.metric4_stat)).setText(m.getRating());
+                } else {
+                    ((TextView) findViewById(R.id.metric4_stat)).setText("--");
+                }
+            }
+            i++;
+        }
+        /*
         DayData todayData = dm.getMetricsForDay(Calendar.getInstance().getTime());
 
         Collection<Metric> todayMetrics = todayData.getAllMetrics();
@@ -138,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
             metricCount++;
         }
         */
+
     }
 
     public void startDisplay(View view){
