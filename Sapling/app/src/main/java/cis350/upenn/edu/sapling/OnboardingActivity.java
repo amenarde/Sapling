@@ -241,7 +241,7 @@ public class OnboardingActivity extends AppCompatActivity {
                 }
                 i++;
             }
-            
+
 
             //return to main activity
             Intent i = new Intent();
