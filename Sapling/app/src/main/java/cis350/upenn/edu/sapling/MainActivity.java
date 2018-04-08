@@ -99,10 +99,12 @@ public class MainActivity extends AppCompatActivity {
           Iterator<Metric> metrics = dayData.getAllMetrics().iterator();
           while(metrics.hasNext()) {
               Metric m = metrics.next();
-              if (m.getPositive()){
-              qualityOfLife += m.getRating();
-          } else {
-                  qualityOfLife += (7 - m.getRating());
+              if (m.hasScale()) {
+                  if (m.getPositive()) {
+                      qualityOfLife += m.getRating();
+                  } else {
+                      qualityOfLife += (8 - m.getRating());
+                  }
               }
           }
         }

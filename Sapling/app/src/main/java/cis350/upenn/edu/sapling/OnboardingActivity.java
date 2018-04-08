@@ -149,8 +149,6 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     public void onboardingNext(View view) {
-
-
         if (currState == 0) {
             nameLayout.startAnimation(out);
             //save name for settings

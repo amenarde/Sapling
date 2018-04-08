@@ -116,7 +116,6 @@ private void populateSeekBars(final DayData day) {
                         CharSequence txt = cb.getText();
                         newG = new Goal(txt.toString(), false);
                     }
-
                     dayData.putGoal(newG);
                     dataManager.putDay(new Date(),dayData,getApplicationContext());
                 }
