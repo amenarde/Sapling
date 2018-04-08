@@ -13,7 +13,9 @@ import android.content.SharedPreferences;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Tiffany_Yue on 2/23/18.
@@ -38,10 +40,76 @@ public class OnboardingActivity extends AppCompatActivity {
 
         //locate views necessary
         nameLayout = findViewById(R.id.name_layout);
+
+        //set the default metrics
+
         metricsLayout = findViewById(R.id.metrics_layout);
+
+        DataManager dm = DataManager.getInstance();
+        try {
+            dm.addDefaultGoals(getApplicationContext());
+            dm.addDefaultMetrics(getApplicationContext());
+        } catch (IOException e) {
+
+        }
+
+        Map<String, Metric> activeMetrics = dm.getActiveMetrics(getApplicationContext());
+        System.out.println("active metric size : " + activeMetrics.size());
+        int num = 1;
+        String metric1="";
+        String metric2="";
+        String metric3="";
+        String metric4="";
+        for (String s : activeMetrics.keySet()) {
+            Metric m = activeMetrics.get(s);
+            System.out.println("active m: " + m.getName() + " " + m.getPositive());
+            if (num == 1) {
+                metric1 = m.getName();
+            } else if (num == 2) {
+                metric2 = m.getName();
+            } else if (num == 3) {
+                metric3 = m.getName();
+            } else {
+                metric4 = m.getName();
+            }
+            num++;
+        }
+
+        ((EditText) findViewById(R.id.metrics_input1)).setText(metric1);
+        ((EditText) findViewById(R.id.metrics_input2)).setText(metric2);
+        ((EditText) findViewById(R.id.metrics_input3)).setText(metric3);
+        ((EditText) findViewById(R.id.metrics_input4)).setText(metric4);
+
+        Set<String> activeGoals = dm.getActiveGoals(getApplicationContext());
+        System.out.println("active goal size : " + activeGoals.size());
+        int count = 1;
+        String goal1 = "";
+        String goal2 = "";
+        String goal3 = "";
+        String goal4 = "";
+        for (String s : activeGoals) {
+            System.out.println("active g: " + s);
+            if (count == 1) {
+                goal1 = s;
+            } else if (count == 2) {
+                goal2 = s;
+            } else if (count == 3) {
+                goal3 = s;
+            } else {
+                goal4 = s;
+            }
+            count++;
+        }
+        ((EditText) findViewById(R.id.habits_input1)).setText(goal1);
+        ((EditText) findViewById(R.id.habits_input2)).setText(goal2);
+        ((EditText) findViewById(R.id.habits_input3)).setText(goal3);
+        ((EditText) findViewById(R.id.habits_input4)).setText(goal4);
+
+
         metricsLayout.setVisibility(View.INVISIBLE);
         habitsLayout = findViewById(R.id.habits_layout);
         habitsLayout.setVisibility(View.INVISIBLE);
+
 
         in.setDuration(350);
 
@@ -90,6 +158,7 @@ public class OnboardingActivity extends AppCompatActivity {
             Log.v("Name entered is ", name);
         } else if (currState == 1) {
             metricsLayout.startAnimation(out);
+
             //save metrics for settings
             String metric1 = ((EditText) findViewById(R.id.metrics_input1)).getText().toString();
             String metric2 = ((EditText) findViewById(R.id.metrics_input2)).getText().toString();
@@ -99,6 +168,55 @@ public class OnboardingActivity extends AppCompatActivity {
 
             DataManager dm = DataManager.getInstance();
 
+            boolean a, b, c, d;
+            a = b = c = d = false;
+
+            String as, bs, cs, ds;
+            as = bs = cs = ds = "";
+
+
+            Map<String, Metric> activeMetrics = dm.getActiveMetrics(getApplicationContext());
+            int i = 1;
+            for (String m : activeMetrics.keySet()) {
+                if (i == 1 && !m.equals(metric1) && metric1.length() != 0) {
+                    a = true;
+                    as = m;
+                }
+                if (i == 2 && !m.equals(metric2) && metric1.length() != 0) {
+                    b = true;
+                    bs = m;
+                }
+                if (i == 3 && !m.equals(metric3) && metric1.length() != 0) {
+                    c = true;
+                    cs = m;
+                }
+                if (i == 4 && !m.equals(metric4) && metric1.length() != 0) {
+                    d = true;
+                    ds = m;
+                }
+                i++;
+            }
+
+            if (a) {
+                dm.deprecateModelMetric(as, true, getApplicationContext());
+                dm.addModelMetric(metric1, true, getApplicationContext());
+            }
+            if (b) {
+                dm.deprecateModelMetric(bs, true, getApplicationContext());
+                dm.addModelMetric(metric2, true, getApplicationContext());
+            }
+            if (c) {
+                dm.deprecateModelMetric(cs, true, getApplicationContext());
+                dm.addModelMetric(metric3, true, getApplicationContext());
+            }
+            if (d) {
+                dm.deprecateModelMetric(ds, true, getApplicationContext());
+                dm.addModelMetric(metric4, true, getApplicationContext());;
+            }
+
+
+
+            /*
             // test code for DataManager
             dm.addModelMetric("Productivity", true, getApplicationContext());
             dm.addModelMetric("Laziness", false, getApplicationContext());
@@ -111,6 +229,7 @@ public class OnboardingActivity extends AppCompatActivity {
                 System.out.println("active m: " + m.getName() + " " + m.getPositive());
             }
             System.out.println("active goals size: " + dm.getActiveGoals(getApplicationContext()).size());
+            */
 
         } else {
 
@@ -121,23 +240,61 @@ public class OnboardingActivity extends AppCompatActivity {
             String habit3 = ((EditText) findViewById(R.id.habits_input3)).getText().toString();
             String habit4 = ((EditText) findViewById(R.id.habits_input4)).getText().toString();
 
-            /*
-            if (habit1.length() > 0) {
-                dm.addGoal(habit1);
+            Log.v("Habits entered are ", habit1 + " " + habit2 + " " + habit3 + " " + habit4);
+
+            DataManager dm = DataManager.getInstance();
+
+            boolean aa, bb, cc, dd; aa = bb = cc = dd = false;
+            String aas, bbs, ccs, dds; aas = bbs = ccs = dds = "";
+
+
+            Set<String> activeGoals = dm.getActiveGoals(getApplicationContext());
+            int i = 1;
+            for (String m : activeGoals) {
+                if (i == 1 && !m.equals(habit1) && habit1.length() != 0) {
+                    aa = true;
+                    aas = m;
+                }
+                if (i == 2 && !m.equals(habit2) && habit1.length() != 0) {
+                    bb = true;
+                    bbs = m;
+                }
+                if (i == 3 && !m.equals(habit3) && habit1.length() != 0) {
+                    cc = true;
+                    ccs = m;
+                }
+                if (i == 4 && !m.equals(habit4) && habit4.length() != 0) {
+                    dd = true;
+                    dds = m;
+                }
+                i++;
             }
-            if (habit2.length() > 0) {
-                dm.addGoal(habit2);
+
+            if (aa) {
+                dm.deprecateModelGoal(aas, getApplicationContext());
+                dm.addModelGoal(habit1, getApplicationContext());
             }
-            if (habit3.length() > 0) {
-                dm.addGoal(habit3);
+            if (bb) {
+                dm.deprecateModelGoal(bbs, getApplicationContext());
+                dm.addModelGoal(habit2, getApplicationContext());
             }
-            if (habit4.length() > 0) {
-                dm.addGoal(habit4);
-            }*/
+            if (cc) {
+                dm.deprecateModelGoal(ccs, getApplicationContext());
+                dm.addModelGoal(habit3, getApplicationContext());
+            }
+            if (dd) {
+                dm.deprecateModelGoal(dds, getApplicationContext());
+                dm.addModelGoal(habit4, getApplicationContext());
+            }
+            
 
             //return to main activity
-            Intent i = new Intent();
-            setResult(RESULT_OK, i);
+//            Intent intent = new Intent();
+//            setResult(RESULT_OK, intent);
+            Intent showCaseIntent = new Intent(this, ShowcaseActivity.class);
+            startActivityForResult(showCaseIntent, 5);
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
             //save habits for settings
             finish();
         }

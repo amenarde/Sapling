@@ -5,4 +5,5 @@
     <color name="colorAccent">#A5E670</color>
     <color name="colorButton">#ffffff</color>
     <color name="off_white">#fbfbf5</color>
+    <color name="custom_showcase_bg">#b9002153</color>
 </resources>
