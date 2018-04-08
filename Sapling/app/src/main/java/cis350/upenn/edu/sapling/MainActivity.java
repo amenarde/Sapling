@@ -89,6 +89,26 @@ public class MainActivity extends AppCompatActivity {
         series.setThickness(8);
         graph.addSeries(series);
 
+        Iterator<DayData> pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
+        int qualityOfLife = 0;
+        int daysInWeek = 0;
+        while (pastWeek.hasNext()) {
+            DayData dayData = pastWeek.next();
+            daysInWeek += 1;
+
+          Iterator<Metric> metrics = dayData.getAllMetrics().iterator();
+          while(metrics.hasNext()) {
+              Metric m = metrics.next();
+              if (m.getPositive()){
+              qualityOfLife += m.getRating();
+          } else {
+                  qualityOfLife += (7 - m.getRating());
+              }
+          }
+        }
+        qualityOfLife = qualityOfLife / daysInWeek;
+        setPlantImg(dm);
+
 
 
 
