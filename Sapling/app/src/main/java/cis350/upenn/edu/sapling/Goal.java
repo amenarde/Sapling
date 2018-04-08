@@ -20,6 +20,9 @@ public class Goal {
     }
 
     public boolean getCompleted() {
+        if (completed == null) {
+            return false;
+        }
         return completed;
     }
 }

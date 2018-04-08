@@ -49,15 +49,7 @@ public class DataManager {
 
     public DayData getDay(Date date, Context context) {
 
-
-        DayData dd = new DayData();
-        dd.putMetric(new Metric("Antonio's Metric", new Scale(3), true));
-        dd.putGoal(new Goal("Antonio please go to gym", false));
-
-        dbWriter.put(new Date(), dd, context);
-
         DayData day = dbWriter.get(date, context);
-
         if (day == null) {
             return getDefaultDayData(context);
         }
