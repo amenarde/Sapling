@@ -2,6 +2,7 @@ package cis350.upenn.edu.sapling;
 
 import android.content.Context;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,6 +39,17 @@ class DataModel {
         inactiveMetrics = new HashMap<>();
         activeGoals = new HashSet<>();
         inactiveGoals = new HashSet<>();
+    }
+
+    // adding default values after deleting the path file
+    // used in onboarding activity
+    public void addDefaults(Context c) throws IOException {
+        String path = "path.txt";
+        File f = new File(path);
+        if (f.exists()) f.delete();
+        addDefaultMetrics(c);
+        addDefaultGoals(c);
+        modelIO.updateFile(c);
     }
 
     // adds a few default metrics to track - used in onboarding activity
