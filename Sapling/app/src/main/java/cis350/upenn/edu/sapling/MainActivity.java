@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         series.setThickness(8);
         graph.addSeries(series);
 
+
         graph.getViewport().setMinX(1);
         graph.getViewport().setMaxX(7);
         graph.getViewport().setMinY(0.0);
@@ -117,8 +118,6 @@ public class MainActivity extends AppCompatActivity {
 
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setXAxisBoundsManual(true);
-
-
 
 
         // updates the elements as per the current day's existing metrics, "--" if not present
@@ -207,6 +206,11 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, SettingsActivity.class);
         startActivityForResult(i, 4);
     }
+    public void startShowcase(View view){
+        Intent i = new Intent(this, ShowcaseActivity.class);
+        startActivityForResult(i, 5);
+    }
+
 
     private boolean isFirstTime() {
         if (firstTime == null) {
@@ -279,8 +283,9 @@ public class MainActivity extends AppCompatActivity {
            while(metrics.hasNext()) {
                Metric m = metrics.next();
                if (m.getPositive()){
+                   averageScale += m.getRating();
                } else {
-                   averageScale += (7 - m.getRating());
+                   averageScale += (8 - m.getRating());
                }
            }
        }

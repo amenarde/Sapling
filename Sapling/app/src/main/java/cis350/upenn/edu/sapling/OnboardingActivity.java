@@ -289,6 +289,10 @@ public class OnboardingActivity extends AppCompatActivity {
             }
 
             //return to main activity
+//            Intent intent = new Intent();
+//            setResult(RESULT_OK, intent);
+            Intent showCaseIntent = new Intent(this, ShowcaseActivity.class);
+            startActivityForResult(showCaseIntent, 5);
             Intent intent = new Intent();
             setResult(RESULT_OK, intent);
             //save habits for settings

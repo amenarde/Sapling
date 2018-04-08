@@ -51,7 +51,11 @@ private void populateSeekBars(final DayData day) {
         thumb.setIntrinsicWidth(30);
         seekBar.setMinimumWidth(1000);
         seekBar.setThumb(thumb);
-        seekBar.setProgress(1);
+        if (m.hasScale()) {
+            seekBar.setProgress(m.getRating() - 1);
+        } else {
+            seekBar.setProgress(3);
+        }
         seekBar.setVisibility(View.VISIBLE);
 
         metric_labels.addView(textV);
@@ -74,6 +78,7 @@ private void populateSeekBars(final DayData day) {
                 MetricScale sk = (MetricScale) seekBar;
                 Metric newM = new Metric(sk.getName(), new Scale(progress + 1), sk.getPositive());
                 day.putMetric(newM);
+                dataManager.putDay(new Date(),dayData,getApplicationContext());
             }
         });
     }
@@ -83,13 +88,16 @@ private void populateSeekBars(final DayData day) {
 
         while (itGoals.hasNext()) {
             Goal g = itGoals.next();
+            System.out.println("Goal :" + g.getName() + "completed on open? " + g.getCompleted());
+
             LinearLayout goal_labels = findViewById(R.id.goals_view_list);
-            String input = g.getName().trim().toLowerCase();
+            String input = g.getName();
             String formattedText = input.substring(0, 1).toUpperCase() + input.substring(1);
 
             CheckBox checkBox = new CheckBox(this);
             checkBox.setText(formattedText);
             checkBox.setTextSize(20);
+            checkBox.setChecked(g.getCompleted());
             goal_labels.addView(checkBox);
 
             checkBox.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +116,9 @@ private void populateSeekBars(final DayData day) {
                         CharSequence txt = cb.getText();
                         newG = new Goal(txt.toString(), false);
                     }
+
                     dayData.putGoal(newG);
+                    dataManager.putDay(new Date(),dayData,getApplicationContext());
                 }
             });
         }

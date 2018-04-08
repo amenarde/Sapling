@@ -4,24 +4,32 @@ package cis350.upenn.edu.sapling;
 
 import android.content.Context;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class DataManager {
+
     private static DataManager dataManager;
-    
+
+    private static boolean dummyDataFilled = false;
+
     private DataModel dataModel;
     private DBWriter dbWriter;
     
     private DataManager() {
         dataModel = DataModel.getInstance();
-        dbWriter = new DBWriter("data/");
+        dbWriter = new DBWriter();
+
+
     }
     
     public static DataManager getInstance() {
@@ -32,29 +40,45 @@ public class DataManager {
         return dataManager;
     }
 
+    private void fillDummyData(Context context) {
+        if (dummyDataFilled) return;
+
+        //TODO: autofill a work week
+
+    }
+
     public DayData getDay(Date date, Context context) {
+
+
+        DayData dd = new DayData();
+        dd.putMetric(new Metric("Antonio's Metric", new Scale(3), true));
+        dd.putGoal(new Goal("Antonio please go to gym", false));
+
+        dbWriter.put(new Date(), dd, context);
+
         DayData day = dbWriter.get(date, context);
 
-
         if (day == null) {
-            DayData data = new DayData();
-            data.putMetric(new Metric("Metric1", new Scale(5), true));
-            data.putGoal(new Goal("Goal1", Boolean.TRUE));
-            return data;
-
-//            DayData toFill = new DayData();
-//            Set<String> metrics = getActiveMetrics(context);
-//            Set<String> goals = getActiveGoals(context);
-//            for (String name : metrics) {
-//                toFill.putMetric(new Metric(name, null));
-//            }
-//            for (String name : goals) {
-//                toFill.putGoal(new Goal(name, null));
-//            }
-//            return toFill;
+            return getDefaultDayData(context);
         }
 
         return day;
+    }
+
+    private DayData getDefaultDayData(Context context) {
+        DayData toFill = new DayData();
+
+        Map<String, Metric> metrics = getActiveMetrics(context);
+        Set<String> goals = getActiveGoals(context);
+
+        for (Metric m : metrics.values()) {
+            toFill.putMetric(m);
+        }
+        for (String name : goals) {
+            toFill.putGoal(new Goal(name, null));
+        }
+
+        return toFill;
     }
 
     public void putDay(Date date, DayData dayData, Context context) {

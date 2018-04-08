@@ -31,6 +31,9 @@ public class Metric {
     public boolean hasScale() {return scale != null;}
     public void putScale(Scale scale) { this.scale = scale; }
     public int getRating() {
+        if (scale == null) {
+            return -1;
+        }
         return scale.getValue();
     }
     public boolean getPositive() { return positive;}
