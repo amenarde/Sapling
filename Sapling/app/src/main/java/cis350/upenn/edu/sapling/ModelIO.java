@@ -47,7 +47,7 @@ public class ModelIO {
         this.dm = dm;
         this.modelFilePath = "path.txt";
         File f = new File(this.modelFilePath);
-        if (f.exists()) {
+        if (!f.exists()) {
             try {
                 f.createNewFile();
             } catch (Exception e) {

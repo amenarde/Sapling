@@ -30,6 +30,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.jjoe64:graphview:4.2.1'
+    compile 'com.github.amlcurran.showcaseview:library:5.4.3'
 }
 
 dependencies {
@@ -40,6 +41,9 @@ dependencies {
 }
 dependencies {
     compile 'com.github.clans:fab:1.6.4'
+}
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:+'
 }
 dependencies {
     // https://mvnrepository.com/artifact/com.google.code.gson/gson

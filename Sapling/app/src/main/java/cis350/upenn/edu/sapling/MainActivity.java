@@ -163,6 +163,11 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, SettingsActivity.class);
         startActivityForResult(i, 4);
     }
+    public void startShowcase(View view){
+        Intent i = new Intent(this, ShowcaseActivity.class);
+        startActivityForResult(i, 5);
+    }
+
 
     private boolean isFirstTime() {
         if (firstTime == null) {
@@ -235,8 +240,9 @@ public class MainActivity extends AppCompatActivity {
            while(metrics.hasNext()) {
                Metric m = metrics.next();
                if (m.getPositive()){
+                   averageScale += m.getRating();
                } else {
-                   averageScale += (7 - m.getRating());
+                   averageScale += (8 - m.getRating());
                }
            }
        }
