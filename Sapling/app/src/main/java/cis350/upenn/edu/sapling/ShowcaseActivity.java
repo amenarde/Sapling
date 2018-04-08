@@ -3,6 +3,7 @@ package cis350.upenn.edu.sapling;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -103,6 +104,20 @@ public class ShowcaseActivity extends AppCompatActivity implements OnShowcaseEve
                 .build();
         showcase.setButtonPosition(lps);
         showcase.overrideButtonClick(onClick);
+        showcase.hide();
+
+        CountDownTimer cdt = new CountDownTimer(2500, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+            @Override
+            public void onFinish() {
+                showcase.show();
+            }
+        };
+        cdt.start();
+
 
       //graph_sv.hide();
 
