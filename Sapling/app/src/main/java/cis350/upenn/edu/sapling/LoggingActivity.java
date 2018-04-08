@@ -88,8 +88,10 @@ private void populateSeekBars(final DayData day) {
 
         while (itGoals.hasNext()) {
             Goal g = itGoals.next();
+            System.out.println("Goal :" + g.getName() + "completed on open? " + g.getCompleted());
+
             LinearLayout goal_labels = findViewById(R.id.goals_view_list);
-            String input = g.getName().trim().toLowerCase();
+            String input = g.getName();
             String formattedText = input.substring(0, 1).toUpperCase() + input.substring(1);
 
             CheckBox checkBox = new CheckBox(this);
@@ -114,6 +116,7 @@ private void populateSeekBars(final DayData day) {
                         CharSequence txt = cb.getText();
                         newG = new Goal(txt.toString(), false);
                     }
+
                     dayData.putGoal(newG);
                     dataManager.putDay(new Date(),dayData,getApplicationContext());
                 }

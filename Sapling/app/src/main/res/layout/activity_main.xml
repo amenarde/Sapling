@@ -212,7 +212,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:foregroundGravity="center"
-            android:onClick="startLogging"
+            android:onClick="startShowcase"
             android:src="@drawable/ic_menu"
             fab:fab_label="Daily Log"
             fab:fab_size="normal"

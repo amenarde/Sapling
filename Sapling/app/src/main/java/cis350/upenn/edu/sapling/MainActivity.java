@@ -143,6 +143,11 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, SettingsActivity.class);
         startActivityForResult(i, 4);
     }
+    public void startShowcase(View view){
+        Intent i = new Intent(this, ShowcaseActivity.class);
+        startActivityForResult(i, 5);
+    }
+
 
     private boolean isFirstTime() {
         if (firstTime == null) {
