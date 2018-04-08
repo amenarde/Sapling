@@ -168,26 +168,50 @@ public class OnboardingActivity extends AppCompatActivity {
 
             DataManager dm = DataManager.getInstance();
 
+            boolean a, b, c, d;
+            a = b = c = d = false;
+
+            String as, bs, cs, ds;
+            as = bs = cs = ds = "";
+
+
             Map<String, Metric> activeMetrics = dm.getActiveMetrics(getApplicationContext());
             int i = 1;
             for (String m : activeMetrics.keySet()) {
                 if (i == 1 && !m.equals(metric1) && metric1.length() != 0) {
-                    dm.deprecateModelMetric(m, true, getApplicationContext());
-                    dm.addModelMetric(metric1, true, getApplicationContext());
+                    a = true;
+                    as = m;
                 }
-                if (i == 2 && !m.equals(metric2) && metric1.length() != 0) {
-                    dm.deprecateModelMetric(m, true, getApplicationContext());
-                    dm.addModelMetric(metric2, true, getApplicationContext());
+                if (i == 2 && !m.equals(metric2) && metric2.length() != 0) {
+                    b = true;
+                    bs = m;
                 }
-                if (i == 3 && !m.equals(metric3) && metric1.length() != 0) {
-                    dm.deprecateModelMetric(m, true, getApplicationContext());
-                    dm.addModelMetric(metric3, true, getApplicationContext());
+                if (i == 3 && !m.equals(metric3) && metric3.length() != 0) {
+                    c = true;
+                    cs = m;
                 }
-                if (i == 4 && !m.equals(metric4) && metric1.length() != 0) {
-                    dm.deprecateModelMetric(m, true, getApplicationContext());
-                    dm.addModelMetric(metric4, true, getApplicationContext());;
+                if (i == 4 && !m.equals(metric4) && metric4.length() != 0) {
+                    d = true;
+                    ds = m;
                 }
                 i++;
+            }
+
+            if (a) {
+                dm.deprecateModelMetric(as, true, getApplicationContext());
+                dm.addModelMetric(metric1, true, getApplicationContext());
+            }
+            if (b) {
+                dm.deprecateModelMetric(bs, true, getApplicationContext());
+                dm.addModelMetric(metric2, true, getApplicationContext());
+            }
+            if (c) {
+                dm.deprecateModelMetric(cs, true, getApplicationContext());
+                dm.addModelMetric(metric3, true, getApplicationContext());
+            }
+            if (d) {
+                dm.deprecateModelMetric(ds, true, getApplicationContext());
+                dm.addModelMetric(metric4, true, getApplicationContext());;
             }
 
 
@@ -220,32 +244,52 @@ public class OnboardingActivity extends AppCompatActivity {
 
             DataManager dm = DataManager.getInstance();
 
+            boolean aa, bb, cc, dd; aa = bb = cc = dd = false;
+            String aas, bbs, ccs, dds; aas = bbs = ccs = dds = "";
+
+
             Set<String> activeGoals = dm.getActiveGoals(getApplicationContext());
             int i = 1;
             for (String m : activeGoals) {
                 if (i == 1 && !m.equals(habit1) && habit1.length() != 0) {
-                    dm.deprecateModelGoal(m, getApplicationContext());
-                    dm.addModelGoal(habit1, getApplicationContext());
+                    aa = true;
+                    aas = m;
                 }
-                if (i == 2 && !m.equals(habit2) && habit1.length() != 0) {
-                    dm.deprecateModelGoal(m, getApplicationContext());
-                    dm.addModelGoal(habit2, getApplicationContext());
+                if (i == 2 && !m.equals(habit2) && habit2.length() != 0) {
+                    bb = true;
+                    bbs = m;
                 }
-                if (i == 3 && !m.equals(habit3) && habit1.length() != 0) {
-                    dm.deprecateModelGoal(m, getApplicationContext());
-                    dm.addModelGoal(habit3, getApplicationContext());
+                if (i == 3 && !m.equals(habit3) && habit3.length() != 0) {
+                    cc = true;
+                    ccs = m;
                 }
                 if (i == 4 && !m.equals(habit4) && habit4.length() != 0) {
-                    dm.deprecateModelGoal(m, getApplicationContext());
-                    dm.addModelGoal(habit4, getApplicationContext());
+                    dd = true;
+                    dds = m;
                 }
                 i++;
             }
 
+            if (aa) {
+                dm.deprecateModelGoal(aas, getApplicationContext());
+                dm.addModelGoal(habit1, getApplicationContext());
+            }
+            if (bb) {
+                dm.deprecateModelGoal(bbs, getApplicationContext());
+                dm.addModelGoal(habit2, getApplicationContext());
+            }
+            if (cc) {
+                dm.deprecateModelGoal(ccs, getApplicationContext());
+                dm.addModelGoal(habit3, getApplicationContext());
+            }
+            if (dd) {
+                dm.deprecateModelGoal(dds, getApplicationContext());
+                dm.addModelGoal(habit4, getApplicationContext());
+            }
 
             //return to main activity
-            Intent i = new Intent();
-            setResult(RESULT_OK, i);
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
             //save habits for settings
             finish();
         }
