@@ -89,6 +89,7 @@ class DataModel {
     }
 
     // getters for the metrics/goals sets
+    //TODO: eventually this needs to read from path.txt to get the in-disk versions
     public Set<String> getActiveGoals() { return activeGoals; }
 
     public Set<String> getinactiveGoals() {
