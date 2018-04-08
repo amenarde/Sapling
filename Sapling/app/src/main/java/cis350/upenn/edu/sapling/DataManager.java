@@ -12,18 +12,24 @@ import java.util.Iterator;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class DataManager {
+
     private static DataManager dataManager;
-    
+
+    private static boolean dummyDataFilled = false;
+
     private DataModel dataModel;
     private DBWriter dbWriter;
     
     private DataManager() {
         dataModel = DataModel.getInstance();
         dbWriter = new DBWriter();
+
+
     }
     
     public static DataManager getInstance() {
@@ -34,7 +40,15 @@ public class DataManager {
         return dataManager;
     }
 
+    private void fillDummyData(Context context) {
+        if (dummyDataFilled) return;
+
+        //TODO: autofill a work week
+
+    }
+
     public DayData getDay(Date date, Context context) {
+
 
         DayData dd = new DayData();
         dd.putMetric(new Metric("Antonio's Metric", new Scale(3), true));
@@ -45,23 +59,26 @@ public class DataManager {
         DayData day = dbWriter.get(date, context);
 
         if (day == null) {
-            DayData dx = new DayData();
-            dd.putMetric(new Metric("bad", new Scale(3), true));
-            dd.putGoal(new Goal("more bad", false));
-
-//            DayData toFill = new DayData();
-//            Map<String, Metric> metrics = getActiveMetrics(context);
-//            Set<String> goals = getActiveGoals(context);
-//            for (Metric m : metrics.values()) {
-//                toFill.putMetric(m);
-//            }
-//            for (String name : goals) {
-//                toFill.putGoal(new Goal(name, null));
-//            }
-//            return toFill;
+            return getDefaultDayData(context);
         }
 
         return day;
+    }
+
+    private DayData getDefaultDayData(Context context) {
+        DayData toFill = new DayData();
+
+        Map<String, Metric> metrics = getActiveMetrics(context);
+        Set<String> goals = getActiveGoals(context);
+
+        for (Metric m : metrics.values()) {
+            toFill.putMetric(m);
+        }
+        for (String name : goals) {
+            toFill.putGoal(new Goal(name, null));
+        }
+
+        return toFill;
     }
 
     public void putDay(Date date, DayData dayData, Context context) {
