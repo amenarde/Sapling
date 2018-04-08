@@ -15,6 +15,7 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Tiffany_Yue on 2/23/18.
@@ -79,6 +80,31 @@ public class OnboardingActivity extends AppCompatActivity {
         ((EditText) findViewById(R.id.metrics_input3)).setText(metric3);
         ((EditText) findViewById(R.id.metrics_input4)).setText(metric4);
 
+        Set<String> activeGoals = dm.getActiveGoals(getApplicationContext());
+        System.out.println("active goal size : " + activeGoals.size());
+        int count = 1;
+        String goal1 = "";
+        String goal2 = "";
+        String goal3 = "";
+        String goal4 = "";
+        for (String s : activeGoals) {
+            System.out.println("active g: " + s);
+            if (count == 1) {
+                goal1 = s;
+            } else if (count == 2) {
+                goal2 = s;
+            } else if (count == 3) {
+                goal3 = s;
+            } else {
+                goal4 = s;
+            }
+            count++;
+        }
+        ((EditText) findViewById(R.id.habits_input1)).setText(goal1);
+        ((EditText) findViewById(R.id.habits_input2)).setText(goal2);
+        ((EditText) findViewById(R.id.habits_input3)).setText(goal3);
+        ((EditText) findViewById(R.id.habits_input4)).setText(goal4);
+
 
         metricsLayout.setVisibility(View.INVISIBLE);
         habitsLayout = findViewById(R.id.habits_layout);
@@ -142,6 +168,30 @@ public class OnboardingActivity extends AppCompatActivity {
 
             DataManager dm = DataManager.getInstance();
 
+            Map<String, Metric> activeMetrics = dm.getActiveMetrics(getApplicationContext());
+            int i = 1;
+            for (String m : activeMetrics.keySet()) {
+                if (i == 1 && !m.equals(metric1) && metric1.length() != 0) {
+                    dm.deprecateModelMetric(m, true, getApplicationContext());
+                    dm.addModelMetric(metric1, true, getApplicationContext());
+                }
+                if (i == 2 && !m.equals(metric2) && metric1.length() != 0) {
+                    dm.deprecateModelMetric(m, true, getApplicationContext());
+                    dm.addModelMetric(metric2, true, getApplicationContext());
+                }
+                if (i == 3 && !m.equals(metric3) && metric1.length() != 0) {
+                    dm.deprecateModelMetric(m, true, getApplicationContext());
+                    dm.addModelMetric(metric3, true, getApplicationContext());
+                }
+                if (i == 4 && !m.equals(metric4) && metric1.length() != 0) {
+                    dm.deprecateModelMetric(m, true, getApplicationContext());
+                    dm.addModelMetric(metric4, true, getApplicationContext());;
+                }
+                i++;
+            }
+
+
+
             /*
             // test code for DataManager
             dm.addModelMetric("Productivity", true, getApplicationContext());
@@ -166,19 +216,32 @@ public class OnboardingActivity extends AppCompatActivity {
             String habit3 = ((EditText) findViewById(R.id.habits_input3)).getText().toString();
             String habit4 = ((EditText) findViewById(R.id.habits_input4)).getText().toString();
 
-            /*
-            if (habit1.length() > 0) {
-                dm.addGoal(habit1);
+            Log.v("Habits entered are ", habit1 + " " + habit2 + " " + habit3 + " " + habit4);
+
+            DataManager dm = DataManager.getInstance();
+
+            Set<String> activeGoals = dm.getActiveGoals(getApplicationContext());
+            int i = 1;
+            for (String m : activeGoals) {
+                if (i == 1 && !m.equals(habit1) && habit1.length() != 0) {
+                    dm.deprecateModelGoal(m, getApplicationContext());
+                    dm.addModelGoal(habit1, getApplicationContext());
+                }
+                if (i == 2 && !m.equals(habit2) && habit1.length() != 0) {
+                    dm.deprecateModelGoal(m, getApplicationContext());
+                    dm.addModelGoal(habit2, getApplicationContext());
+                }
+                if (i == 3 && !m.equals(habit3) && habit1.length() != 0) {
+                    dm.deprecateModelGoal(m, getApplicationContext());
+                    dm.addModelGoal(habit3, getApplicationContext());
+                }
+                if (i == 4 && !m.equals(habit4) && habit4.length() != 0) {
+                    dm.deprecateModelGoal(m, getApplicationContext());
+                    dm.addModelGoal(habit4, getApplicationContext());
+                }
+                i++;
             }
-            if (habit2.length() > 0) {
-                dm.addGoal(habit2);
-            }
-            if (habit3.length() > 0) {
-                dm.addGoal(habit3);
-            }
-            if (habit4.length() > 0) {
-                dm.addGoal(habit4);
-            }*/
+            
 
             //return to main activity
             Intent i = new Intent();
