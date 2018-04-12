@@ -1,25 +1,22 @@
 package cis350.upenn.edu.sapling;
 
-//@author: amenarde
-
 import android.content.Context;
-
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
-
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+// @author: amenarde
+// this class is the primary controller that the activities interact with;
+// it uses a model writer to set and receive data it from the database ;
+// it has a data model which it exposes, uses data model to verify data and
+// make placeholder/empty days
 
 public class DataManager {
 
     private static DataManager dataManager;
-
     private static boolean dummyDataFilled = false;
 
     private DataModel dataModel;
@@ -28,8 +25,6 @@ public class DataManager {
     private DataManager() {
         dataModel = DataModel.getInstance();
         dbWriter = new DBWriter();
-
-
     }
     
     public static DataManager getInstance() {
@@ -40,6 +35,7 @@ public class DataManager {
         return dataManager;
     }
 
+    // for demonstration purposes, primes the app with some old data
     private void fillDummyData(Context context) {
         if (dummyDataFilled) return;
 
@@ -47,6 +43,7 @@ public class DataManager {
 
     }
 
+    // returns the DayData for the given day
     public DayData getDay(Date date, Context context) {
 
         DayData day = dbWriter.get(date, context);
@@ -57,6 +54,7 @@ public class DataManager {
         return day;
     }
 
+    // generates an empty template day from dataModel to be filled
     private DayData getDefaultDayData(Context context) {
         DayData toFill = new DayData();
 
@@ -73,6 +71,7 @@ public class DataManager {
         return toFill;
     }
 
+    // pushes DayData to the database
     public void putDay(Date date, DayData dayData, Context context) {
         if (dayData == null) {
             throw new IllegalArgumentException("null argument");
@@ -81,6 +80,7 @@ public class DataManager {
         dbWriter.put(date, dayData, context);
     }
 
+    // Gets data for the last week (today and last 6 days)
     // Hands back in order: today, yesterday, ...
     public Iterator<DayData> getLastWeek(Date date, Context context) {
         ArrayList<DayData> list = new ArrayList<DayData>(7);
