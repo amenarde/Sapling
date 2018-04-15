@@ -70,16 +70,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-
         DataManager dm = DataManager.getInstance();
+
         Iterator<DayData> pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
+
+        Map<String, Metric> am = dm.getActiveMetrics(getApplicationContext());
+
+        for (String s : am.keySet()) {
+            Log.v("activemetric found:", s);
+        }
+
 
         setPlantImg(dm);
 
         ///TIFFANY'S GRAPH CODE
-
         DataPoint[] points = new DataPoint[7];
         int dayInWeek = 7;
+
+
+
         while (pastWeek.hasNext()) {
             double totalNum = 0;
             DayData dayData = pastWeek.next();
@@ -89,13 +98,16 @@ public class MainActivity extends AppCompatActivity {
             int numMetrics = 0;
             while(metrics.hasNext()) {
                 Metric m = metrics.next();
-                numMetrics++;
-                if (m.getPositive()){
-                    totalNum += m.getRating();
-                } else {
-                    totalNum += (7 - m.getRating());
+                Log.v("Main Activity:", "Metric " + m.getName() + " is active? " + dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName()));
+                if (m.getRating() != -1 && dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName())) {
+                    numMetrics++;
+                    if (m.getPositive()){
+                        totalNum += m.getRating();
+                    } else {
+                        totalNum += (7 - m.getRating());
+                    }
+                    Log.v("Main Activity:", "Day " + dayInWeek + " found with metric " + numMetrics + ", " + m.getName() + " with value " + m.getRating());
                 }
-                Log.v("Main Activity:", "Day " + dayInWeek + " found with metric " + numMetrics + ", " + m.getName() + " with value " + m.getRating());
             }
             Log.v("Main Activity", "total num calculated is " + totalNum);
             double val = totalNum/numMetrics;
@@ -121,8 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         // updates the elements as per the current day's existing metrics, "--" if not present
-
-
         Map<String, Metric> todayMetrics = dm.getActiveMetrics(getApplicationContext());
         int i = 0;
         for (Metric m : todayMetrics.values()) {

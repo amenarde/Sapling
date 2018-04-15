@@ -56,7 +56,7 @@ class DataModel {
     public void addDefaultMetrics(Context c) throws IOException {
         addMetric("Happiness", true, c);
         addMetric("Productivity", true, c);
-        addMetric("Stress", false, c);
+        addMetric("Stress", true, c);
         addMetric("Health", true, c);
     }
 

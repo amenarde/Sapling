@@ -122,16 +122,6 @@ private void populateSeekBars(final DayData day) {
             });
         }
 
-        dataManager.addModelMetric("Productivity", true, getApplicationContext());
-        dataManager.addModelMetric("Fatness", false, getApplicationContext());
-        dataManager.addModelMetric("Sadness", false, getApplicationContext());
-        dataManager.addModelGoal("Go to the gym", getApplicationContext());
-        dataManager.addModelGoal("Eat fruits", getApplicationContext());
-        dataManager.addModelGoal("Go to class", getApplicationContext());
-
-        dataManager.deprecateModelGoal("Go to class", getApplicationContext());
-        dataManager.deprecateModelMetric("Fatness", false, getApplicationContext());
-
         Map<String, Metric> metrics = dataManager.getActiveMetrics(this.getApplicationContext());
         Set<String> goals = dataManager.getActiveGoals(this.getApplicationContext());
         Map<String, Metric> inactiveMetrics = dataManager.getinativeMetrics(this.getApplicationContext());
