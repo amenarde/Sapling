@@ -22,42 +22,42 @@ public class DayData {
             throw new IllegalArgumentException("Metrics must be non-null");
         }
 
-        metrics.put(metric.getName(), metric);
+        metrics.put(metric.getName().toLowerCase(), metric);
     }
 
     public Metric getMetric(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Name must be non-null");
         }
-        return metrics.get(name);
+        return metrics.get(name.toLowerCase());
     }
 
     public void putGoal(Goal goal) {
         if (goal == null) {
             throw new IllegalArgumentException("Goals must be non-null");
         }
-        goals.put(goal.getName(), goal);
+        goals.put(goal.getName().toLowerCase(), goal);
     }
 
     public Goal getGoal(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Name must be non-null");
         }
-        return goals.get(name);
+        return goals.get(name.toLowerCase());
     }
 
     public boolean hasGoal(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Name must be non-null");
         }
-        return goals.containsKey(name);
+        return goals.containsKey(name.toLowerCase());
     }
 
     public boolean hasMetric(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Name must be non-null");
         }
-        return metrics.containsKey(name);
+        return metrics.containsKey(name.toLowerCase());
     }
 
     public Collection<Metric> getAllMetrics() {
