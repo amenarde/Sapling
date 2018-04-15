@@ -69,9 +69,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-
         DataManager dm = DataManager.getInstance();
+        if (firstTime) dm.purgeFiles(this.getApplicationContext());
         Iterator<DayData> pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
 
         setPlantImg(dm);

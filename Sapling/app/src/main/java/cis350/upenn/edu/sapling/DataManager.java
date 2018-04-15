@@ -1,6 +1,10 @@
 package cis350.upenn.edu.sapling;
 
 import android.content.Context;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -51,6 +55,12 @@ public class DataManager {
         return day;
     }
 
+    public DayData removeDayData (Date date, Context context) {
+        DayData oldData = dbWriter.remove(date, context);
+        //returns new data
+        return this.getDay(date, context);
+    }
+
     // generates an empty template day from dataModel to be filled
     private DayData getDefaultDayData(Context context) {
         DayData toFill = new DayData();
@@ -89,6 +99,14 @@ public class DataManager {
     }
     
     /* <-------------------------------- DataModel Methods --------------------------> */
+
+    public void addUsername(String name, Context c) throws IOException {
+        dataModel.addName(name, c);
+    }
+
+    public String getUsername() {
+        return dataModel.getUsername();
+    }
 
     // adds a few default metrics to the metric map and txt file
     public void addDefaultMetrics(Context c) throws IOException {
@@ -148,6 +166,15 @@ public class DataManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void purgeFiles(Context c) {
+        File dataDir = c.getFilesDir();
+        for (File f : dataDir.listFiles()) {
+            String name = f.getName();
+            if (name.equals("path.txt") || name.endsWith(".JSON")) f.delete();
+        }
+
     }
     
 }
