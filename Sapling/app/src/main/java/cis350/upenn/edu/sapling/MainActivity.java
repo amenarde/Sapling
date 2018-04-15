@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         series.setDataPointsRadius(10);
         series.setThickness(8);
         graph.addSeries(series);
-        
+
         graph.getViewport().setMinX(1);
         graph.getViewport().setMaxX(7);
         graph.getViewport().setMinY(0.0);
