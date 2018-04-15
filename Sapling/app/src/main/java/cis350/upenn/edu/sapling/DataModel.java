@@ -74,34 +74,34 @@ class DataModel {
 
     // add a goal to currently track
     public void addGoal(String goal, Context c) throws IOException {
-        if (!activeGoals.contains(goal)) {
-            activeGoals.add(goal);
+        if (!activeGoals.contains(goal.toLowerCase())) {
+            activeGoals.add(goal.toLowerCase());
             modelIO.updateFile(c);
         }
     }
     // deprecate a goal
     public void deprecateGoal(String goal, Context c) throws IOException {
-        if (activeGoals.contains(goal)) {
-            activeGoals.remove(goal);
-            inactiveGoals.add(goal);
+        if (activeGoals.contains(goal.toLowerCase())) {
+            activeGoals.remove(goal.toLowerCase());
+            inactiveGoals.add(goal.toLowerCase());
             modelIO.updateFile(c);
         }
     }
 
     // add a metric to currently track
     public void addMetric(String name, boolean positive, Context c) throws IOException {
-        if (!activeMetrics.containsKey(name)) {
-            Metric metric = new Metric(name, positive);
-            activeMetrics.put(name, metric);
+        if (!activeMetrics.containsKey(name.toLowerCase())) {
+            Metric metric = new Metric(name.toLowerCase(), positive);
+            activeMetrics.put(name.toLowerCase(), metric);
             modelIO.updateFile(c);
         }
     }
 
     // deprecate a metric
     public void deprecateMetric(String name, boolean positive, Context c) throws IOException {
-        if (activeMetrics.containsKey(name)) {
-            activeMetrics.remove(name);
-            inactiveMetrics.put(name, new Metric(name, positive));
+        if (activeMetrics.containsKey(name.toLowerCase())) {
+            activeMetrics.remove(name.toLowerCase());
+            inactiveMetrics.put(name.toLowerCase(), new Metric(name.toLowerCase(), positive));
             modelIO.updateFile(c);
         }
     }
