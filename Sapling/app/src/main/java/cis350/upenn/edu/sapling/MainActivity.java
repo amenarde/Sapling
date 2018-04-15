@@ -95,7 +95,9 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     totalNum += (7 - m.getRating());
                 }
+                Log.v("Main Activity:", "Day " + dayInWeek + " found with metric " + numMetrics + ", " + m.getName() + " with value " + m.getRating());
             }
+            Log.v("Main Activity", "total num calculated is " + totalNum);
             double val = totalNum/numMetrics;
 
             //assign to proper day
@@ -108,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(10);
         series.setThickness(8);
+        graph.removeAllSeries();
         graph.addSeries(series);
 
 
