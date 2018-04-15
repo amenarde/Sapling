@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_back"
     tools:context="cis350.upenn.edu.sapling.DisplayActivity">
+<<<<<<< HEAD
 
     <TextView
         android:id="@+id/ground_background"
@@ -27,5 +28,11 @@
         app:layout_constraintStart_toStartOf="@+id/ground_background"
         app:layout_constraintTop_toTopOf="@+id/ground_background" />
 
+=======
+<GridView
+    android:id="@+id/heatmap"
+    android:layout_width="720px"
+    android:layout_height="match_parent"/>
+>>>>>>> ed23aed7ca8c32c6a999cf86c06a713af798edcb
 
 </android.support.constraint.ConstraintLayout>
