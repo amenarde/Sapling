@@ -13,8 +13,8 @@ private DataManager dm;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        setWelcome();
         this.dm = DataManager.getInstance();
+        setWelcome();
     }
     private void resetAll(View view){
         dm.purgeFiles(getApplicationContext());
