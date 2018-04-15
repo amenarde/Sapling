@@ -25,6 +25,7 @@ class DataModel {
     static Set<String> activeGoals;
     static HashSet<String> inactiveGoals;
     static ModelIO modelIO;    // an IO writer that keeps track of the same data in a local txt file
+    static String username;
 
     static DataModel getInstance() {
         if (instance == null) {
@@ -66,6 +67,11 @@ class DataModel {
         addGoal("Go to the gym", c);
     }
 
+    public void addName(String name, Context c) throws IOException {
+        username = name;
+        modelIO.updateFile(c);
+    }
+
     // add a goal to currently track
     public void addGoal(String goal, Context c) throws IOException {
         if (!activeGoals.contains(goal)) {
@@ -101,7 +107,6 @@ class DataModel {
     }
 
     // getters for the metrics/goals sets
-    //TODO: eventually this needs to read from path.txt to get the in-disk versions
     public Set<String> getActiveGoals() { return activeGoals; }
 
     public Set<String> getinactiveGoals() {
@@ -114,5 +119,5 @@ class DataModel {
         return inactiveMetrics;
     }
 
-
+    public String getUsername() { return username; }
 }

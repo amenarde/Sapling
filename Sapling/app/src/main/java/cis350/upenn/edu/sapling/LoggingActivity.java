@@ -24,7 +24,6 @@ public class LoggingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logging);
-
         // COMMUNICATES W/DATA LAYER
         dataManager = DataManager.getInstance();
         Date today = new Date();
@@ -127,7 +126,7 @@ private void populateSeekBars(final DayData day) {
         Map<String, Metric> inactiveMetrics = dataManager.getinactiveMetrics(this.getApplicationContext());
         Set<String> inactiveGoals = dataManager.getinactiveGoals(this.getApplicationContext());
 
-        System.out.println("=--------------SHIT----------");
+        System.out.println("------------------SHIT----------");
         System.out.println("Active metrics " + metrics.size());
         System.out.println("Active goals " + goals.size());
         System.out.println("inactive metrics " + inactiveMetrics.size());
