@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_back"
     tools:context="cis350.upenn.edu.sapling.DisplayActivity">
-
+<GridView
+    android:id="@+id/heatmap"
+    android:layout_width="720px"
+    android:layout_height="match_parent"/>
 
 </android.support.constraint.ConstraintLayout>

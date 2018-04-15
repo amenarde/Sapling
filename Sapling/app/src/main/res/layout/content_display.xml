@@ -8,5 +8,4 @@
     tools:context="cis350.upenn.edu.sapling.DisplayActivity"
     android:background="@drawable/gradient_back"
     tools:showIn="@layout/activity_display">
-
 </android.support.constraint.ConstraintLayout>

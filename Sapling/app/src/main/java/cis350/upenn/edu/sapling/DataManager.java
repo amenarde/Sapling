@@ -2,6 +2,7 @@ package cis350.upenn.edu.sapling;
 
 import android.content.Context;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.io.IOException;
@@ -37,10 +38,6 @@ public class DataManager {
 
     // for demonstration purposes, primes the app with some old data
     private void fillDummyData(Context context) {
-        if (dummyDataFilled) return;
-
-        //TODO: autofill a work week
-
     }
 
     // returns the DayData for the given day

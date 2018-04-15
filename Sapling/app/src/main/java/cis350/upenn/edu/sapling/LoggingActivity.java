@@ -122,45 +122,5 @@ private void populateSeekBars(final DayData day) {
             });
         }
 
-        dataManager.addModelMetric("Productivity", true, getApplicationContext());
-        dataManager.addModelMetric("Fatness", false, getApplicationContext());
-        dataManager.addModelMetric("Sadness", false, getApplicationContext());
-        dataManager.addModelGoal("Go to the gym", getApplicationContext());
-        dataManager.addModelGoal("Eat fruits", getApplicationContext());
-        dataManager.addModelGoal("Go to class", getApplicationContext());
-
-        dataManager.deprecateModelGoal("Go to class", getApplicationContext());
-        dataManager.deprecateModelMetric("Fatness", false, getApplicationContext());
-
-        Map<String, Metric> metrics = dataManager.getActiveMetrics(this.getApplicationContext());
-        Set<String> goals = dataManager.getActiveGoals(this.getApplicationContext());
-        Map<String, Metric> inactiveMetrics = dataManager.getinativeMetrics(this.getApplicationContext());
-        Set<String> inactiveGoals = dataManager.getinactiveGoals(this.getApplicationContext());
-
-        System.out.println("=--------------SHIT----------");
-        System.out.println("Active metrics " + metrics.size());
-        System.out.println("Active goals " + goals.size());
-        System.out.println("inactive metrics " + inactiveMetrics.size());
-        System.out.println("inactive goals " + inactiveGoals.size());
-
-
-        for (String s : metrics.keySet()) {
-            Metric metric = metrics.get(s);
-            System.out.println("Active Metric: " + metric.getName() + " " + metric.getPositive());
-        }
-        System.out.println();
-        for (String s : goals) {
-            System.out.println("Active Goal: " + s);
-        }
-        System.out.println();
-        for (String s : inactiveMetrics.keySet()) {
-            Metric metric = inactiveMetrics.get(s);
-            System.out.println("Inactive Metric: " + metric.getName() + " " + metric.getPositive());
-        }
-        System.out.println();
-        for (String s : inactiveGoals) {
-            System.out.println("Inactive Goal: " + s);
-        }
-
     }
 }
