@@ -167,6 +167,27 @@ public class MainActivity extends AppCompatActivity {
             }
             i++;
         }
+
+        if (i == 0) {
+            ((TextView) findViewById(R.id.metric1_title)).setText("");
+            ((TextView) findViewById(R.id.metric1_stat)).setText("");
+            i++;
+        }
+        if (i == 1) {
+            ((TextView) findViewById(R.id.metric2_title)).setText("");
+            ((TextView) findViewById(R.id.metric2_stat)).setText("");
+            i++;
+        }
+        if (i == 2) {
+            ((TextView) findViewById(R.id.metric3_title)).setText("");
+            ((TextView) findViewById(R.id.metric3_stat)).setText("");
+            i++;
+        }
+        if (i == 3) {
+            ((TextView) findViewById(R.id.metric4_title)).setText("");
+            ((TextView) findViewById(R.id.metric4_stat)).setText("");
+
+        }
         /*
         DayData todayData = dm.getMetricsForDay(Calendar.getInstance().getTime());
 
