@@ -77,13 +77,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginStart="40dp"
-                android:layout_marginLeft="40dp"
+                android:layout_marginStart="204dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/prod_stat"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="30sp"
-                app:layout_constraintStart_toEndOf="@+id/metric2_stat"
+                app:layout_constraintStart_toStartOf="parent"
                 fab:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -103,25 +102,24 @@
                 android:id="@+id/metric4_stat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="284dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/stress_stat"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="30sp"
-                app:layout_constraintStart_toEndOf="@+id/metric3_stat"
+                app:layout_constraintStart_toStartOf="parent"
                 fab:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/metric2_stat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
-                android:layout_marginLeft="28dp"
+                android:layout_marginStart="124dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/health_stat"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="30sp"
-                app:layout_constraintStart_toEndOf="@+id/metric1_stat"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -140,13 +138,12 @@
                 android:id="@+id/metric3_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginLeft="32dp"
+                android:layout_marginStart="204dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/productivity_label"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/metric2_stat"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView

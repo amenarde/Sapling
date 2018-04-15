@@ -62,7 +62,7 @@ class DataModel {
 
     // adds a few default goals to track - used in onboarding activity
     public void addDefaultGoals(Context c) throws IOException {
-        addGoal("Eat an Apple a day", c);
+        addGoal("Eat an Apple", c);
         addGoal("Go to the gym", c);
     }
 

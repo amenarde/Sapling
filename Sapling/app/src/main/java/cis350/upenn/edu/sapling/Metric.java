@@ -34,7 +34,6 @@ public class Metric {
     public String getName() {
         return name;
     }
-
     public boolean hasScale() {
         return scale == null;
     }
