@@ -144,6 +144,11 @@ public class OnboardingActivity extends AppCompatActivity {
             //save name for settings
             String name = ((EditText) findViewById(R.id.name_input)).getText().toString();
             Log.v("Name entered is ", name);
+            DataManager dm = DataManager.getInstance();
+            try {
+                System.out.println("ADDDING A FUCKING NAME");
+                dm.addUsername(name, this.getApplicationContext());
+            } catch (Exception e) { e.printStackTrace(); }
         } else if (currState == 1) {
             metricsLayout.startAnimation(out);
 

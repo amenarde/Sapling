@@ -43,22 +43,25 @@ private void populateSeekBars(final DayData day) {
         textV.setText(label);
         textV.setTextSize(20);
 
+
+
         MetricScale seekBar = new MetricScale(this, label, m.getPositive());
         seekBar.setMax(6);
         ShapeDrawable thumb = new ShapeDrawable(new OvalShape());
         thumb.setIntrinsicHeight(30);
         thumb.setIntrinsicWidth(30);
-        seekBar.setMinimumWidth(1000);
+        seekBar.setMinimumWidth(1250);
         seekBar.setThumb(thumb);
         if (m.hasScale()) {
             seekBar.setProgress(m.getRating() - 1);
         } else {
-            seekBar.setProgress(3);
+            seekBar.setProgress(0);
         }
         seekBar.setVisibility(View.VISIBLE);
 
         metric_labels.addView(textV);
         metric_labels.addView(seekBar);
+        metric_labels.addView(seekBar.tracker);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -75,6 +78,14 @@ private void populateSeekBars(final DayData day) {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
                 MetricScale sk = (MetricScale) seekBar;
+                TextView textView = sk.tracker;
+
+                //move tracker
+                int val = (progress * (seekBar.getWidth() - 2 * seekBar.getThumbOffset())) / seekBar.getMax();
+                textView.setText("" + (progress + 1));
+                textView.setX(seekBar.getX() + val + seekBar.getThumbOffset() / 2);
+
+                //update DayData
                 Metric newM = new Metric(sk.getName(), new Scale(progress + 1), sk.getPositive());
                 day.putMetric(newM);
                 dataManager.putDay(new Date(),dayData,getApplicationContext());

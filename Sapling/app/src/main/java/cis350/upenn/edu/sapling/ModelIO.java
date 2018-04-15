@@ -46,14 +46,6 @@ public class ModelIO {
         this.path = "";
         this.dm = dm;
         this.modelFilePath = "path.txt";
-        File f = new File(this.modelFilePath);
-        if (!f.exists()) {
-            try {
-                f.createNewFile();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public boolean hasActiveMetric(String s, Context c) {

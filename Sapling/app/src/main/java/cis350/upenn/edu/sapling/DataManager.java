@@ -58,6 +58,12 @@ public class DataManager {
         return day;
     }
 
+    public DayData removeDayData (Date date, Context context) {
+        DayData oldData = dbWriter.remove(date, context);
+        //returns new data
+        return this.getDay(date, context);
+    }
+
     // generates an empty template day from dataModel to be filled
     private DayData getDefaultDayData(Context context) {
         DayData toFill = new DayData();
