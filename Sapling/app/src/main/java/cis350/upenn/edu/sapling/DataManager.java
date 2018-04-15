@@ -1,6 +1,10 @@
 package cis350.upenn.edu.sapling;
 
 import android.content.Context;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -151,6 +155,15 @@ public class DataManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void purgeFiles(Context c) {
+        File dataDir = c.getFilesDir();
+        for (File f : dataDir.listFiles()) {
+            String name = f.getName();
+            if (name.equals("path.txt") || name.endsWith(".JSON")) f.delete();
+        }
+
     }
     
 }
