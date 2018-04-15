@@ -124,7 +124,7 @@ private void populateSeekBars(final DayData day) {
 
         Map<String, Metric> metrics = dataManager.getActiveMetrics(this.getApplicationContext());
         Set<String> goals = dataManager.getActiveGoals(this.getApplicationContext());
-        Map<String, Metric> inactiveMetrics = dataManager.getinativeMetrics(this.getApplicationContext());
+        Map<String, Metric> inactiveMetrics = dataManager.getinactiveMetrics(this.getApplicationContext());
         Set<String> inactiveGoals = dataManager.getinactiveGoals(this.getApplicationContext());
 
         System.out.println("=--------------SHIT----------");

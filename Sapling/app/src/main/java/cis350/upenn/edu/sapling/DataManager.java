@@ -116,7 +116,7 @@ public class DataManager {
         return dataModel.getActiveMetrics();
     }
 
-    public Map<String, Metric> getinativeMetrics(Context c) {
+    public Map<String, Metric> getinactiveMetrics(Context c) {
         return dataModel.getinactiveMetrics();
     }
 
