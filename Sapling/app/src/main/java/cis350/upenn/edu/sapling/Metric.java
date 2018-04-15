@@ -35,7 +35,7 @@ public class Metric {
         return name;
     }
     public boolean hasScale() {
-        return scale == null;
+        return scale != null;
     }
 
     public void putScale(Scale scale) {

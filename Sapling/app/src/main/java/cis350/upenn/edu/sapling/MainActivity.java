@@ -95,7 +95,9 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     totalNum += (7 - m.getRating());
                 }
+                Log.v("Main Activity:", "Day " + dayInWeek + " found with metric " + numMetrics + ", " + m.getName() + " with value " + m.getRating());
             }
+            Log.v("Main Activity", "total num calculated is " + totalNum);
             double val = totalNum/numMetrics;
 
             //assign to proper day
@@ -103,20 +105,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
+        graph.getViewport().setMinX(1);
+        graph.getViewport().setMaxX(7);
+        graph.getViewport().setMinY(0.0);
+        graph.getViewport().setMaxY(7.0);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setXAxisBoundsManual(true);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
         series.setColor(Color.WHITE);
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(10);
         series.setThickness(8);
+        graph.removeAllSeries();
         graph.addSeries(series);
-
-        graph.getViewport().setMinX(1);
-        graph.getViewport().setMaxX(7);
-        graph.getViewport().setMinY(0.0);
-        graph.getViewport().setMaxY(7.0);
-
-        graph.getViewport().setYAxisBoundsManual(true);
-        graph.getViewport().setXAxisBoundsManual(true);
 
 
         // updates the elements as per the current day's existing metrics, "--" if not present
