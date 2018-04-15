@@ -97,6 +97,14 @@ public class DataManager {
     
     /* <-------------------------------- DataModel Methods --------------------------> */
 
+    public void addUsername(String name, Context c) throws IOException {
+        dataModel.addName(name, c);
+    }
+
+    public String getUsername() {
+        return dataModel.getUsername();
+    }
+
     // adds a few default metrics to the metric map and txt file
     public void addDefaultMetrics(Context c) throws IOException {
         dataModel.addDefaultMetrics(c);
