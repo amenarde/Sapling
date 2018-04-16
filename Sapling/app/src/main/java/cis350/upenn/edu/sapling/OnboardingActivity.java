@@ -145,7 +145,6 @@ public class OnboardingActivity extends AppCompatActivity {
             String name = ((EditText) findViewById(R.id.name_input)).getText().toString();
             Log.v("Name entered is ", name);
             try {
-                System.out.println("ADDDING A FUCKING NAME");
                 dm.addUsername(name, this.getApplicationContext());
             } catch (Exception e) { e.printStackTrace(); }
         } else if (currState == 1) {
