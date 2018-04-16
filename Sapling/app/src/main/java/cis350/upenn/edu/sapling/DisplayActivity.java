@@ -46,14 +46,14 @@ public class DisplayActivity extends AppCompatActivity {
         GridView heatMap = (GridView) findViewById(R.id.heatmap);
         ListView namesList = (ListView) findViewById(R.id.goal_names);
 
-        heatMap.setNumColumns(8);
+        heatMap.setNumColumns(7);
 
         Set<String> goals = DataManager.getInstance().getActiveGoals(this);
         String[] names = goals.toArray(new String[goals.size()]);
 
         boolean[][] data = new boolean[names.length][7];
         Iterator<DayData> week = DataManager.getInstance().getLastWeek(endDate, this);
-        int y = 6;
+        int y = 0;
 
         while (week.hasNext()) {
             DayData dd = week.next();
@@ -67,8 +67,8 @@ public class DisplayActivity extends AppCompatActivity {
                 }
             }
 
-            y--;
-            if (y == -1) {
+            y++;
+            if (y == 7) {
                 break;
             }
         }

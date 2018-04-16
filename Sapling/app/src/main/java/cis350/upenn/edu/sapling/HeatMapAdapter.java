@@ -46,18 +46,17 @@ public class HeatMapAdapter extends BaseAdapter{
         Object toDisplay = getItem(i);
 
         if ((Boolean)toDisplay) {
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(80, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(60, 60);
 
             viewItem.setLayoutParams(params);
-            viewItem.setBackgroundColor(Color.GREEN);
-            //viewItem.setPadding(5,5,5,5);
-            viewItem.setText("x");
+            viewItem.setBackgroundColor(Color.rgb(0,128,0));
+            viewItem.setPadding(5,5,5,5);
         }
         else {
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(80, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(60, 60);
             viewItem.setLayoutParams(params);
             viewItem.setBackgroundColor(Color.DKGRAY);
-            //viewItem.setPadding(5,5,5,5);
+            viewItem.setPadding(5,5,5,5);
         }
 
         return viewItem;
