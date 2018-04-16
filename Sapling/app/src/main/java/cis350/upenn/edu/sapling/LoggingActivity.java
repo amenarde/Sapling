@@ -24,7 +24,6 @@ public class LoggingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logging);
-
         // COMMUNICATES W/DATA LAYER
         dataManager = DataManager.getInstance();
         Date today = new Date();
@@ -133,22 +132,12 @@ private void populateSeekBars(final DayData day) {
             });
         }
 
-        dataManager.addModelMetric("Productivity", true, getApplicationContext());
-        dataManager.addModelMetric("Fatness", false, getApplicationContext());
-        dataManager.addModelMetric("Sadness", false, getApplicationContext());
-        dataManager.addModelGoal("Go to the gym", getApplicationContext());
-        dataManager.addModelGoal("Eat fruits", getApplicationContext());
-        dataManager.addModelGoal("Go to class", getApplicationContext());
-
-        dataManager.deprecateModelGoal("Go to class", getApplicationContext());
-        dataManager.deprecateModelMetric("Fatness", false, getApplicationContext());
-
         Map<String, Metric> metrics = dataManager.getActiveMetrics(this.getApplicationContext());
         Set<String> goals = dataManager.getActiveGoals(this.getApplicationContext());
         Map<String, Metric> inactiveMetrics = dataManager.getinativeMetrics(this.getApplicationContext());
         Set<String> inactiveGoals = dataManager.getinactiveGoals(this.getApplicationContext());
 
-        System.out.println("=--------------SHIT----------");
+        System.out.println("------------------SHIT----------");
         System.out.println("Active metrics " + metrics.size());
         System.out.println("Active goals " + goals.size());
         System.out.println("inactive metrics " + inactiveMetrics.size());

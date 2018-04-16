@@ -100,6 +100,11 @@ public class ModelIO {
     public void updateFile(Context c) throws IOException {
         OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(new File(c.getFilesDir(),
                                 this.modelFilePath), false));
+        if (this.dm.username != null) {
+            writer.write("Username: \n");
+            writer.write(this.dm.username + "\n");
+        }
+
         if (this.dm.getActiveGoals().size() > 0) {
             writer.write("Active Goals: \n");
             writeGoalContent(writer, this.dm.getActiveGoals());
