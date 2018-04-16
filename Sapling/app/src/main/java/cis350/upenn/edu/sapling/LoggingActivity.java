@@ -32,18 +32,18 @@ public class LoggingActivity extends AppCompatActivity {
         populateSeekBars(dayData);
     }
 
+
 private void populateSeekBars(final DayData day) {
     Iterator<Metric> itMetrics = day.getAllMetrics().iterator();
 
     while(itMetrics.hasNext()) {
         Metric m = itMetrics.next();
+
         String label = m.getName().toUpperCase();
         LinearLayout metric_labels = findViewById(R.id.metrics_view_list);
         TextView textV = new TextView(this);
         textV.setText(label);
         textV.setTextSize(20);
-
-
 
         MetricScale seekBar = new MetricScale(this, label, m.getPositive());
         seekBar.setMax(6);
@@ -53,8 +53,10 @@ private void populateSeekBars(final DayData day) {
         seekBar.setMinimumWidth(1250);
         seekBar.setThumb(thumb);
         if (m.hasScale()) {
+            System.out.println("SCALE IS : " + m.getRating());
             seekBar.setProgress(m.getRating() - 1);
         } else {
+            System.out.println("SCALE DOES NOT EXIST");
             seekBar.setProgress(0);
         }
         seekBar.setVisibility(View.VISIBLE);
@@ -77,6 +79,7 @@ private void populateSeekBars(final DayData day) {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                System.out.println("PROGRESS CHANGES to " + (progress + 1));
                 MetricScale sk = (MetricScale) seekBar;
                 TextView textView = sk.tracker;
 
@@ -86,7 +89,7 @@ private void populateSeekBars(final DayData day) {
                 textView.setX(seekBar.getX() + val + seekBar.getThumbOffset() / 2);
 
                 //update DayData
-                Metric newM = new Metric(sk.getName(), new Scale(progress + 1), sk.getPositive());
+                Metric newM = new Metric(sk.getName().toLowerCase(), new Scale(progress + 1), sk.getPositive());
                 dayData.putMetric(newM);
                 dataManager.putDay(new Date(),dayData,getApplicationContext());
             }

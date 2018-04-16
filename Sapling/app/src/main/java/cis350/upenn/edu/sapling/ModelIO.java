@@ -109,25 +109,21 @@ public class ModelIO {
         writer.write("\r\n");
         if (this.dm.getActiveMetrics().size() > 0) {
             writer.write("Active Metrics: \n");
-            System.out.println("ac");
             writeMetricContent(writer, this.dm.getActiveMetrics());
         }
         writer.write("\r\n");
         if (this.dm.getinactiveMetrics().size() > 0) {
             writer.write("Inactive Metrics: \n");
-            System.out.println("Inac");
             writeMetricContent(writer, this.dm.getinactiveMetrics());
         }
         writer.write("\r\n");
         writer.close();
-        System.out.println("done");
     }
 
     // helper method that writes the content of a set to a file
     public void writeMetricContent(OutputStreamWriter writer, Map<String, Metric> content) throws IOException {
         for (String s : content.keySet()) {
             Metric metric = content.get(s);
-            System.out.println(metric.getName() + ", " + metric.getPositive() + "\n");
             writer.write(metric.getName() + ", " + metric.getPositive() + "\n");
         }
     }

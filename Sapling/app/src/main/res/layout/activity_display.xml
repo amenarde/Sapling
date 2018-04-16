@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+=======
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+>>>>>>> 40527830a1c3ca53369ed64f3c154e970a57dcc8
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gradient_back"
     tools:context="cis350.upenn.edu.sapling.DisplayActivity">
+<<<<<<< HEAD
 
     <ListView
         android:id="@+id/goal_names"
@@ -21,5 +28,34 @@
     android:padding="1dp"
     android:layout_width="420px" />
 
+=======
+<<<<<<< HEAD
+
+    <TextView
+        android:id="@+id/ground_background"
+        android:layout_width="320dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="32dp"
+        android:background="#8CFFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph"
+        android:layout_width="300dp"
+        android:layout_height="225dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="@+id/ground_background"
+        app:layout_constraintTop_toTopOf="@+id/ground_background" />
+
+=======
+<GridView
+    android:id="@+id/heatmap"
+    android:layout_width="720px"
+    android:layout_height="match_parent"/>
+>>>>>>> ed23aed7ca8c32c6a999cf86c06a713af798edcb
+>>>>>>> 40527830a1c3ca53369ed64f3c154e970a57dcc8
 
 </android.support.constraint.ConstraintLayout>
