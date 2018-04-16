@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         series.setThickness(8);
         graph.removeAllSeries();
         graph.addSeries(series);
+        graph.setTitle("Quality of Life");
 
 
         // updates the elements as per the current day's existing metrics, "--" if not present
