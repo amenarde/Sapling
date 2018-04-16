@@ -28,10 +28,10 @@ public class OnboardingActivity extends AppCompatActivity {
     int currState = 0;
     final Animation in = new AlphaAnimation(0.0f, 1.0f);
     final Animation out = new AlphaAnimation(1.0f, 0.0f);
+    boolean runGuide = true;
     ConstraintLayout nameLayout;
     ConstraintLayout metricsLayout;
     ConstraintLayout habitsLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +39,16 @@ public class OnboardingActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
-
+        int requestCode = getIntent().getIntExtra("requestCode",1);
+        if (requestCode == 2) {runGuide = false;}
         //locate views necessary
         nameLayout = findViewById(R.id.name_layout);
 
         //set the default metrics
         metricsLayout = findViewById(R.id.metrics_layout);
+
+        Boolean calledInApp = getIntent().getBooleanExtra("calledInApp", false);
+        runGuide = !calledInApp;
 
         DataManager dm = DataManager.getInstance();
         try {
@@ -291,18 +295,27 @@ public class OnboardingActivity extends AppCompatActivity {
                 dm.addModelGoal(habit4, getApplicationContext());
             }
 
-            //return to main activity
-//            Intent intent = new Intent();
-//            setResult(RESULT_OK, intent);
-            Intent showCaseIntent = new Intent(this, ShowcaseActivity.class);
-            startActivityForResult(showCaseIntent, 5);
-            Intent intent = new Intent();
-            setResult(RESULT_OK, intent);
-            //save habits for settings
-            finish();
+            if (runGuide) {
+                Intent showCaseIntent = new Intent(this, ShowcaseActivity.class);
+                startActivityForResult(showCaseIntent, 1);
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                //save habits for settings
+                finish();
+            } else {
+                startMainActivity(view);
+            }
+
+
+
+
+            //startMainActivity(view);
         }
 
     }
-
-
+    private void startMainActivity(View view){
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("calledInApp", true);
+        startActivityForResult(i, 2);
+    }
 }

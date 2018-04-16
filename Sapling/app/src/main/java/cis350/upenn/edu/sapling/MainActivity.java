@@ -54,16 +54,20 @@ public class MainActivity extends AppCompatActivity {
         mPreferences.edit().clear().commit();
 
         super.onCreate(savedInstanceState);
-
-        //if the first time opening the app, jump to onboarding process
-        if (isFirstTime()) {
-            (new NotificationBuilder()).setNotificationCalendar();
-            Intent i = new Intent(this, OnboardingActivity.class);
-            startActivityForResult(i, 5);
+        //checks if mainactivity has been called from another activity
+//        boolean calledInApp = getIntent().getBooleanExtra("calledInApp", false);
+//if (!calledInApp) {
+    //if the first time opening the app, jump to onboarding process
+        Boolean calledInApp = getIntent().getBooleanExtra("calledInApp", false);
+        if (!calledInApp) {
+            if (isFirstTime()) {
+                (new NotificationBuilder()).setNotificationCalendar();
+                Intent i = new Intent(this, OnboardingActivity.class);
+                i.putExtra("requestCode", 1);
+                startActivityForResult(i, 1);
+            }
         }
-
         setContentView(R.layout.activity_main);
-
     }
 
     @Override

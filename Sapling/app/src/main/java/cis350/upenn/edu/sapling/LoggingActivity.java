@@ -44,7 +44,6 @@ private void populateSeekBars(final DayData day) {
         textV.setTextSize(20);
 
 
-
         MetricScale seekBar = new MetricScale(this, label, m.getPositive());
         seekBar.setMax(6);
         ShapeDrawable thumb = new ShapeDrawable(new OvalShape());

@@ -24,12 +24,12 @@
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.298"></TextView>
+        app:layout_constraintVertical_bias="0.256"></TextView>
 
     <TextView
         android:id="@+id/message_display"
-        android:layout_width="283dp"
-        android:layout_height="55dp"
+        android:layout_width="273dp"
+        android:layout_height="42dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -40,10 +40,10 @@
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.111"></TextView>
+        app:layout_constraintVertical_bias="0.097"></TextView>
 
     <Button
         android:id="@+id/day_reset_button"
@@ -65,8 +65,8 @@
 
     <Button
         android:id="@+id/all_reset_button"
-        android:layout_width="124dp"
-        android:layout_height="63dp"
+        android:layout_width="123dp"
+        android:layout_height="69dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
