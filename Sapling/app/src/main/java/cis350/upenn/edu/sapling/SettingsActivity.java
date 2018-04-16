@@ -3,6 +3,7 @@ package cis350.upenn.edu.sapling;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.Date;
 
@@ -12,13 +13,19 @@ private DataManager dm;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        setWelcome();
         this.dm = DataManager.getInstance();
     }
-    public void resetAll(View view){
+    private void resetAll(View view){
         dm.purgeFiles(getApplicationContext());
     }
-    public void resetToday(View view){
+    private void resetToday(View view){
         Date today = new Date();
         dm.removeDayData(today,getApplicationContext());
+    }
+    private void setWelcome() {
+        String message = "Hi " + dm.getUsername() + ", \n Looking for a fresh start?";
+        TextView display = findViewById(R.id.message_display);
+        display.setText(message);
     }
 }
