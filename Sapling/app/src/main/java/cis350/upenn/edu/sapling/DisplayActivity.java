@@ -94,40 +94,40 @@ public class DisplayActivity extends AppCompatActivity {
         System.out.println("num metrics is " + metrics.size());
         int metricCount = 0;
         for (Metric m : metrics) {
-            pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
-            int dayInWeek = 7;
-            while (pastWeek.hasNext()) {
+            if (dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase())) {
+                pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
+                int dayInWeek = 7;
+                while (pastWeek.hasNext()) {
 
-                DayData dayData = pastWeek.next();
-                dayInWeek -= 1;
-                if (dayData.getMetric(m.getName().toLowerCase()).getRating() != -1) {
-                    //assign to proper day
-                    if (metricCount == 0) {
-                        pointsM1[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
-                    } else if (metricCount == 1) {
-                        pointsM2[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
-                    } else if (metricCount == 2) {
-                        pointsM3[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
-                    } else if (metricCount == 3) {
-                        pointsM4[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
-                    }
-                } else {
-                    //assign to proper day
-                    if (metricCount == 0) {
-                        pointsM1[dayInWeek] = new DataPoint(dayInWeek + 1, 0);
-                    } else if (metricCount == 1) {
-                        pointsM2[dayInWeek] = new DataPoint(dayInWeek + 1, 0);
-                    } else if (metricCount == 2) {
-                        pointsM3[dayInWeek] = new DataPoint(dayInWeek + 1, 0);
-                    } else if (metricCount == 3) {
-                        pointsM4[dayInWeek] = new DataPoint(dayInWeek + 1, 0);
+                    DayData dayData = pastWeek.next();
+                    dayInWeek -= 1;
+                    if (dayData.getMetric(m.getName().toLowerCase()).getRating() != -1) {
+                        //assign to proper day
+                        if (metricCount == 0) {
+                            pointsM1[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
+                        } else if (metricCount == 1) {
+                            pointsM2[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
+                        } else if (metricCount == 2) {
+                            pointsM3[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
+                        } else if (metricCount == 3) {
+                            pointsM4[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
+                        }
+                    } else {
+                        //assign to proper day
+                        if (metricCount == 0) {
+                            pointsM1[dayInWeek] = new DataPoint(dayInWeek + 1, 0);
+                        } else if (metricCount == 1) {
+                            pointsM2[dayInWeek] = new DataPoint(dayInWeek + 1, 0);
+                        } else if (metricCount == 2) {
+                            pointsM3[dayInWeek] = new DataPoint(dayInWeek + 1, 0);
+                        } else if (metricCount == 3) {
+                            pointsM4[dayInWeek] = new DataPoint(dayInWeek + 1, 0);
+                        }
                     }
                 }
             }
-
             metricCount++;
         }
-
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
         graph.getViewport().setMinX(1);
@@ -137,34 +137,40 @@ public class DisplayActivity extends AppCompatActivity {
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setXAxisBoundsManual(true);
 
-        LineGraphSeries<DataPoint> series1 = new LineGraphSeries<>(pointsM1);
-        LineGraphSeries<DataPoint> series2 = new LineGraphSeries<>(pointsM2);
-        LineGraphSeries<DataPoint> series3 = new LineGraphSeries<>(pointsM3);
-        LineGraphSeries<DataPoint> series4 = new LineGraphSeries<>(pointsM4);
+        if (pointsM1[0] != null) {
+            LineGraphSeries<DataPoint> series1 = new LineGraphSeries<>(pointsM1);
+            series1.setColor(Color.WHITE);
+            series1.setDrawDataPoints(true);
+            series1.setDataPointsRadius(10);
+            series1.setThickness(8);
+            graph.addSeries(series1);
+        }
+        if (pointsM2[0] != null) {
+            LineGraphSeries<DataPoint> series2 = new LineGraphSeries<>(pointsM2);
+            series2.setColor(Color.rgb(230, 255, 247));
+            series2.setDrawDataPoints(true);
+            series2.setDataPointsRadius(10);
+            series2.setThickness(8);
+            graph.addSeries(series2);
+        }
+        if (pointsM3[0] != null) {
+            LineGraphSeries<DataPoint> series3 = new LineGraphSeries<>(pointsM3);
+            series3.setColor(Color.rgb(179, 255, 231));
+            series3.setDrawDataPoints(true);
+            series3.setDataPointsRadius(10);
+            series3.setThickness(8);
+            graph.addSeries(series3);
+        }
+        if (pointsM4[0] != null) {
+            LineGraphSeries<DataPoint> series4 = new LineGraphSeries<>(pointsM4);
+            series4.setColor(Color.rgb(128, 255, 215));
+            series4.setDrawDataPoints(true);
+            series4.setDataPointsRadius(10);
+            series4.setThickness(8);
+            graph.addSeries(series4);
+        }
 
-        series1.setColor(Color.WHITE);
-        series1.setDrawDataPoints(true);
-        series1.setDataPointsRadius(10);
-        series1.setThickness(8);
-        series2.setColor(Color.rgb(0, 204, 136));
-        series2.setDrawDataPoints(true);
-        series2.setDataPointsRadius(10);
-        series2.setThickness(8);
-        series3.setColor(Color.rgb(128, 255, 212));
-        series3.setDrawDataPoints(true);
-        series3.setDataPointsRadius(10);
-        series3.setThickness(8);
-        series4.setColor(Color.rgb(0, 77, 51));
-        series4.setDrawDataPoints(true);
-        series4.setDataPointsRadius(10);
-        series4.setThickness(8);
-
-
-        graph.removeAllSeries();
-        graph.addSeries(series1);
-        graph.addSeries(series2);
-        graph.addSeries(series3);
-        graph.addSeries(series4);
+        graph.setTitle("Last Week's Data");
 
     }
 }

@@ -151,10 +151,10 @@ public class OnboardingActivity extends AppCompatActivity {
             metricsLayout.startAnimation(out);
 
             //save metrics for settings
-            String metric1 = ((EditText) findViewById(R.id.metrics_input1)).getText().toString();
-            String metric2 = ((EditText) findViewById(R.id.metrics_input2)).getText().toString();
-            String metric3 = ((EditText) findViewById(R.id.metrics_input3)).getText().toString();
-            String metric4 = ((EditText) findViewById(R.id.metrics_input4)).getText().toString();
+            String metric1 = ((EditText) findViewById(R.id.metrics_input1)).getText().toString().toLowerCase();
+            String metric2 = ((EditText) findViewById(R.id.metrics_input2)).getText().toString().toLowerCase();
+            String metric3 = ((EditText) findViewById(R.id.metrics_input3)).getText().toString().toLowerCase();
+            String metric4 = ((EditText) findViewById(R.id.metrics_input4)).getText().toString().toLowerCase();
             Log.v("Metrics entered are ", metric1 + " " + metric2 + " " + metric3 + " " + metric4);
 
             Map<String, Metric> activeMetrics = dm.getActiveMetrics(getApplicationContext());
@@ -203,11 +203,11 @@ public class OnboardingActivity extends AppCompatActivity {
             HashSet<String> activeMetricsSet = new HashSet<String>();
 
             for (Metric m : activeMetrics.values()) {
-                activeMetricsSet.add(m.getName());
+                activeMetricsSet.add(m.getName().toLowerCase());
             }
             for (String m : activeMetricsSet) {
-                if (!newMetrics.contains(m)) {
-                    dm.deprecateModelMetric(m, true, getApplicationContext());
+                if (!newMetrics.contains(m.toLowerCase())) {
+                    dm.deprecateModelMetric(m.toLowerCase(), true, getApplicationContext());
                 }
             }
 
