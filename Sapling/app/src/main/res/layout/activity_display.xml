@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gradient_back"
     tools:context="cis350.upenn.edu.sapling.DisplayActivity">
-<GridView
+
+    <ListView
+        android:id="@+id/goal_names"
+        android:layout_width="95dp"
+        android:layout_toLeftOf="@+id/heatmap"
+        android:layout_height="match_parent" />
+
+    <GridView
     android:id="@+id/heatmap"
-    android:layout_width="720px"
-    android:layout_height="match_parent"/>
+    app:layout_constraintLeft_toRightOf="@+id/goal_names"
+    android:layout_toRightOf="@+id/goal_names"
+    android:layout_height="match_parent"
+    android:padding="1dp"
+    android:layout_width="420px" />
+
 
 </android.support.constraint.ConstraintLayout>

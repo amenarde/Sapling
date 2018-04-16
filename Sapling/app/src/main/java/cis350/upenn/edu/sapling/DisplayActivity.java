@@ -1,5 +1,6 @@
 package cis350.upenn.edu.sapling;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,8 +33,10 @@ public class DisplayActivity extends AppCompatActivity {
 
 
     private void fillHeatMap(Date endDate) {
-        GridView gameField = (GridView) findViewById(R.id.heatmap);
-        gameField.setNumColumns(8);
+        GridView heatMap = (GridView) findViewById(R.id.heatmap);
+        ListView namesList = (ListView) findViewById(R.id.goal_names);
+
+        heatMap.setNumColumns(8);
 
         Set<String> goals = DataManager.getInstance().getActiveGoals(this);
         String[] names = goals.toArray(new String[goals.size()]);
@@ -59,7 +64,47 @@ public class DisplayActivity extends AppCompatActivity {
         }
 
 
-        HeatMapAdapter adapter = new HeatMapAdapter(this, data, names);
-        gameField.setAdapter(adapter);
+        GoalNamesAdapter goalAdapter = new GoalNamesAdapter(this, names);
+        HeatMapAdapter heatMapAdapter = new HeatMapAdapter(this, data);
+
+        namesList.setAdapter(goalAdapter);
+        heatMap.setAdapter(heatMapAdapter);
+    }
+
+    class GoalNamesAdapter extends BaseAdapter {
+
+        String[] names;
+        Context context;
+
+        public GoalNamesAdapter(Context context, String[] names) {
+            this.names = names;
+            this.context = context;
+        }
+
+        @Override
+        public int getCount() {
+            return names.length;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return names[i];
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0; //unused
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            TextView viewItem = new TextView(context);
+            String name = (String)getItem(i);
+
+            viewItem.setBackgroundColor(Color.WHITE);
+            viewItem.setText(name);
+
+            return viewItem;
+        }
     }
 }

@@ -87,7 +87,7 @@ private void populateSeekBars(final DayData day) {
 
                 //update DayData
                 Metric newM = new Metric(sk.getName(), new Scale(progress + 1), sk.getPositive());
-                day.putMetric(newM);
+                dayData.putMetric(newM);
                 dataManager.putDay(new Date(),dayData,getApplicationContext());
             }
         });
