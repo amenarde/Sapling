@@ -34,8 +34,9 @@ public class Metric {
     public String getName() {
         return name;
     }
+
     public boolean hasScale() {
-        return scale == null;
+        return scale != null;
     }
 
     public void putScale(Scale scale) {
@@ -48,6 +49,7 @@ public class Metric {
 
     // returns -1 if a scale is not present, otherwise returns the true value of the Scale,
     // the range of which is defined by the scale class
+
     public int getRating() {
         if (scale == null) {
             return -1;
