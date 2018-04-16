@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/birthday_display"
-        android:layout_width="182dp"
-        android:layout_height="39dp"
+        android:layout_width="260dp"
+        android:layout_height="120dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -18,35 +18,17 @@
         android:fontFamily="sans-serif"
         android:text="@string/username"
         android:textColor="@color/colorButton"
-        android:textSize="26sp"
+        android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.654"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.138"></TextView>
-
-    <TextView
-        android:id="@+id/name_display"
-        android:layout_width="113dp"
-        android:layout_height="36dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/birthday"
-        android:textColor="@color/colorButton"
-        android:textSize="26sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.701"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.272"></TextView>
+        app:layout_constraintVertical_bias="0.181"></TextView>
 
     <Button
-        android:id="@+id/modify_button"
-        android:layout_width="97dp"
+        android:id="@+id/day_reset_button"
+        android:layout_width="121dp"
         android:layout_height="57dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -60,11 +42,11 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.657" />
+        app:layout_constraintVertical_bias="0.63" />
 
     <Button
-        android:id="@+id/reset_button"
-        android:layout_width="97dp"
+        android:id="@+id/all_reset_button"
+        android:layout_width="119dp"
         android:layout_height="45dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -78,44 +60,7 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788" />
-
-    <TextView
-        android:id="@+id/birthday_label"
-        android:layout_width="97dp"
-        android:layout_height="39dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="sans-serif"
-        android:text="@string/username_label"
-        android:textColor="@color/colorButton"
-        android:textSize="26sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.125"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.138"></TextView>
-
-    <TextView
-        android:id="@+id/name_label"
-        android:layout_width="113dp"
-        android:layout_height="36dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/birthday_label"
-        android:textColor="@color/colorButton"
-        android:textSize="26sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.134"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.272"></TextView>
+        app:layout_constraintVertical_bias="0.775" />
 
 
 </android.support.constraint.ConstraintLayout>
