@@ -13,18 +13,18 @@ private DataManager dm;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        setWelcome();
         this.dm = DataManager.getInstance();
+        setWelcome();
     }
-    private void resetAll(View view){
+    public void resetAll(View view){
         dm.purgeFiles(getApplicationContext());
     }
-    private void resetToday(View view){
+    public void resetToday(View view){
         Date today = new Date();
         dm.removeDayData(today,getApplicationContext());
     }
     private void setWelcome() {
-        String message = "Hi " + dm.getUsername() + ", \n Looking for a fresh start?";
+        String message = "Hi " + dm.getUsername() + ",";
         TextView display = findViewById(R.id.message_display);
         display.setText(message);
     }

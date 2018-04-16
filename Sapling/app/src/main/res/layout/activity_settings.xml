@@ -8,27 +8,47 @@
     tools:context="cis350.upenn.edu.sapling.SettingsActivity">
 
     <TextView
-        android:id="@+id/message_display"
-        android:layout_width="260dp"
-        android:layout_height="120dp"
+        android:id="@+id/message_display2"
+        android:layout_width="275dp"
+        android:layout_height="117dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
-        android:text="@string/username"
+        android:text="@string/settings_message"
         android:textColor="@color/colorButton"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.277"></TextView>
+        app:layout_constraintVertical_bias="0.298"></TextView>
+
+    <TextView
+        android:id="@+id/message_display"
+        android:layout_width="283dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/settings_message"
+        android:textColor="@color/colorButton"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.111"></TextView>
 
     <Button
         android:id="@+id/day_reset_button"
-        android:layout_width="121dp"
-        android:layout_height="57dp"
+        android:layout_width="125dp"
+        android:layout_height="71dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -39,29 +59,27 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.63" />
+        app:layout_constraintVertical_bias="0.628" />
 
     <Button
         android:id="@+id/all_reset_button"
-        android:layout_width="119dp"
-        android:layout_height="45dp"
+        android:layout_width="124dp"
+        android:layout_height="63dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@color/off_white"
-        android:text="@string/reset_label"
         android:onClick="resetAll"
+        android:text="@string/reset_label"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775" />
+        app:layout_constraintVertical_bias="0.828" />
 
 
 </android.support.constraint.ConstraintLayout>

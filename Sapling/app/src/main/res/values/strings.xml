@@ -24,9 +24,8 @@
     <string name="reset_label">Reset All</string>
     <string name="modify_label">Reset Today\'s Data</string>
     <string name="username_label">Hi </string>
-    <string name="birthday_label">Name? </string>
+    <string name="settings_message">Looking for a fresh start? </string>
     <string name="username">Jane Doe </string>
-    <string name="birthday">01/03/1993</string>
     <string name="end">End</string>
 
     <string name="sc_qof_title">Quality of Life</string>
