@@ -224,25 +224,25 @@ public class OnboardingActivity extends AppCompatActivity {
             Set<String> activeGoals = dm.getActiveGoals(getApplicationContext());
 
             if (habit1.length() > 0 && !activeGoals.contains(habit1)) {
-                dm.addModelMetric(habit1, true, getApplicationContext());
+                dm.addModelGoal(habit1, getApplicationContext());
                 newGoals.add(habit1);
             } else if (habit1.length() > 0) {
                 newGoals.add(habit1);
             }
             if (habit2.length() > 0 && !activeGoals.contains(habit2)) {
-                dm.addModelMetric(habit2, true, getApplicationContext());
+                dm.addModelGoal(habit2, getApplicationContext());
                 newGoals.add(habit2);
             } else if (habit2.length() > 0) {
                 newGoals.add(habit2);
             }
             if (habit3.length() > 0 && !activeGoals.contains(habit3)) {
-                dm.addModelMetric(habit3, true, getApplicationContext());
+                dm.addModelGoal(habit3, getApplicationContext());
                 newGoals.add(habit3);
             } else if (habit3.length() > 0) {
                 newGoals.add(habit3);
             }
             if (habit4.length() > 0 && !activeGoals.contains(habit4)) {
-                dm.addModelMetric(habit4, true, getApplicationContext());
+                dm.addModelGoal(habit4, getApplicationContext());
                 newGoals.add(habit4);
             } else if (habit4.length() > 0) {
                 newGoals.add(habit4);
