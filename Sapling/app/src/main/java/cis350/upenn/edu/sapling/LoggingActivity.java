@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -103,6 +104,7 @@ private void populateSeekBars(final DayData day) {
 }
     private void voidPopulateCheckBoxes(final DayData dayData) {
         Iterator<Goal> itGoals = dayData.getAllGoals().iterator();
+        DataManager dm = DataManager.getInstance();
 
         while (itGoals.hasNext()) {
             Goal g = itGoals.next();
@@ -112,32 +114,35 @@ private void populateSeekBars(final DayData day) {
             String input = g.getName();
             String formattedText = input.substring(0, 1).toUpperCase() + input.substring(1);
 
-            CheckBox checkBox = new CheckBox(this);
-            checkBox.setText(formattedText);
-            checkBox.setTextSize(20);
-            checkBox.setChecked(g.getCompleted());
-            goal_labels.addView(checkBox);
+            if (dm.getActiveGoals(getApplicationContext()).contains(g.getName().toLowerCase())) {
+                CheckBox checkBox = new CheckBox(this);
+                checkBox.setText(formattedText);
+                checkBox.setTextSize(20);
+                checkBox.setChecked(g.getCompleted());
+                goal_labels.addView(checkBox);
 
-            checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Is the view now checked?
-                    boolean checked = ((CheckBox) view).isChecked();
-                    CheckBox cb = (CheckBox) view;
-                    String label = cb.getText().toString().toLowerCase();
-                    Goal newG;
+                checkBox.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Is the view now checked?
+                        boolean checked = ((CheckBox) view).isChecked();
+                        CheckBox cb = (CheckBox) view;
+                        String label = cb.getText().toString().toLowerCase();
+                        Goal newG;
 
-                    if (checked) {
-                        CharSequence txt = cb.getText();
-                        newG = new Goal(txt.toString(), true);
-                    } else {
-                        CharSequence txt = cb.getText();
-                        newG = new Goal(txt.toString(), false);
+                        if (checked) {
+                            CharSequence txt = cb.getText();
+                            newG = new Goal(txt.toString(), true);
+                        } else {
+                            CharSequence txt = cb.getText();
+                            newG = new Goal(txt.toString(), false);
+                        }
+                        dayData.putGoal(newG);
+                        dataManager.putDay(new Date(),dayData,getApplicationContext());
                     }
-                    dayData.putGoal(newG);
-                    dataManager.putDay(new Date(),dayData,getApplicationContext());
-                }
-            });
+                });
+            }
+
         }
     }
 }

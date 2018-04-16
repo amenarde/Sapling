@@ -145,7 +145,6 @@ public class OnboardingActivity extends AppCompatActivity {
             String name = ((EditText) findViewById(R.id.name_input)).getText().toString();
             Log.v("Name entered is ", name);
             try {
-                System.out.println("ADDDING A FUCKING NAME");
                 dm.addUsername(name, this.getApplicationContext());
             } catch (Exception e) { e.printStackTrace(); }
         } else if (currState == 1) {
@@ -214,7 +213,6 @@ public class OnboardingActivity extends AppCompatActivity {
 
         } else {
 
-
             //save habits for settings
             String habit1 = ((EditText) findViewById(R.id.habits_input1)).getText().toString();
             String habit2 = ((EditText) findViewById(R.id.habits_input2)).getText().toString();
@@ -226,25 +224,25 @@ public class OnboardingActivity extends AppCompatActivity {
             Set<String> activeGoals = dm.getActiveGoals(getApplicationContext());
 
             if (habit1.length() > 0 && !activeGoals.contains(habit1)) {
-                dm.addModelMetric(habit1, true, getApplicationContext());
+                dm.addModelGoal(habit1, getApplicationContext());
                 newGoals.add(habit1);
             } else if (habit1.length() > 0) {
                 newGoals.add(habit1);
             }
             if (habit2.length() > 0 && !activeGoals.contains(habit2)) {
-                dm.addModelMetric(habit2, true, getApplicationContext());
+                dm.addModelGoal(habit2, getApplicationContext());
                 newGoals.add(habit2);
             } else if (habit2.length() > 0) {
                 newGoals.add(habit2);
             }
             if (habit3.length() > 0 && !activeGoals.contains(habit3)) {
-                dm.addModelMetric(habit3, true, getApplicationContext());
+                dm.addModelGoal(habit3, getApplicationContext());
                 newGoals.add(habit3);
             } else if (habit3.length() > 0) {
                 newGoals.add(habit3);
             }
             if (habit4.length() > 0 && !activeGoals.contains(habit4)) {
-                dm.addModelMetric(habit4, true, getApplicationContext());
+                dm.addModelGoal(habit4, getApplicationContext());
                 newGoals.add(habit4);
             } else if (habit4.length() > 0) {
                 newGoals.add(habit4);
