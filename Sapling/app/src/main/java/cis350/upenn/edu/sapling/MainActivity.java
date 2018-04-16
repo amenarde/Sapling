@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
         //if the first time opening the app, jump to onboarding process
         if (isFirstTime()) {
+            DataManager dm = DataManager.getInstance();
+            dm.purgeFiles(this.getApplicationContext());
             firstTime = false;
             (new NotificationBuilder()).setNotificationCalendar();
             Intent i = new Intent(this, OnboardingActivity.class);
@@ -73,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         DataManager dm = DataManager.getInstance();
-        if (firstTime) {dm.purgeFiles(this.getApplicationContext());}
         Iterator<DayData> pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
 
         setPlantImg(dm);

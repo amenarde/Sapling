@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.io.IOException;
 import java.util.Map;
@@ -169,12 +171,20 @@ public class DataManager {
     }
 
     public void purgeFiles(Context c) {
+        System.out.println("ENTERED PURGE");
+        // delete disk storage
         File dataDir = c.getFilesDir();
         for (File f : dataDir.listFiles()) {
             String name = f.getName();
-            if (name.equals("path.txt") || name.endsWith(".JSON")) f.delete();
+            if (name.equals("path.txt") || name.endsWith(".JSON")) {
+                if (name.equals("path.txt")) System.out.println("DELETING THE PATH.TXT");
+                f.delete();
+            }
         }
-
+        // delete in memory storage
+        dataModel.activeMetrics = new HashMap<>();
+        dataModel.inactiveMetrics = new HashMap<>();
+        dataModel.activeGoals = new HashSet<>();
+        dataModel.inactiveGoals = new HashSet<>();
     }
-    
 }
