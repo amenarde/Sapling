@@ -214,7 +214,6 @@ public class OnboardingActivity extends AppCompatActivity {
 
         } else {
 
-
             //save habits for settings
             String habit1 = ((EditText) findViewById(R.id.habits_input1)).getText().toString();
             String habit2 = ((EditText) findViewById(R.id.habits_input2)).getText().toString();
