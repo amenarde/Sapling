@@ -23,6 +23,8 @@ import java.util.Set;
 
 public class OnboardingActivity extends AppCompatActivity {
 
+    // the different steps in the onboarding process are "states" - these are incremented and fade in/
+    // out layouts as necessary.
     int currState = 0;
     final Animation in = new AlphaAnimation(0.0f, 1.0f);
     final Animation out = new AlphaAnimation(1.0f, 0.0f);
@@ -42,7 +44,6 @@ public class OnboardingActivity extends AppCompatActivity {
         nameLayout = findViewById(R.id.name_layout);
 
         //set the default metrics
-
         metricsLayout = findViewById(R.id.metrics_layout);
 
         DataManager dm = DataManager.getInstance();
@@ -284,7 +285,6 @@ public class OnboardingActivity extends AppCompatActivity {
                 dm.deprecateModelGoal(dds, getApplicationContext());
                 dm.addModelGoal(habit4, getApplicationContext());
             }
-            
 
             //return to main activity
 //            Intent intent = new Intent();
