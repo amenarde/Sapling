@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -46,14 +47,14 @@ public class HeatMapAdapter extends BaseAdapter{
         Object toDisplay = getItem(i);
 
         if ((Boolean)toDisplay) {
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(60, 60);
+            AbsListView.LayoutParams params = new AbsListView.LayoutParams(60, 60);
 
             viewItem.setLayoutParams(params);
             viewItem.setBackgroundColor(Color.rgb(0,128,0));
             viewItem.setPadding(5,5,5,5);
         }
         else {
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(60, 60);
+            AbsListView.LayoutParams params = new AbsListView.LayoutParams(60, 60);
             viewItem.setLayoutParams(params);
             viewItem.setBackgroundColor(Color.DKGRAY);
             viewItem.setPadding(5,5,5,5);
