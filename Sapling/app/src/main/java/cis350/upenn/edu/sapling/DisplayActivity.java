@@ -173,8 +173,9 @@ public class DisplayActivity extends AppCompatActivity {
         Collection<Metric> metrics = dm.getDay(new Date(), getApplicationContext()).getAllMetrics();
         System.out.println("num metrics is " + metrics.size());
         int metricCount = 0;
-        for (Metric m : metrics) {
-            if (dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase()) && displayedMetrics.contains(m.getName().toLowerCase())) {
+
+        for (Metric m : allActiveMetrics) {
+            if (displayedMetrics.contains(m.getName())) {
                 pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
                 int dayInWeek = 7;
                 while (pastWeek.hasNext()) {
@@ -205,8 +206,8 @@ public class DisplayActivity extends AppCompatActivity {
                         }
                     }
                 }
+                metricCount++;
             }
-            metricCount++;
         }
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
