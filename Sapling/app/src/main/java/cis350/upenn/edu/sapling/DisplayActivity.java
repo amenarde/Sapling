@@ -29,15 +29,18 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Collection;
+import java.util.HashSet;
 
 public class DisplayActivity extends AppCompatActivity {
+
+    HashSet<String> displayedMetrics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
 
-        fillHeatMap(new Date());
+
 
     }
 
@@ -118,10 +121,40 @@ public class DisplayActivity extends AppCompatActivity {
         }
     }
 
+    public void hideMetric(String s) {
+        if (displayedMetrics.contains(s)) {
+            displayedMetrics.remove(s);
+        }
+        fillGraph();
+    }
+
+    public void showMetric(String s) {
+        if (!displayedMetrics.contains(s)) {
+            displayedMetrics.add(s);
+        }
+        fillGraph();
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
+        //fillHeatMap(new Date());
 
+        //the handler should remove that view from the displayedMetrics set and call fillGraph();
+
+        displayedMetrics = new HashSet<String>();
+        DataManager dm = DataManager.getInstance();
+        Collection<Metric> metrics = dm.getDay(new Date(), getApplicationContext()).getAllMetrics();
+        for (Metric m : metrics) {
+            if (dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase())) {
+                displayedMetrics.add(m.getName().toLowerCase());
+            }
+        }
+        fillGraph();
+
+    }
+
+    private void fillGraph() {
         DataManager dm = DataManager.getInstance();
 
         ///TIFFANY'S GRAPH CODE
@@ -139,14 +172,14 @@ public class DisplayActivity extends AppCompatActivity {
         System.out.println("num metrics is " + metrics.size());
         int metricCount = 0;
         for (Metric m : metrics) {
-            if (dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase())) {
+            if (dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase()) && displayedMetrics.contains(m.getName().toLowerCase())) {
                 pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
                 int dayInWeek = 7;
                 while (pastWeek.hasNext()) {
 
                     DayData dayData = pastWeek.next();
                     dayInWeek -= 1;
-                    if (dayData.getMetric(m.getName().toLowerCase()).getRating() != -1) {
+                    if (dayData.getMetric(m.getName().toLowerCase()) != null && dayData.getMetric(m.getName().toLowerCase()).getRating() != -1) {
                         //assign to proper day
                         if (metricCount == 0) {
                             pointsM1[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
@@ -216,6 +249,5 @@ public class DisplayActivity extends AppCompatActivity {
         }
 
         graph.setTitle("Last Week's Data");
-
     }
 }
