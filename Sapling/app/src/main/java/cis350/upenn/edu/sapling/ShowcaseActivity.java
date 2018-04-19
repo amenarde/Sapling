@@ -34,14 +34,68 @@ public class ShowcaseActivity extends AppCompatActivity implements OnShowcaseEve
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_showcase);
 
-
         onClick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 switchShowcase();
             }
         };
 
+        createAllShowcaseViews();
+
+//Optional delay between creation of activity and showcase view
+//        CountDownTimer cdt = new CountDownTimer(2500, 1000) {
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//            }
+//            @Override
+//            public void onFinish() {
+//                showcase.show();
+//            }
+//        };
+//        cdt.start();
+
+      //graph_sv.hide();
+
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ImageView plant_view = (ImageView) findViewById(R.id.homepage_plant);
+                        switchImage(plant_view);
+                    }
+                });
+            }
+        };
+        timer.schedule(timerTask, 1000, 1000);
+    }
+
+
+    @Override
+    public void onShowcaseViewHide(ShowcaseView showcaseView) {
+
+    }
+
+    @Override
+    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+
+    }
+
+    @Override
+    public void onShowcaseViewShow(ShowcaseView showcaseView) {
+
+    }
+
+    @Override
+    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
+
+    }
+
+    private void createAllShowcaseViews() {
         lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
@@ -49,7 +103,6 @@ public class ShowcaseActivity extends AppCompatActivity implements OnShowcaseEve
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
         lps.setMargins(margin, margin, margin, margin);
 
-//create all showcase views
         ViewTarget graph_target = new ViewTarget(R.id.graph, this);
         graph_sv = new ShowcaseView.Builder(this)
                 .setShowcaseDrawer(new SquareShowcaseView(getResources(), 1))
@@ -104,60 +157,8 @@ public class ShowcaseActivity extends AppCompatActivity implements OnShowcaseEve
                 .build();
         showcase.setButtonPosition(lps);
         showcase.overrideButtonClick(onClick);
-        showcase.hide();
-
-        CountDownTimer cdt = new CountDownTimer(2500, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-            @Override
-            public void onFinish() {
-                showcase.show();
-            }
-        };
-        cdt.start();
-
-
-      //graph_sv.hide();
-
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ImageView plant_view = (ImageView) findViewById(R.id.homepage_plant);
-                        switchImage(plant_view);
-                    }
-                });
-            }
-        };
-        timer.schedule(timerTask, 1000, 1000);
+        showcase.show();
     }
-
-
-    @Override
-    public void onShowcaseViewHide(ShowcaseView showcaseView) {
-
-    }
-
-    @Override
-    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
-
-    }
-
-    @Override
-    public void onShowcaseViewShow(ShowcaseView showcaseView) {
-
-    }
-
-    @Override
-    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
-
-    }
-
 private void switchShowcase () {
         switch (nextShowcase) {
             case 1:

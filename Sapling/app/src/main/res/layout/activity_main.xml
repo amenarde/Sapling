@@ -205,28 +205,16 @@
             tools:layout_editor_absoluteY="0dp" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/menu_logging"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:foregroundGravity="center"
-            android:onClick="startDisplay"
-            android:src="@drawable/ic_log_round"
-            fab:fab_label="Daily Log"
-            fab:fab_size="normal"
-            tools:layout_editor_absoluteX="95dp"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/menu_goaltracking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:foregroundGravity="center"
-            android:onClick="startGoalTracking"
-            android:src="@drawable/ic_tracking_round"
-            fab:fab_label="Goal Tracking"
-            fab:fab_size="normal"
-            tools:layout_editor_absoluteX="95dp"
-            tools:layout_editor_absoluteY="0dp" />
+        android:id="@+id/menu_logging"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:onClick="startLogging"
+        android:src="@drawable/ic_log_round"
+        fab:fab_label="DailyLog"
+        fab:fab_size="normal"
+        tools:layout_editor_absoluteX="95dp"
+        tools:layout_editor_absoluteY="0dp"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/menu_display"
