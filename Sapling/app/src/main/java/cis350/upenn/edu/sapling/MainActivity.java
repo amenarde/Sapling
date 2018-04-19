@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         DataManager dm = DataManager.getInstance();
         Iterator<DayData> pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
 
-        setPlantImg(dm);
+        setPlantImg(qualityOfLife(dm));
 
         ///TIFFANY'S GRAPH CODE
         DataPoint[] points = new DataPoint[7];
@@ -201,11 +201,6 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(i, 2);
     }
 
-    public void startGoalTracking(View view){
-        Intent i = new Intent(this, GoalTrackingActivity.class);
-        startActivityForResult(i, 3);
-    }
-
     public void startSettings(View view){
         Intent i = new Intent(this, SettingsActivity.class);
         startActivityForResult(i, 4);
@@ -214,7 +209,6 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, ShowcaseActivity.class);
         startActivityForResult(i, 5);
     }
-
 
     private boolean isFirstTime() {
         if (firstTime == null) {
@@ -273,44 +267,54 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-   private void setPlantImg (DataManager dm) {
-       Iterator<DayData> pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
+    private double qualityOfLife (DataManager dm) {
 
-       //Algorithm for plant health
-       double averageScale = 0;
-       int daysInWeek = 0;
-       while (pastWeek.hasNext()) {
-           DayData dayData = pastWeek.next();
-           daysInWeek += 1;
+        Iterator<DayData> pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
+        //Algorithm for plant health
+        double totalRating = 0;
+        int numMetrics = 0;
+        while (pastWeek.hasNext()) {
+            DayData dayData = pastWeek.next();
+            Iterator<Metric> metrics = dayData.getAllMetrics().iterator();
+            while(metrics.hasNext()) {
+                Metric m = metrics.next();
+                if (dm.getActiveMetrics(getApplicationContext())
+                        .containsKey(m.getName().toLowerCase())) {
+                    if (m.getPositive() && m.hasScale() && m.getRating()!= -1) {
+                        totalRating += m.getRating();
+                        numMetrics += 1;
+                    } else if (m.hasScale())  {
+                        totalRating += (8 - m.getRating());
+                        numMetrics += 1;
+                    }
+                }
+            }
+        }
+        System.out.println("numMetrics =" + numMetrics);
+        System.out.println("total rating =" + totalRating);
+        System.out.println("average rating =" + (totalRating/numMetrics));
+        return  totalRating / numMetrics;
+    }
 
-           Iterator<Metric> metrics = dayData.getAllMetrics().iterator();
-           while(metrics.hasNext()) {
-               Metric m = metrics.next();
-               if (m.getPositive()){
-                   averageScale += m.getRating();
-               } else {
-                   averageScale += (8 - m.getRating());
-               }
-           }
-       }
-       averageScale = averageScale / daysInWeek;
+   private void setPlantImg (Double qualityOfLife) {
        double q = (7/6);
-       int qualityOfLife;
-       if (averageScale < (q)) {
-           qualityOfLife = 1;
-       } else if (averageScale < (q * 2)) {
-           qualityOfLife = 2;
-       } else if (averageScale < (q * 3)) {
-           qualityOfLife = 3;
-       } else if (averageScale < (q * 4)) {
-           qualityOfLife = 4;
-       } else if (averageScale < (q * 5)) {
-           qualityOfLife = 5;
+       int qofScaled = 0;
+
+       if (qualityOfLife< (q)) {
+           qofScaled = 1;
+       } else if (qualityOfLife < (q * 2)) {
+           qofScaled = 2;
+       } else if (qualityOfLife < (q * 3)) {
+           qofScaled = 3;
+       } else if (qualityOfLife < (q * 4)) {
+           qofScaled = 4;
+       } else if (qualityOfLife < (q * 5)) {
+           qofScaled = 5;
        } else {
-           qualityOfLife = 6;
+           qofScaled = 6;
        }
 
-       int qof = qualityOfLife;
+       int qof = qofScaled;
        ImageView plant_view = (ImageView) findViewById(R.id.homepage_plant);
        switch(qof) {
            case 1 : plant_view.setImageResource(R.drawable.ic_sapling_1);

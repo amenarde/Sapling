@@ -31,7 +31,7 @@
     <string name="sc_qof_title">Quality of Life</string>
     <string name="sc_qof_descr">This plant represents your quality of life.\n
         Watch it grow as you increase positive metrics in your life such as
-        health and decrease negative one such as stress.
+        health and decrease negative ones such as stress.
     </string>
 
     <string name="sc_graph_title">Metric Graph</string>
@@ -50,10 +50,10 @@
     <string name="sc_menu_descr">
         Daily Log \n
         Enter today\'s metric and goal values \n \n
+
         Display\n
         Graphically display metrics over time \n \n
-        Goal Tracking\n
-        Remove/add both goals and metrics\n \n
+
         Settings\n
         Update your user details \n
         \n

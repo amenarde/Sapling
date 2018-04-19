@@ -274,7 +274,6 @@ public class OnboardingActivity extends AppCompatActivity {
             } else {
                 startMainActivity(view);
             }
-            //startMainActivity(view);
         }
 
     }
