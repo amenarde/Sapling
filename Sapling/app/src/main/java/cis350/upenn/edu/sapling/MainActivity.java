@@ -31,6 +31,7 @@ import java.util.zip.Inflater;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Date;
 
 import com.jjoe64.graphview.series.Series;
 import com.jjoe64.graphview.series.BaseSeries;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         mPreferences.edit().clear().commit();
 
         super.onCreate(savedInstanceState);
+
         //checks if mainactivity has been called from another activity
 //        boolean calledInApp = getIntent().getBooleanExtra("calledInApp", false);
 //if (!calledInApp) {
@@ -73,16 +75,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         DataManager dm = DataManager.getInstance();
-        if (firstTime) dm.purgeFiles(this.getApplicationContext());
         Iterator<DayData> pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
 
         setPlantImg(dm);
 
         ///TIFFANY'S GRAPH CODE
-
         DataPoint[] points = new DataPoint[7];
         int dayInWeek = 7;
+
         while (pastWeek.hasNext()) {
             double totalNum = 0;
             DayData dayData = pastWeek.next();
@@ -92,13 +94,16 @@ public class MainActivity extends AppCompatActivity {
             int numMetrics = 0;
             while(metrics.hasNext()) {
                 Metric m = metrics.next();
-                numMetrics++;
-                if (m.getPositive()){
-                    totalNum += m.getRating();
-                } else {
-                    totalNum += (7 - m.getRating());
+                Log.v("Main Activity:", "Metric " + m.getName() + " is active? " + dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase()));
+                if (m.getRating() != -1 && dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase())) {
+                    numMetrics++;
+                    if (m.getPositive()){
+                        totalNum += m.getRating();
+                    } else {
+                        totalNum += (7 - m.getRating());
+                    }
+                    Log.v("Main Activity:", "Day " + dayInWeek + " found with metric " + numMetrics + ", " + m.getName() + " with value " + m.getRating());
                 }
-                Log.v("Main Activity:", "Day " + dayInWeek + " found with metric " + numMetrics + ", " + m.getName() + " with value " + m.getRating());
             }
             Log.v("Main Activity", "total num calculated is " + totalNum);
             double val = totalNum/numMetrics;
@@ -121,72 +126,68 @@ public class MainActivity extends AppCompatActivity {
         series.setThickness(8);
         graph.removeAllSeries();
         graph.addSeries(series);
+        graph.setTitle("Quality of Life");
 
 
         // updates the elements as per the current day's existing metrics, "--" if not present
-
-
-        Map<String, Metric> todayMetrics = dm.getActiveMetrics(getApplicationContext());
+        DayData todayData = dm.getDay(new Date(), getApplicationContext());
         int i = 0;
-        for (Metric m : todayMetrics.values()) {
-            if (i == 0) {
-                ((TextView) findViewById(R.id.metric1_title)).setText(m.getName());
-                if (m.hasScale()) {
-                    ((TextView) findViewById(R.id.metric1_stat)).setText(m.getRating());
-                } else {
-                    ((TextView) findViewById(R.id.metric1_stat)).setText("--");
+        for (Metric m : todayData.getAllMetrics()) {
+            if (dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase())) {
+                System.out.println("found metric with name " +m.getName() + " and rating " + m.getRating());
+                if (i == 0) {
+                    ((TextView) findViewById(R.id.metric1_title)).setText(m.getName().toLowerCase());
+                    if (m.hasScale()) {
+                        ((TextView) findViewById(R.id.metric1_stat)).setText(String.valueOf(m.getRating()) + ".0");
+                    } else {
+                        ((TextView) findViewById(R.id.metric1_stat)).setText("--");
+                    }
+                } else if (i == 1) {
+                    ((TextView) findViewById(R.id.metric2_title)).setText(m.getName().toLowerCase());
+                    if (m.hasScale()) {
+                        ((TextView) findViewById(R.id.metric2_stat)).setText(String.valueOf(m.getRating()) + ".0");
+                    } else {
+                        ((TextView) findViewById(R.id.metric2_stat)).setText("--");
+                    }
+                } else if (i == 2) {
+                    ((TextView) findViewById(R.id.metric3_title)).setText(m.getName().toLowerCase());
+                    if (m.hasScale()) {
+                        ((TextView) findViewById(R.id.metric3_stat)).setText(String.valueOf(m.getRating()) + ".0");
+                    } else {
+                        ((TextView) findViewById(R.id.metric3_stat)).setText("--");
+                    }
+                } else if (i == 3) {
+                    ((TextView) findViewById(R.id.metric4_title)).setText(m.getName().toLowerCase());
+                    if (m.hasScale()) {
+                        ((TextView) findViewById(R.id.metric4_stat)).setText(String.valueOf(m.getRating()) + ".0");
+                    } else {
+                        ((TextView) findViewById(R.id.metric4_stat)).setText("--");
+                    }
                 }
-            } else if (i == 1) {
-                ((TextView) findViewById(R.id.metric2_title)).setText(m.getName());
-                if (m.hasScale()) {
-                    ((TextView) findViewById(R.id.metric2_stat)).setText(m.getRating());
-                } else {
-                    ((TextView) findViewById(R.id.metric2_stat)).setText("--");
-                }
-            } else if (i == 2) {
-                ((TextView) findViewById(R.id.metric3_title)).setText(m.getName());
-                if (m.hasScale()) {
-                    ((TextView) findViewById(R.id.metric3_stat)).setText(m.getRating());
-                } else {
-                    ((TextView) findViewById(R.id.metric3_stat)).setText("--");
-                }
-            } else if (i == 3) {
-                ((TextView) findViewById(R.id.metric4_title)).setText(m.getName());
-                if (m.hasScale()) {
-                    ((TextView) findViewById(R.id.metric4_stat)).setText(m.getRating());
-                } else {
-                    ((TextView) findViewById(R.id.metric4_stat)).setText("--");
-                }
+                i++;
             }
+        }
+
+        if (i == 0) {
+            ((TextView) findViewById(R.id.metric1_title)).setText("");
+            ((TextView) findViewById(R.id.metric1_stat)).setText("");
             i++;
         }
-        /*
-        DayData todayData = dm.getMetricsForDay(Calendar.getInstance().getTime());
-
-        Collection<Metric> todayMetrics = todayData.getAllMetrics();
-        Iterator<Metric> iter = todayMetrics.iterator();
-
-        int metricCount = 0;
-
-        while (iter.hasNext()) {
-            Metric m = iter.next();
-
-            if (metricCount == 0) {
-                ((TextView) findViewById(R.id.metric1_title)).setText(m.getName());
-                ((TextView) findViewById(R.id.metric1_stat)).setText(m.getRating());
-            } else if (metricCount == 1) {
-                ((TextView) findViewById(R.id.metric2_title)).setText(m.getName());
-                ((TextView) findViewById(R.id.metric2_stat)).setText(m.getRating());
-            } else if (metricCount == 2) {
-                ((TextView) findViewById(R.id.metric3_title)).setText(m.getName());
-                ((TextView) findViewById(R.id.metric3_stat)).setText(m.getRating());
-            } else {
-                ((TextView) findViewById(R.id.metric4_title)).setText(m.getName());
-                ((TextView) findViewById(R.id.metric4_stat)).setText(m.getRating());
-            }
-            metricCount++;
+        if (i == 1) {
+            ((TextView) findViewById(R.id.metric2_title)).setText("");
+            ((TextView) findViewById(R.id.metric2_stat)).setText("");
+            i++;
         }
-        */
+        if (i == 2) {
+            ((TextView) findViewById(R.id.metric3_title)).setText("");
+            ((TextView) findViewById(R.id.metric3_stat)).setText("");
+            i++;
+        }
+        if (i == 3) {
+            ((TextView) findViewById(R.id.metric4_title)).setText("");
+            ((TextView) findViewById(R.id.metric4_stat)).setText("");
+
+        }
 
     }
 
