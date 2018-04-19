@@ -233,6 +233,8 @@ public class DisplayActivity extends AppCompatActivity {
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setXAxisBoundsManual(true);
 
+        graph.removeAllSeries();
+
         if (pointsM1[0] != null) {
             LineGraphSeries<DataPoint> series1 = new LineGraphSeries<>(pointsM1);
             series1.setColor(Color.WHITE);
