@@ -48,6 +48,7 @@ public class ChecklistAdapter extends BaseAdapter{
         cb.setText(metricNames[i]);
         cb.setChecked(checked[i]);
         cb.setBackgroundColor(colors[i]);
+        cb.setTextColor(context.getResources().getColor(R.color.colorPrimary));
 
         cb.setOnClickListener(new View.OnClickListener() {
 
