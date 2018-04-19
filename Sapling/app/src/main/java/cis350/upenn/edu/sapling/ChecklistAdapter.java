@@ -49,9 +49,9 @@ public class ChecklistAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 if(cb.isChecked()){
-                    parent.hideMetric(cb.getText());
+                    parent.hideMetric(cb.getText().toString());
                 }else{
-                    parent.showMetric(cb.getText());
+                    parent.showMetric(cb.getText().toString());
                 }
             }
         });

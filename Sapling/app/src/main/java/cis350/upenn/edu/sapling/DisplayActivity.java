@@ -34,13 +34,36 @@ import java.util.HashSet;
 public class DisplayActivity extends AppCompatActivity {
 
     HashSet<String> displayedMetrics;
-
+    HashSet<Metric> allActiveMetrics;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
 
+        DataManager dm = DataManager.getInstance();
+        Collection<Metric> metrics = dm.getDay(new Date(), getApplicationContext()).getAllMetrics();
+        for (Metric m : metrics) {
+            if (dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase())) {
+                allActiveMetrics.add(m);
+            }
+        }
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        displayedMetrics = new HashSet<String>();
+        for (Metric m : allActiveMetrics) {
+            displayedMetrics.add(m.getName().toLowerCase());
+        }
+        //fillHeatMap(new Date());
+        fillGraph();
+
+    }
+
 
     private void createCheckList() {
         ListView checklist = (ListView) findViewById(R.id.checklist);
@@ -136,25 +159,6 @@ public class DisplayActivity extends AppCompatActivity {
             displayedMetrics.add(s);
         }
         fillGraph();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //fillHeatMap(new Date());
-
-        //the handler should remove that view from the displayedMetrics set and call fillGraph();
-
-        displayedMetrics = new HashSet<String>();
-        DataManager dm = DataManager.getInstance();
-        Collection<Metric> metrics = dm.getDay(new Date(), getApplicationContext()).getAllMetrics();
-        for (Metric m : metrics) {
-            if (dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase())) {
-                displayedMetrics.add(m.getName().toLowerCase());
-            }
-        }
-        fillGraph();
-
     }
 
     private void fillGraph() {
