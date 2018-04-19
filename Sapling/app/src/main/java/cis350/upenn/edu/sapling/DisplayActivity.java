@@ -38,9 +38,14 @@ public class DisplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display);
 
         fillHeatMap(new Date());
-
+        createCheckList();
     }
 
+    private void createCheckList() {
+        ListView checklist = (ListView) findViewById(R.id.checklist);
+        //ChecklistAdapter cla = new ChecklistAdapter();
+        //checklist.setAdapter(cla);
+    }
 
     private void fillHeatMap(Date endDate) {
         GridView heatMap = (GridView) findViewById(R.id.heatmap);
