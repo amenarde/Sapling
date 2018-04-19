@@ -21,6 +21,7 @@ public class ChecklistAdapter extends BaseAdapter{
         this.context = context;
         this.metricNames = metricNames;
         this.checked = checked;
+        this.parent = parent;
     }
 
     @Override

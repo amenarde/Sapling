@@ -54,16 +54,31 @@ public class DisplayActivity extends AppCompatActivity {
         for (Metric m : allActiveMetrics) {
             displayedMetrics.add(m.getName().toLowerCase());
         }
-        //fillHeatMap(new Date());
+        fillHeatMap(new Date());
+        fillCheckList();
         fillGraph();
 
     }
 
 
-    private void createCheckList() {
+    private void fillCheckList() {
         ListView checklist = (ListView) findViewById(R.id.checklist);
-        //ChecklistAdapter cla = new ChecklistAdapter();
-        //checklist.setAdapter(cla);
+
+        String[] names = new String[allActiveMetrics.size()];
+        int i = 0;
+        for (Metric m : allActiveMetrics) {
+            names[i] = m.getName();
+            i++;
+        }
+
+        Boolean[] checked = new Boolean[names.length];
+        for (i = 0; i < checked.length; i++) {
+            checked[i] = true;
+        }
+
+        ChecklistAdapter cla = new ChecklistAdapter(this.getApplicationContext(),
+                                                    names, checked, this);
+        checklist.setAdapter(cla);
     }
 
     private void fillHeatMap(Date endDate) {
