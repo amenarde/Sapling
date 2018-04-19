@@ -12,8 +12,10 @@ public class ChecklistAdapter extends BaseAdapter{
     String[] metricNames;
     Boolean[] checked;
     DisplayActivity parent;
+    int[] colors;
 
-    public ChecklistAdapter(Context context, String[] metricNames, Boolean[] checked, DisplayActivity parent) {
+    public ChecklistAdapter(Context context, String[] metricNames, Boolean[] checked,
+                            DisplayActivity parent, int[] colors) {
         if (metricNames.length != checked.length) {
             throw new IllegalArgumentException("Must have the same sized arrays");
         }
@@ -22,6 +24,7 @@ public class ChecklistAdapter extends BaseAdapter{
         this.metricNames = metricNames;
         this.checked = checked;
         this.parent = parent;
+        this.colors = colors;
     }
 
     @Override
@@ -44,6 +47,7 @@ public class ChecklistAdapter extends BaseAdapter{
         final CheckBox cb = new CheckBox(context);
         cb.setText(metricNames[i]);
         cb.setChecked(checked[i]);
+        cb.setBackgroundColor(colors[i]);
 
         cb.setOnClickListener(new View.OnClickListener() {
 

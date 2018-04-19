@@ -30,11 +30,13 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.HashMap;
 
 public class DisplayActivity extends AppCompatActivity {
 
     HashSet<String> displayedMetrics;
     Collection<Metric> allActiveMetrics;
+    HashMap<String, Integer> legend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +56,11 @@ public class DisplayActivity extends AppCompatActivity {
         for (Metric m : allActiveMetrics) {
             displayedMetrics.add(m.getName().toLowerCase());
         }
+        legend = new HashMap<String, Integer>();
+
         fillHeatMap(new Date());
-        fillCheckList();
         fillGraph();
+        fillCheckList();
 
     }
 
@@ -76,8 +80,13 @@ public class DisplayActivity extends AppCompatActivity {
             checked[i] = true;
         }
 
+        int[] colors = new int[names.length];
+        for (i = 0; i < checked.length; i++) {
+            colors[i] = legend.get(names[i]);
+        }
+
         ChecklistAdapter cla = new ChecklistAdapter(this.getApplicationContext(),
-                                                    names, checked, this);
+                                                    names, checked, this, colors);
         checklist.setAdapter(cla);
     }
 
@@ -191,6 +200,18 @@ public class DisplayActivity extends AppCompatActivity {
 
         for (Metric m : allActiveMetrics) {
             if (displayedMetrics.contains(m.getName())) {
+
+                if (metricCount == 0) {
+                    legend.put(m.getName(), Color.rgb(255, 255, 255));
+                } else if (metricCount == 1) {
+                    legend.put(m.getName(), Color.rgb(230, 255, 247));
+                } else if (metricCount == 2) {
+                    legend.put(m.getName(), Color.rgb(179, 255, 231));
+                } else if (metricCount == 3) {
+                    legend.put(m.getName(), Color.rgb(128, 255, 215));
+                }
+
+
                 pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
                 int dayInWeek = 7;
                 while (pastWeek.hasNext()) {
