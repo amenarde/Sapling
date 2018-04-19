@@ -34,20 +34,15 @@ import java.util.HashSet;
 public class DisplayActivity extends AppCompatActivity {
 
     HashSet<String> displayedMetrics;
-    HashSet<Metric> allActiveMetrics;
-    
+    Collection<Metric> allActiveMetrics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
 
         DataManager dm = DataManager.getInstance();
-        Collection<Metric> metrics = dm.getDay(new Date(), getApplicationContext()).getAllMetrics();
-        for (Metric m : metrics) {
-            if (dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase())) {
-                allActiveMetrics.add(m);
-            }
-        }
+        allActiveMetrics = dm.getDay(new Date(), getApplicationContext()).getAllMetrics();
 
     }
 
