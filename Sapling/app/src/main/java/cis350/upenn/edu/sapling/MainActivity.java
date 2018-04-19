@@ -211,10 +211,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isFirstTime() {
-        SharedPreferences mPreferences = this.getPreferences(Context.MODE_PRIVATE);
-        firstTime = mPreferences.getBoolean("firstTime", true);
-        Log.v("First Time bool true?", "it is " + firstTime);
         if (firstTime == null) {
+            SharedPreferences mPreferences = this.getPreferences(Context.MODE_PRIVATE);
+            firstTime = mPreferences.getBoolean("firstTime", true);
+            Log.v("First Time bool true?", "it is " + firstTime);
             if (firstTime) {
                 SharedPreferences.Editor editor = mPreferences.edit();
                 editor.putBoolean("firstTime", false);
