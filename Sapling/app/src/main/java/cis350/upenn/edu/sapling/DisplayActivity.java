@@ -16,6 +16,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -91,6 +92,8 @@ public class DisplayActivity extends AppCompatActivity {
     }
 
     private void fillHeatMap(Date endDate) {
+
+
         GridView heatMap = (GridView) findViewById(R.id.heatmap);
         ListView namesList = (ListView) findViewById(R.id.goal_names);
 
@@ -123,7 +126,7 @@ public class DisplayActivity extends AppCompatActivity {
 
 
         GoalNamesAdapter goalAdapter = new GoalNamesAdapter(this, names);
-        HeatMapAdapter heatMapAdapter = new HeatMapAdapter(this, data);
+        HeatMapAdapter heatMapAdapter = new HeatMapAdapter(this, data, endDate);
 
         namesList.setAdapter(goalAdapter);
         heatMap.setAdapter(heatMapAdapter);
@@ -141,12 +144,12 @@ public class DisplayActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return names.length;
+            return names.length + 1;
         }
 
         @Override
         public Object getItem(int i) {
-            return names[i];
+            return names[i-1];
         }
 
         @Override
@@ -156,10 +159,16 @@ public class DisplayActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
+
+            if (i == 0) {
+                TextView viewItem = new TextView(context);
+                return viewItem;
+            }
+
             TextView viewItem = new TextView(context);
             String name = (String)getItem(i);
 
-            viewItem.setBackgroundColor(Color.WHITE);
+            viewItem.setTextColor(context.getResources().getColor(R.color.off_white));
             viewItem.setText(name);
 
             return viewItem;
