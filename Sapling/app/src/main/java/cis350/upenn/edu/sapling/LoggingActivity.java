@@ -1,5 +1,6 @@
 package cis350.upenn.edu.sapling;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -144,5 +145,12 @@ private void populateSeekBars(final DayData day) {
             }
 
         }
+    }
+
+    public void submit(View view) {
+        //saves inputs and returns to mainActivity
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
