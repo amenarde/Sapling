@@ -16,6 +16,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -29,20 +30,70 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.HashMap;
 
 public class DisplayActivity extends AppCompatActivity {
+
+    HashSet<String> displayedMetrics;
+    Collection<Metric> allActiveMetrics;
+    HashMap<String, Integer> legend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
 
+        DataManager dm = DataManager.getInstance();
+        allActiveMetrics = dm.getDay(new Date(), getApplicationContext()).getAllMetrics();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        displayedMetrics = new HashSet<String>();
+        for (Metric m : allActiveMetrics) {
+            displayedMetrics.add(m.getName().toLowerCase());
+        }
+        legend = new HashMap<String, Integer>();
+
         fillHeatMap(new Date());
+        fillGraph();
+        fillCheckList();
 
     }
 
 
+    private void fillCheckList() {
+        ListView checklist = (ListView) findViewById(R.id.checklist);
+
+        String[] names = new String[allActiveMetrics.size()];
+        int i = 0;
+        for (Metric m : allActiveMetrics) {
+            names[i] = m.getName();
+            i++;
+        }
+
+        Boolean[] checked = new Boolean[names.length];
+        for (i = 0; i < checked.length; i++) {
+            checked[i] = true;
+        }
+
+        int[] colors = new int[names.length];
+        for (i = 0; i < checked.length; i++) {
+            colors[i] = legend.get(names[i]);
+        }
+
+        ChecklistAdapter cla = new ChecklistAdapter(this.getApplicationContext(),
+                                                    names, checked, this, colors);
+        checklist.setAdapter(cla);
+    }
+
     private void fillHeatMap(Date endDate) {
+
+
         GridView heatMap = (GridView) findViewById(R.id.heatmap);
         ListView namesList = (ListView) findViewById(R.id.goal_names);
 
@@ -75,7 +126,7 @@ public class DisplayActivity extends AppCompatActivity {
 
 
         GoalNamesAdapter goalAdapter = new GoalNamesAdapter(this, names);
-        HeatMapAdapter heatMapAdapter = new HeatMapAdapter(this, data);
+        HeatMapAdapter heatMapAdapter = new HeatMapAdapter(this, data, endDate);
 
         namesList.setAdapter(goalAdapter);
         heatMap.setAdapter(heatMapAdapter);
@@ -93,12 +144,12 @@ public class DisplayActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return names.length;
+            return names.length + 1;
         }
 
         @Override
         public Object getItem(int i) {
-            return names[i];
+            return names[i-1];
         }
 
         @Override
@@ -108,20 +159,37 @@ public class DisplayActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
+
+            if (i == 0) {
+                TextView viewItem = new TextView(context);
+                return viewItem;
+            }
+
             TextView viewItem = new TextView(context);
             String name = (String)getItem(i);
 
-            viewItem.setBackgroundColor(Color.WHITE);
+            viewItem.setTextColor(context.getResources().getColor(R.color.off_white));
             viewItem.setText(name);
 
             return viewItem;
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    public void hideMetric(String s) {
+        if (displayedMetrics.contains(s)) {
+            displayedMetrics.remove(s);
+        }
+        fillGraph();
+    }
 
+    public void showMetric(String s) {
+        if (!displayedMetrics.contains(s)) {
+            displayedMetrics.add(s);
+        }
+        fillGraph();
+    }
+
+    private void fillGraph() {
         DataManager dm = DataManager.getInstance();
 
         ///TIFFANY'S GRAPH CODE
@@ -138,15 +206,28 @@ public class DisplayActivity extends AppCompatActivity {
         Collection<Metric> metrics = dm.getDay(new Date(), getApplicationContext()).getAllMetrics();
         System.out.println("num metrics is " + metrics.size());
         int metricCount = 0;
-        for (Metric m : metrics) {
-            if (dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase())) {
+
+        for (Metric m : allActiveMetrics) {
+            if (displayedMetrics.contains(m.getName())) {
+
+                if (metricCount == 0) {
+                    legend.put(m.getName(), Color.rgb(255, 255, 255));
+                } else if (metricCount == 1) {
+                    legend.put(m.getName(), Color.rgb(230, 255, 247));
+                } else if (metricCount == 2) {
+                    legend.put(m.getName(), Color.rgb(179, 255, 231));
+                } else if (metricCount == 3) {
+                    legend.put(m.getName(), Color.rgb(128, 255, 215));
+                }
+
+
                 pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
                 int dayInWeek = 7;
                 while (pastWeek.hasNext()) {
 
                     DayData dayData = pastWeek.next();
                     dayInWeek -= 1;
-                    if (dayData.getMetric(m.getName().toLowerCase()).getRating() != -1) {
+                    if (dayData.getMetric(m.getName().toLowerCase()) != null && dayData.getMetric(m.getName().toLowerCase()).getRating() != -1) {
                         //assign to proper day
                         if (metricCount == 0) {
                             pointsM1[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
@@ -170,8 +251,8 @@ public class DisplayActivity extends AppCompatActivity {
                         }
                     }
                 }
+                metricCount++;
             }
-            metricCount++;
         }
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
@@ -181,6 +262,8 @@ public class DisplayActivity extends AppCompatActivity {
         graph.getViewport().setMaxY(7.0);
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setXAxisBoundsManual(true);
+
+        graph.removeAllSeries();
 
         if (pointsM1[0] != null) {
             LineGraphSeries<DataPoint> series1 = new LineGraphSeries<>(pointsM1);
@@ -216,6 +299,5 @@ public class DisplayActivity extends AppCompatActivity {
         }
 
         graph.setTitle("Last Week's Data");
-
     }
 }
