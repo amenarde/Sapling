@@ -38,6 +38,7 @@ public class DisplayActivity extends AppCompatActivity {
     HashSet<String> displayedMetrics;
     Collection<Metric> allActiveMetrics;
     HashMap<String, Integer> legend;
+    Date currDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class DisplayActivity extends AppCompatActivity {
 
         DataManager dm = DataManager.getInstance();
         allActiveMetrics = dm.getDay(new Date(), getApplicationContext()).getAllMetrics();
-
+        currDate = new Date();
     }
 
     @Override
@@ -59,8 +60,9 @@ public class DisplayActivity extends AppCompatActivity {
         }
         legend = new HashMap<String, Integer>();
 
-        fillHeatMap(new Date());
-        fillGraph();
+        fillDateLabel(currDate);
+        fillHeatMap(currDate);
+        fillGraph(currDate);
         fillCheckList();
 
     }
@@ -179,17 +181,42 @@ public class DisplayActivity extends AppCompatActivity {
         if (displayedMetrics.contains(s)) {
             displayedMetrics.remove(s);
         }
-        fillGraph();
+        fillGraph(currDate);
     }
 
     public void showMetric(String s) {
         if (!displayedMetrics.contains(s)) {
             displayedMetrics.add(s);
         }
-        fillGraph();
+        fillGraph(currDate);
     }
 
-    private void fillGraph() {
+    public void handlePreviousWeek(View view) {
+        currDate = new Date(currDate.getTime() - 86_400_000 * 7);
+        fillGraph(currDate);
+        fillHeatMap(currDate);
+        fillDateLabel(currDate);
+    }
+
+    public void handleNextWeek(View view) {
+        if (!(currDate.getTime() + 86_400_000 * 7 > new Date().getTime())) {
+            currDate = new Date(currDate.getTime() + 86_400_000 * 7);
+            fillGraph(currDate);
+            fillHeatMap(currDate);
+            fillDateLabel(currDate);
+        }
+    }
+
+    private void fillDateLabel(Date endDate) {
+
+        SimpleDateFormat titleDate = new SimpleDateFormat("MM-dd");
+        String date = titleDate.format(new Date(endDate.getTime() - 86_400_000 * 6)) + " - " + titleDate.format(endDate);
+
+        TextView dateLabel = findViewById(R.id.date_label);
+        dateLabel.setText(date);
+    }
+
+    private void fillGraph(Date endDate) {
         DataManager dm = DataManager.getInstance();
 
         ///TIFFANY'S GRAPH CODE
@@ -221,7 +248,7 @@ public class DisplayActivity extends AppCompatActivity {
                 }
 
 
-                pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
+                pastWeek = dm.getLastWeek(endDate, this.getApplicationContext());
                 int dayInWeek = 0;
                 while (pastWeek.hasNext()) {
 
@@ -298,6 +325,6 @@ public class DisplayActivity extends AppCompatActivity {
             graph.addSeries(series4);
         }
 
-        graph.setTitle("Last Week's Data");
+        graph.setTitle("Metrics");
     }
 }

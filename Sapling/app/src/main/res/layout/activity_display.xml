@@ -65,24 +65,30 @@
     <Button
         android:id="@+id/button"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="48dp"
+        android:layout_width="54dp"
         android:layout_height="48dp"
         android:layout_marginBottom="8dp"
+        android:onClick="handlePreviousWeek"
+        android:text="Prev"
         android:textColor="@color/colorPrimaryDark"
+        android:textSize="10sp"
         app:layout_constraintBottom_toTopOf="@+id/ground_background"
         app:layout_constraintStart_toStartOf="@+id/ground_background" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="48dp"
+        android:layout_width="54dp"
         android:layout_height="48dp"
         android:layout_marginBottom="8dp"
+        android:onClick="handleNextWeek"
+        android:text="Next"
         android:textColor="@color/colorPrimaryDark"
+        android:textSize="10sp"
         app:layout_constraintBottom_toTopOf="@+id/ground_background"
         app:layout_constraintEnd_toEndOf="@+id/ground_background" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/date_label"
         android:layout_width="150dp"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
