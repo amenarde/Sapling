@@ -1,5 +1,6 @@
 package cis350.upenn.edu.sapling;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -149,9 +150,11 @@ public class LoggingActivity extends AppCompatActivity {
         }
     }
 
-    public void onLoggingButtonClicked(View view) {
-        Intent i = new Intent();
-        setResult(RESULT_OK, i);
+
+    public void submit(View view) {
+        //saves inputs and returns to mainActivity
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         finish();
     }
 }

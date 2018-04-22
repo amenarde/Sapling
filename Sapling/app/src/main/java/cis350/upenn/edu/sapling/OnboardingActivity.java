@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.view.animation.Animation;
@@ -12,6 +13,9 @@ import android.support.constraint.ConstraintLayout;
 import android.content.SharedPreferences;
 import android.content.Context;
 import android.util.Log;
+
+import org.honorato.multistatetogglebutton.MultiStateToggleButton;
+import org.honorato.multistatetogglebutton.ToggleButton;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -38,11 +42,11 @@ public class OnboardingActivity extends AppCompatActivity {
 
     HashSet<String> newMetrics = new HashSet<String>();
     HashSet<String> newGoals = new HashSet<String>();
+    MultiStateToggleButton[] toggleArray = new  MultiStateToggleButton[4];
+    HashSet<MultiStateToggleButton> toggleButtons = new HashSet<MultiStateToggleButton>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
         int requestCode = getIntent().getIntExtra("requestCode",1);
@@ -51,6 +55,9 @@ public class OnboardingActivity extends AppCompatActivity {
         nameLayout = findViewById(R.id.name_layout);
         //set the default metrics
         metricsLayout = findViewById(R.id.metrics_layout);
+
+        loadToggleButtons();
+        setToggleDefaults();
 
         Boolean calledInApp = getIntent().getBooleanExtra("calledInApp", false);
         runGuide = !calledInApp;
@@ -138,6 +145,58 @@ public class OnboardingActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+    }
+
+    private void loadToggleButtons() {
+        MultiStateToggleButton button1 = (MultiStateToggleButton) this.findViewById(R.id.mstb_1);
+        MultiStateToggleButton button2 = (MultiStateToggleButton) this.findViewById(R.id.mstb_2);
+        MultiStateToggleButton button3 = (MultiStateToggleButton) this.findViewById(R.id.mstb_3);
+        MultiStateToggleButton button4 = (MultiStateToggleButton) this.findViewById(R.id.mstb_4);
+
+        button1.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int position) {
+                System.out.println("Button 1 : "  + position);
+            }
+        });
+        button2.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int position) {
+                System.out.println("Button 2 : "  + position);
+            }
+        });
+        button3.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int position) {
+                System.out.println("Button 3 : "  + position);
+            }
+        });
+        button4.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int position) {
+                System.out.println("Button 4 : "  + position);
+            }
+        });
+
+        toggleArray[0] = button1;
+        toggleArray[1] = button2;
+        toggleArray[2] = button3;
+        toggleArray[3] = button4;
+    }
+
+    private void setToggleDefaults() {
+        for (int i = 0; i < 4; i++) {
+            MultiStateToggleButton button = toggleArray[i];
+            button.enableMultipleChoice(false);
+            if (i != 1) {
+                button.setValue(0);
+            } else {
+                button.setValue(1);
+            }
+        }
     }
 
     public void onboardingNext(View view) {
@@ -169,34 +228,41 @@ public class OnboardingActivity extends AppCompatActivity {
 
             //add all the new metrics
             //deprecate old ones that aren't contained in the new set
-
-
             System.out.println("does activemetrics containKey " + metric1  + ": " + activeMetrics.containsKey(metric1));
             System.out.println("does activemetrics containKey " + metric2  + ": " + activeMetrics.containsKey(metric2));
             System.out.println("does activemetrics containKey " + metric3  + ": " + activeMetrics.containsKey(metric3));
             System.out.println("does activemetrics containKey " + metric4  + ": " + activeMetrics.containsKey(metric4));
 
+
             if (metric1.length() > 0 && !activeMetrics.containsKey(metric1)) {
-                dm.addModelMetric(metric1, true, getApplicationContext());
+                boolean positive = (toggleArray[0].getValue() == 0);
+                dm.addModelMetric(metric1, positive, getApplicationContext());
                 newMetrics.add(metric1);
+
             } else if (metric1.length() > 0) {
                 newMetrics.add(metric1);
             }
 
             if (metric2.length() > 0 && !activeMetrics.containsKey(metric2)) {
-                dm.addModelMetric(metric2, true, getApplicationContext());
+                boolean positive = (toggleArray[1].getValue() == 0);
+                dm.addModelMetric(metric2, positive, getApplicationContext());
                 newMetrics.add(metric2);
+
             } else if (metric2.length() > 0) {
                 newMetrics.add(metric2);
             }
+
             if (metric3.length() > 0 && !activeMetrics.containsKey(metric3)) {
-                dm.addModelMetric(metric3, true, getApplicationContext());
+                boolean positive = (toggleArray[2].getValue() == 0);
+                dm.addModelMetric(metric3, positive, getApplicationContext());
                 newMetrics.add(metric3);
             } else if (metric3.length() > 0) {
                 newMetrics.add(metric3);
             }
+
             if (metric4.length() > 0 && !activeMetrics.containsKey(metric4)) {
-                dm.addModelMetric(metric4, true, getApplicationContext());
+                boolean positive = (toggleArray[3].getValue() == 0);
+                dm.addModelMetric(metric4, positive, getApplicationContext());
                 newMetrics.add(metric4);
             } else if (metric4.length() > 0) {
                 newMetrics.add(metric4);

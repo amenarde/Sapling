@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     if (m.getPositive()){
                         totalNum += m.getRating();
                     } else {
-                        totalNum += (7 - m.getRating());
+                        totalNum += (8 - m.getRating());
                     }
                     //Log.v("Main Activity:", "Day " + dayInWeek + " found with metric " + numMetrics + ", " + m.getName() + " with value " + m.getRating());
                 }
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
                     if (m.getPositive() && m.hasScale() && m.getRating()!= -1) {
                         totalRating += m.getRating();
                         numMetrics += 1;
-                    } else if (m.hasScale())  {
+                    } else if (m.hasScale() && m.getRating()!= -1)  {
                         totalRating += (8 - m.getRating());
                         numMetrics += 1;
                     }
