@@ -2,20 +2,66 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    xmlns:mstb="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_onboarding"
     tools:context="cis350.upenn.edu.sapling.OnboardingActivity">
 
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/name_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        fab:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/name_body"
+            android:layout_width="237dp"
+            android:layout_height="123dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="316dp"
+            android:lineSpacingExtra="8sp"
+            android:text="Together, we’ll track your life stats and reinforce new habits."
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            fab:layout_constraintStart_toStartOf="parent"
+            fab:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name_title"
+            android:layout_width="173dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="64dp"
+            android:lineSpacingExtra="8sp"
+            android:text="Welcome to Sapling,"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            fab:layout_constraintStart_toStartOf="parent"
+            fab:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/name_input"
+            android:layout_width="239dp"
+            android:layout_height="71dp"
+            android:layout_marginStart="-1dp"
+            android:layout_marginTop="156dp"
+            android:backgroundTint="@android:color/white"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            fab:layout_constraintStart_toStartOf="@+id/name_title"
+            fab:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/metrics_layout"
         android:layout_width="match_parent"
-        android:layout_height="548dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp">
+        tools:layout_editor_absoluteX="183dp">
 
         <TextView
             android:id="@+id/name_title"
@@ -30,20 +76,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/more_or_less"
-            android:layout_width="81dp"
-            android:layout_height="58dp"
-            android:text="Would you like more or less?"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="275dp"
-            tools:layout_editor_absoluteY="174dp" />
-
-
         <EditText
             android:id="@+id/metrics_input1"
-            android:layout_width="241dp"
+            android:layout_width="239dp"
             android:layout_height="71dp"
             android:layout_marginStart="-1dp"
             android:layout_marginTop="216dp"
@@ -100,95 +135,107 @@
             android:textSize="36sp"
             fab:layout_constraintStart_toStartOf="@+id/name_title"
             fab:layout_constraintTop_toTopOf="parent" />
-
-        <org.honorato.multistatetogglebutton.MultiStateToggleButton
-            android:id="@+id/mstb_1"
-            android:layout_width="79dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/metrics_input1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.471"
-            app:mstbColorNotPressedBackground="@color/gray"
-            app:mstbColorPressedBackground="@color/colorAccent"
-            app:mstbColorPressedText="@android:color/white"
-            mstb:mstbPrimaryColor="@android:color/white"
-            mstb:mstbSecondaryColor="@color/gray"
-            mstb:values="@array/select_array" />
-
-
-        <org.honorato.multistatetogglebutton.MultiStateToggleButton
-            android:id="@+id/mstb_2"
-            android:layout_width="79dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toEndOf="@+id/metrics_input2"
-            app:layout_constraintVertical_bias="0.593"
-            app:mstbColorNotPressedBackground="@color/gray"
-            app:mstbColorPressedBackground="@color/colorAccent"
-            app:mstbColorPressedText="@android:color/white"
-            mstb:layout_constraintBottom_toBottomOf="parent"
-            mstb:layout_constraintTop_toTopOf="parent"
-            mstb:mstbPrimaryColor="@android:color/white"
-            mstb:mstbSecondaryColor="@color/gray"
-            mstb:values="@array/select_array" />
-
-        <org.honorato.multistatetogglebutton.MultiStateToggleButton
-            android:id="@+id/mstb_3"
-            android:layout_width="79dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/metrics_input3"
-            app:layout_constraintVertical_bias="0.723"
-            mstb:layout_constraintBottom_toBottomOf="parent"
-            mstb:layout_constraintTop_toTopOf="parent"
-            app:mstbColorNotPressedBackground="@color/gray"
-            app:mstbColorPressedBackground="@color/colorAccent"
-            app:mstbColorPressedText="@android:color/white"
-            mstb:mstbPrimaryColor="@android:color/white"
-            mstb:mstbSecondaryColor="@color/gray"
-            mstb:values="@array/select_array" />
-
-
-        <org.honorato.multistatetogglebutton.MultiStateToggleButton
-            android:id="@+id/mstb_4"
-            android:layout_width="79dp"
-            android:layout_height="39dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/metrics_input4"
-            app:layout_constraintVertical_bias="0.847"
-            mstb:layout_constraintBottom_toBottomOf="parent"
-            mstb:layout_constraintTop_toTopOf="parent"
-            app:mstbColorNotPressedBackground="@color/gray"
-            app:mstbColorPressedBackground="@color/colorAccent"
-            app:mstbColorPressedText="@android:color/white"
-            mstb:mstbPrimaryColor="@android:color/white"
-            mstb:mstbSecondaryColor="@color/gray"
-            mstb:values="@array/select_array" />
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/habits_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="183dp">
+
+        <TextView
+            android:id="@+id/habits_title"
+            android:layout_width="294dp"
+            android:layout_height="159dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="64dp"
+            android:lineSpacingExtra="8sp"
+            android:text="What habits do you want to work on?"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/habits_input1"
+            android:layout_width="239dp"
+            android:layout_height="71dp"
+            android:layout_marginStart="-1dp"
+            android:layout_marginTop="216dp"
+            android:backgroundTint="@android:color/white"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="apple a day"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            app:layout_constraintStart_toStartOf="@+id/habits_title"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/habits_input2"
+            android:layout_width="239dp"
+            android:layout_height="71dp"
+            android:layout_marginStart="-1dp"
+            android:layout_marginTop="280dp"
+            android:backgroundTint="@android:color/white"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="gym visit"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            fab:layout_constraintStart_toStartOf="@+id/habits_title"
+            fab:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/habits_input3"
+            android:layout_width="239dp"
+            android:layout_height="71dp"
+            android:layout_marginStart="-1dp"
+            android:layout_marginTop="340dp"
+            android:backgroundTint="@android:color/white"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            fab:layout_constraintStart_toStartOf="@+id/habits_title"
+            fab:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/habits_input4"
+            android:layout_width="239dp"
+            android:layout_height="71dp"
+            android:layout_marginStart="-1dp"
+            android:layout_marginTop="404dp"
+            android:backgroundTint="@android:color/white"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            fab:layout_constraintStart_toStartOf="@+id/habits_title"
+            fab:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_onboarding_name"
+        android:layout_width="70dp"
+        android:layout_height="61dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="onboardingNext"
+        android:src="@mipmap/next_button_foreground"
+        app:backgroundTint="@color/add_button_back"
+        app:layout_anchorGravity="top|right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
 
 </android.support.constraint.ConstraintLayout>
 
