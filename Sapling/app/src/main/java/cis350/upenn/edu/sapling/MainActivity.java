@@ -1,44 +1,25 @@
 package cis350.upenn.edu.sapling;
 
 import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.LayoutInflater.Factory;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.view.ViewGroup;
 
-import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.zip.Inflater;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Date;
 
-import com.jjoe64.graphview.series.Series;
-import com.jjoe64.graphview.series.BaseSeries;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import com.jjoe64.graphview.series.BarGraphSeries;
 
 import android.graphics.Color;
 
@@ -86,18 +67,18 @@ public class MainActivity extends AppCompatActivity {
 
         ///TIFFANY'S GRAPH CODE
         DataPoint[] points = new DataPoint[7];
-        int dayInWeek = 7;
+        int dayInWeek = 0;
 
         while (pastWeek.hasNext()) {
             double totalNum = 0;
             DayData dayData = pastWeek.next();
-            dayInWeek -= 1;
+            dayInWeek += 1;
 
             Iterator<Metric> metrics = dayData.getAllMetrics().iterator();
             int numMetrics = 0;
             while(metrics.hasNext()) {
                 Metric m = metrics.next();
-                Log.v("Main Activity:", "Metric " + m.getName() + " is active? " + dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase()));
+                //Log.v("Main Activity:", "Metric " + m.getName() + " is active? " + dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase()));
                 if (m.getRating() != -1 && dm.getActiveMetrics(getApplicationContext()).containsKey(m.getName().toLowerCase())) {
                     numMetrics++;
                     if (m.getPositive()){
@@ -105,19 +86,22 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         totalNum += (7 - m.getRating());
                     }
-                    Log.v("Main Activity:", "Day " + dayInWeek + " found with metric " + numMetrics + ", " + m.getName() + " with value " + m.getRating());
+                    //Log.v("Main Activity:", "Day " + dayInWeek + " found with metric " + numMetrics + ", " + m.getName() + " with value " + m.getRating());
                 }
             }
-            Log.v("Main Activity", "total num calculated is " + totalNum);
+            //Log.v("Main Activity", "total num calculated is " + totalNum);
             double val = totalNum/numMetrics;
+            if (numMetrics == 0) {
+                val = 0.0;
+            }
 
             //assign to proper day
-            points[dayInWeek] = new DataPoint(dayInWeek + 1, val);
+            points[dayInWeek - 1] = new DataPoint(dayInWeek - 1, val);
         }
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
-        graph.getViewport().setMinX(1);
-        graph.getViewport().setMaxX(7);
+        graph.getViewport().setMinX(0.0);
+        graph.getViewport().setMaxX(6.0);
         graph.getViewport().setMinY(0.0);
         graph.getViewport().setMaxY(7.0);
         graph.getViewport().setYAxisBoundsManual(true);

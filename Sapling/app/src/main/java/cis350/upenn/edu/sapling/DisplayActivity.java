@@ -3,12 +3,7 @@ package cis350.upenn.edu.sapling;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,7 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
@@ -26,9 +20,6 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Set;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.HashMap;
@@ -282,7 +273,7 @@ public class DisplayActivity extends AppCompatActivity {
             }
         }
 
-        GraphView graph = (GraphView) findViewById(R.id.graph);
+        GraphView graph = (GraphView) findViewById(R.id.graph_display);
         graph.getViewport().setMinX(0);
         graph.getViewport().setMaxX(6);
         graph.getViewport().setMinY(0.0);

@@ -15,7 +15,7 @@
         android:padding="1dp"
         android:paddingLeft="100dp"
         android:spacing="10dp"
-        app:layout_constraintStart_toStartOf="@+id/graph"
+        app:layout_constraintStart_toStartOf="@+id/graph_display"
         app:layout_constraintTop_toBottomOf="@+id/ground_background" />
 
 
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.jjoe64.graphview.GraphView
-        android:id="@+id/graph"
+        android:id="@+id/graph_display"
         android:layout_width="300dp"
         android:layout_height="225dp"
         android:layout_marginStart="10dp"

@@ -1,9 +1,7 @@
 package cis350.upenn.edu.sapling;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -103,7 +101,7 @@ public class ShowcaseActivity extends AppCompatActivity implements OnShowcaseEve
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
         lps.setMargins(margin, margin, margin, margin);
 
-        ViewTarget graph_target = new ViewTarget(R.id.graph, this);
+        ViewTarget graph_target = new ViewTarget(R.id.graph_showcase, this);
         graph_sv = new ShowcaseView.Builder(this)
                 .setShowcaseDrawer(new SquareShowcaseView(getResources(), 1))
                 .setTarget(graph_target)
