@@ -6,4 +6,5 @@
     <color name="colorButton">#ffffff</color>
     <color name="off_white">#fbfbf5</color>
     <color name="custom_showcase_bg">#b9002153</color>
+    <color name="gray">#76848e</color>
 </resources>
