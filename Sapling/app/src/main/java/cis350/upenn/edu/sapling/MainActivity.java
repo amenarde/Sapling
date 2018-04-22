@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
         Boolean calledInApp = getIntent().getBooleanExtra("calledInApp", false);
         if (!calledInApp) {
             if (isFirstTime()) {
+                DataManager dm = DataManager.getInstance();
+                dm.purgeFiles(this.getApplicationContext());
+                firstTime = false;
                 (new NotificationBuilder()).setNotificationCalendar();
                 Intent i = new Intent(this, OnboardingActivity.class);
                 i.putExtra("requestCode", 1);
@@ -297,18 +300,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
    private void setPlantImg (Double qualityOfLife) {
-       double q = (7/6);
+       double q = (7.0/6.0);
        int qofScaled = 0;
 
        if (qualityOfLife< (q)) {
            qofScaled = 1;
-       } else if (qualityOfLife < (q * 2)) {
+       } else if (qualityOfLife < (q * 2.0)) {
            qofScaled = 2;
-       } else if (qualityOfLife < (q * 3)) {
+       } else if (qualityOfLife < (q * 3.0)) {
            qofScaled = 3;
-       } else if (qualityOfLife < (q * 4)) {
+       } else if (qualityOfLife < (q * 4.0)) {
            qofScaled = 4;
-       } else if (qualityOfLife < (q * 5)) {
+       } else if (qualityOfLife < (q * 5.0)) {
            qofScaled = 5;
        } else {
            qofScaled = 6;

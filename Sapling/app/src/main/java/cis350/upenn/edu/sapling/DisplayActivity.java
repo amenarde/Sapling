@@ -222,32 +222,32 @@ public class DisplayActivity extends AppCompatActivity {
 
 
                 pastWeek = dm.getLastWeek(new Date(), this.getApplicationContext());
-                int dayInWeek = 7;
+                int dayInWeek = 0;
                 while (pastWeek.hasNext()) {
 
                     DayData dayData = pastWeek.next();
-                    dayInWeek -= 1;
+                    dayInWeek += 1;
                     if (dayData.getMetric(m.getName().toLowerCase()) != null && dayData.getMetric(m.getName().toLowerCase()).getRating() != -1) {
                         //assign to proper day
                         if (metricCount == 0) {
-                            pointsM1[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
+                            pointsM1[dayInWeek - 1] = new DataPoint(dayInWeek - 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
                         } else if (metricCount == 1) {
-                            pointsM2[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
+                            pointsM2[dayInWeek - 1] = new DataPoint(dayInWeek - 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
                         } else if (metricCount == 2) {
-                            pointsM3[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
+                            pointsM3[dayInWeek - 1] = new DataPoint(dayInWeek - 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
                         } else if (metricCount == 3) {
-                            pointsM4[dayInWeek] = new DataPoint(dayInWeek + 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
+                            pointsM4[dayInWeek - 1] = new DataPoint(dayInWeek - 1, dayData.getMetric(m.getName().toLowerCase()).getRating());
                         }
                     } else {
                         //assign to proper day
                         if (metricCount == 0) {
-                            pointsM1[dayInWeek] = new DataPoint(dayInWeek + 1, 0);
+                            pointsM1[dayInWeek - 1] = new DataPoint(dayInWeek - 1, 0);
                         } else if (metricCount == 1) {
-                            pointsM2[dayInWeek] = new DataPoint(dayInWeek + 1, 0);
+                            pointsM2[dayInWeek - 1] = new DataPoint(dayInWeek - 1, 0);
                         } else if (metricCount == 2) {
-                            pointsM3[dayInWeek] = new DataPoint(dayInWeek + 1, 0);
+                            pointsM3[dayInWeek - 1] = new DataPoint(dayInWeek - 1, 0);
                         } else if (metricCount == 3) {
-                            pointsM4[dayInWeek] = new DataPoint(dayInWeek + 1, 0);
+                            pointsM4[dayInWeek - 1] = new DataPoint(dayInWeek - 1, 0);
                         }
                     }
                 }
@@ -256,8 +256,8 @@ public class DisplayActivity extends AppCompatActivity {
         }
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
-        graph.getViewport().setMinX(1);
-        graph.getViewport().setMaxX(7);
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setMaxX(6);
         graph.getViewport().setMinY(0.0);
         graph.getViewport().setMaxY(7.0);
         graph.getViewport().setYAxisBoundsManual(true);
